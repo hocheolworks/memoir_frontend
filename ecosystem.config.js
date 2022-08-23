@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "memoir_frontend",
-      script: "main.js",
+      script: "node_modules/next/dist/bin/next",
     },
   ],
   deploy: {

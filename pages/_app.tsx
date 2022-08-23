@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         third:w-1728px third:pl-0 third:pr-0"
     >
       <Head>
-        <title>DeveLogger</title>
+        <title>MEMOIR.</title>
       </Head>
       <div className="h-full flex flex-col">
         <header>
