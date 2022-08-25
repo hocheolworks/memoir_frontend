@@ -4,12 +4,15 @@ import React, { FC } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon, FaSearch } from "react-icons/fa";
+import LabelBtn from "./LabelBtn";
 
 type HeaderPropType = {
   className?: string;
 };
 
 const Header: FC = ({ className }: HeaderPropType) => {
+  const isLoggedIn = true;
+
   return (
     <div className={className}>
       <div className="flex justify-between h-16">
@@ -39,7 +42,13 @@ const Header: FC = ({ className }: HeaderPropType) => {
             Icon={FaSearch}
             size={22}
           />
-
+          {isLoggedIn && (
+            <Link href="/write">
+              <a>
+                <LabelBtn className="mr-5" label="새 글" />
+              </a>
+            </Link>
+          )}
           <CircleAvatar className="w-10 h-10" />
         </div>
       </div>

@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@types/react-icons": "^3.0.0",
+    "@uiw/react-md-editor": "^3.6.0",
     "next": "12.2.5",
+    "next-remove-imports": "^1.0.7",
     "pm2": "^5.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

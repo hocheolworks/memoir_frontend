@@ -15,7 +15,12 @@ const IconBtn: FC<IconBtnProps> = ({
   size,
 }: IconBtnProps) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button
+      className={`w-10 h-10 rounded-full hover:bg-gray-300 hover:bg-opacity-30 duration-300 text-center
+                  flex items-center justify-center
+                  ${className}`}
+      onClick={onClick}
+    >
       <Icon size={size} />
     </button>
   );
