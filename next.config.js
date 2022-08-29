@@ -7,4 +7,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-module.exports = removeImports(nextConfig);
+module.exports = removeImports({ ...nextConfig });

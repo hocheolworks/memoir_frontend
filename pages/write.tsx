@@ -12,7 +12,7 @@ const Write: FC = () => {
   const [content, setContent] = useState<string | undefined>("## Hello World");
 
   return (
-    <div className="h-full wmde-markdown-var">
+    <div className="h-full" data-color-mode="dark">
       <MDEditor
         value={content}
         onChange={setContent}
