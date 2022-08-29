@@ -1,5 +1,3 @@
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 import { MDEditorProps } from "@uiw/react-md-editor";
 import dynamic from "next/dynamic";
 import { FC, useState } from "react";
@@ -13,13 +11,7 @@ const Write: FC = () => {
 
   return (
     <div className="h-full" data-color-mode="dark">
-      <MDEditor
-        value={content}
-        onChange={setContent}
-        fullscreen={false}
-        height={"100%"}
-        toolbarHeight={40}
-      />
+      <MDEditor value={content} onChange={setContent} height={"100%"} />
     </div>
   );
 };
