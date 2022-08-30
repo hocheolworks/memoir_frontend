@@ -31,13 +31,13 @@ const Header: FC = ({ className }: HeaderPropType) => {
         </div>
         <div id="header-right" className="flex-none flex items-center">
           <IconBtn
-            className="mr-5"
+            className="mr-2"
             onClick={() => console.log("change bright mode")}
             Icon={FaMoon}
             size={22}
           />
           <IconBtn
-            className="mr-5"
+            className="mr-2"
             onClick={() => console.log("show text input for search")}
             Icon={FaSearch}
             size={22}
@@ -45,7 +45,7 @@ const Header: FC = ({ className }: HeaderPropType) => {
           {isLoggedIn && (
             <Link href="/write">
               <a>
-                <LabelBtn className="mr-5" label="새 글" />
+                <LabelBtn className="mr-2 hidden first:block" label="글쓰기" />
               </a>
             </Link>
           )}
