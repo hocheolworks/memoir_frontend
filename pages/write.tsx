@@ -11,13 +11,15 @@ const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
 const Write: FC = () => {
   const [content, setContent] = useState<string | undefined>("## Hello World");
 
+  const [isDarkmode, setIsDarkmode] = useState<boolean>(true);
+
   return (
-    <div className="h-full" data-color-mode="dark">
+    <div className="h-full" data-color-mode={isDarkmode ? "dark" : "light"}>
       <MDEditor
         value={content}
         onChange={setContent}
         height={"100%"}
-        // commands={[title1]}
+        commands={[title1]}
       />
     </div>
   );
