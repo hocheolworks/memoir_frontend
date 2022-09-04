@@ -5,10 +5,7 @@ module.exports = {
       cwd: "/home/ubuntu/memoir_frontend/",
       script: "npm",
       args: "start",
-      env: {
-        NODE_ENV: "production",
-      },
-      env_production: process.env,
+      env: process.env,
     },
   ],
   deploy: {
