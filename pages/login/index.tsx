@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import LabelBtn from "../../components/LabelBtn";
 
 const Login: FC = () => {
+  useEffect(() => {
+    console.log(process.env);
+  });
   return (
     <div className="w-full h-full flex items-center justify-center">
       <a
