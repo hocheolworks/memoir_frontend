@@ -11,9 +11,12 @@ const LoginDone: FC = () => {
 
   useEffect(() => {
     axios
-      .post(process.env.NEXT_PUBLIC_BACKEND_URL + "users/login", {
-        code: code,
-      })
+      .post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "users/login",
+        JSON.stringify({
+          code: code,
+        })
+      )
       .then((res) => {
         if (res.status === 201) {
           dispatch(setAuthUser(res.data.data));
