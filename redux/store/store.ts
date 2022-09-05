@@ -1,12 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import { authSlice } from "./authSlice";
+import { authSlice } from "../modules/authSlice";
+import reducer from "../modules";
 import { createWrapper } from "next-redux-wrapper";
 
 const makeStore = () =>
   configureStore({
-    reducer: {
-      [authSlice.name]: authSlice.reducer,
-    },
+    reducer,
+    // reducer: {
+    //   [authSlice.name]: authSlice.reducer,
+    // },
     devTools: true,
   });
 

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthState, setAuthState } from "../redux/store/authSlice";
+import { selectAuthState, setAuthState } from "../redux/modules/authSlice";
 
 const Home: NextPage = () => {
   return (

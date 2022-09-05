@@ -6,7 +6,7 @@ import IconBtn from "./IconBtn";
 import { FaMoon, FaSearch } from "react-icons/fa";
 import LabelBtn from "./LabelBtn";
 import { useSelector } from "react-redux";
-import { selectAuthState, selectAuthUser } from "../redux/store/authSlice";
+import { selectAuthState, selectAuthUser } from "../redux/modules/authSlice";
 
 type HeaderPropType = {
   className?: string;
