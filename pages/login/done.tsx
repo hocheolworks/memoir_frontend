@@ -11,7 +11,7 @@ const LoginDone: FC = () => {
 
   useEffect(() => {
     axios
-      .post(process.env.NEXT_PUBLIC_BACKEND_URL + "api/users/login", {
+      .post(process.env.NEXT_PUBLIC_BACKEND_URL + "users/login", {
         code: code,
       })
       .then((res) => {
