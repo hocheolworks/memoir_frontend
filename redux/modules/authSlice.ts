@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AppState } from "./store";
-import { HYDRATE } from "next-redux-wrapper";
+import { AppState } from "../store/store";
 import { User } from "../../utils/types";
 
 // Type for our state
@@ -28,16 +27,6 @@ export const authSlice = createSlice({
     setAuthUser(state, action) {
       state.authUser = action.payload;
     },
-
-    // Special reducer for hydrating the state. Special case for next-redux-wrapper
-    // extraReducers: {
-    //   [HYDRATE]: (state, action) => {
-    //     return {
-    //       ...state,
-    //       ...action.payload.auth,
-    //     };
-    //   },
-    // },
   },
 });
 

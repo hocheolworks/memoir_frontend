@@ -55,7 +55,11 @@ const Header: FC = ({ className }: HeaderPropType) => {
                   />
                 </a>
               </Link>
-              <CircleAvatar src={user.avatar as string} className="w-10 h-10" />
+              <CircleAvatar
+                src={user.avatar as string}
+                alt={user.githubId as string}
+                className="w-10 h-10"
+              />
             </>
           ) : (
             <a
