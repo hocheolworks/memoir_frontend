@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../redux/store/authSlice";
+import { setAuthUser } from "../../redux/modules/authSlice";
 
 const LoginDone: FC = () => {
   const router = useRouter();
