@@ -15,7 +15,10 @@ const LoginDone: FC = () => {
         process.env.NEXT_PUBLIC_BACKEND_URL + "users/login",
         JSON.stringify({
           code: code,
-        })
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       )
       .then((res) => {
         if (res.status === 201) {
