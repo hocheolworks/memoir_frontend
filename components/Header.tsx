@@ -5,13 +5,16 @@ import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon, FaSearch } from "react-icons/fa";
 import LabelBtn from "./LabelBtn";
+import { useSelector } from "react-redux";
+import { selectAuthState, selectAuthUser } from "../redux/store/authSlice";
 
 type HeaderPropType = {
   className?: string;
 };
 
 const Header: FC = ({ className }: HeaderPropType) => {
-  const isLoggedIn = true;
+  const isLoggedIn = useSelector(selectAuthState);
+  const user = useSelector(selectAuthUser);
 
   return (
     <div className={className}>
@@ -42,14 +45,25 @@ const Header: FC = ({ className }: HeaderPropType) => {
             Icon={FaSearch}
             size={22}
           />
-          {isLoggedIn && (
-            <Link href="/write">
-              <a>
-                <LabelBtn className="mr-2 hidden first:block" label="글쓰기" />
-              </a>
-            </Link>
+          {isLoggedIn ? (
+            <>
+              <Link href="/write">
+                <a>
+                  <LabelBtn
+                    className="mr-2 hidden first:block"
+                    label="글쓰기"
+                  />
+                </a>
+              </Link>
+              <CircleAvatar src={user.avatar as string} className="w-10 h-10" />
+            </>
+          ) : (
+            <a
+              href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI}`}
+            >
+              <LabelBtn label="로그인"></LabelBtn>
+            </a>
           )}
-          <CircleAvatar className="w-10 h-10" />
         </div>
       </div>
     </div>

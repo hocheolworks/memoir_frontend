@@ -6,6 +6,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Head from "next/head";
 
+import { wrapper } from "../redux/store/store";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div
@@ -32,4 +34,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

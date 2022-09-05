@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuthState, setAuthState } from "../redux/store/authSlice";
 
 const Home: NextPage = () => {
   return (
-    <main>
-      <ul>
-        {new Array(30).fill(1).map((val, i) => (
-          <div key={i}>Hello Memoir</div>
-        ))}
-      </ul>
+    <main className="h-full w-full flex items-center justify-center">
+      <div>HOME</div>
     </main>
   );
 };
