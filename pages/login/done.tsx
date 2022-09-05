@@ -10,6 +10,7 @@ const LoginDone: FC = () => {
   const { code } = router.query;
 
   useEffect(() => {
+    if (!code) return;
     axios
       .post(
         process.env.NEXT_PUBLIC_BACKEND_URL + "users/login",
