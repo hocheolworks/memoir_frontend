@@ -13,12 +13,14 @@ const LoginDone: FC = () => {
     if (!code) return;
     axios
       .post(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "users/login",
+        "/api/users/login",
         JSON.stringify({
           code: code,
         }),
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       )
       .then((res) => {
