@@ -58,6 +58,8 @@ const Header: FC = ({ className }: HeaderPropType) => {
               <CircleAvatar
                 src={user.avatar as string}
                 alt={user.githubId as string}
+                width={"100%"}
+                height={"100%"}
                 className="w-10 h-10"
               />
             </>

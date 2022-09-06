@@ -13,6 +13,9 @@ const nextConfig = {
     ];
   },
   swcMinify: true,
+  images: {
+    domains: ["avatars.githubusercontent.com"],
+  },
   env: {
     BASE_URL: process.env.BASE_URL,
   },

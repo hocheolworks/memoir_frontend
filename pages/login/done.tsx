@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../redux/modules/authSlice";
+import { setAuthState, setAuthUser } from "../../redux/modules/authSlice";
 
 const LoginDone: FC = () => {
   const router = useRouter();
@@ -25,9 +25,11 @@ const LoginDone: FC = () => {
       )
       .then((res) => {
         if (res.status === 201) {
-          console.log(res.data);
-          dispatch(setAuthUser(JSON.parse(res.data.data)));
+          dispatch(setAuthUser({ ...res.data.data }));
+          dispatch(setAuthState(true));
           router.push("/");
+        } else {
+          console.log(res.data);
         }
       })
       .catch((err) => {
