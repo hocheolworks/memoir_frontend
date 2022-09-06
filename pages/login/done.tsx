@@ -25,7 +25,8 @@ const LoginDone: FC = () => {
       )
       .then((res) => {
         if (res.status === 201) {
-          dispatch(setAuthUser(res.data.data));
+          console.log(res.data);
+          dispatch(setAuthUser(JSON.parse(res.data.data)));
           router.push("/");
         }
       })
