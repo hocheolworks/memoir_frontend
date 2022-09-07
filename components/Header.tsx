@@ -12,7 +12,7 @@ type HeaderPropType = {
   className?: string;
 };
 
-const Header: FC = ({ className }: HeaderPropType) => {
+const Header: FC<HeaderPropType> = ({ className }) => {
   const isLoggedIn = useSelector(selectAuthState);
   const user = useSelector(selectAuthUser);
 
@@ -64,11 +64,18 @@ const Header: FC = ({ className }: HeaderPropType) => {
               />
             </>
           ) : (
-            <a
-              href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI}`}
-            >
-              <LabelBtn label="로그인"></LabelBtn>
-            </a>
+            <>
+              <a
+                href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI}`}
+              >
+                <LabelBtn label="로그인"></LabelBtn>
+              </a>
+              <Link href={"/register"}>
+                <a>
+                  <LabelBtn className="ml-2" label="회원가입"></LabelBtn>
+                </a>
+              </Link>
+            </>
           )}
         </div>
       </div>
