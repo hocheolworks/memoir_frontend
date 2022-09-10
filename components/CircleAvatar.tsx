@@ -18,7 +18,7 @@ const CircleAvatar: FC<CircleAvatarProps> = ({
 }) => {
   return (
     <div className={className}>
-      <div className="w-full h-full rounded-full bg-gray-300">
+      <div className="w-full h-full bg-gray-300 rounded-full">
         <Image
           src={src}
           alt={alt}

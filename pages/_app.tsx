@@ -11,15 +11,12 @@ import { wrapper } from "../redux/store/store";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div
-      className="w-full ml-auto mr-auto pl-4 pr-4 
-        first:w-1024px first:pl-0 first:pr-0 
-        second:w-1376px second:pl-0 second:pr-0 
-        third:w-1728px third:pl-0 third:pr-0"
+      className="w-full pl-4 pr-4 ml-auto mr-auto first:w-firstScreenWidth first:pl-0 first:pr-0 second:w-secondScreenWidth second:pl-0 second:pr-0 third:w-thirdScreenWidth third:pl-0 third:pr-0"
     >
       <Head>
         <title>MEMOIR.</title>
       </Head>
-      <div className="h-full flex flex-col">
+      <div className="flex flex-col h-full">
         <header>
           <Header />
         </header>

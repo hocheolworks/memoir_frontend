@@ -1,25 +1,38 @@
 import { FC } from "react";
-import Input from "../components/Input";
+import InputWithFloatingLabel from "../components/InputWithFloatingLabel";
+import LabelBtn from "../components/LabelBtn";
 
 const Register: FC = () => {
   return (
-    <div className="h-full w-full flex justify-items-center items-center">
-      <div className="h-full w-full">
-        <div>Welcome to MEMOIR</div>
-        <p>We need more information of you.</p>
-        <p>Log your memories to MEMOIR.</p>
-        <Input
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-[650px] pb-64">
+        <h1 className="mb-8 text-6xl font-bold tracking-wider">
+          Welcome to MEMOIR.
+        </h1>
+        <p className="mb-24 text-lg text-gray-400">
+          Almost done! We need more information about you.
+          <br />
+          Complete the form and Log your memories to MEMOIR.
+        </p>
+        <InputWithFloatingLabel
           id="register_email"
-          label="Email"
+          className="mb-10"
+          label="이메일"
           type="email"
           placeholder="example@mail.com"
-        ></Input>
-        <Input
-          id="register_blogname"
-          label="Blog Title"
+        ></InputWithFloatingLabel>
+        <InputWithFloatingLabel
+          id="register_title"
+          className="mb-32"
+          label="블로그 이름"
           type="text"
           placeholder="Me, More!"
-        ></Input>
+        ></InputWithFloatingLabel>
+
+        <LabelBtn
+          label="완료"
+          className="w-full h-[60px] rounded-md text-xl"
+        ></LabelBtn>
       </div>
     </div>
   );

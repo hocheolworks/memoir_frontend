@@ -15,9 +15,9 @@ module.exports = {
 
     extend: {
       width: {
-        "1024px": "1024px",
-        "1376px": "1376px",
-        "1728px": "1728px",
+        firstScreenWidth: "1024px",
+        secondScreenWidth: "1376px",
+        thirdScreenWidth: "1728px",
       },
     },
   },

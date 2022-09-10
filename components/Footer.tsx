@@ -7,7 +7,7 @@ type FooterPropType = {
 const Footer: FC<FooterPropType> = ({ className }) => {
   return (
     <div className={className}>
-      <hr className="mr-1 ml-1 border-gray-400" />
+      <hr className="ml-1 mr-1 border-gray-400" />
       Footer
     </div>
   );

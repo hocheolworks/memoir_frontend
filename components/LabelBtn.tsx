@@ -6,12 +6,13 @@ type LabelBtnProps = {
 };
 
 const LabelBtn: FC<LabelBtnProps> = ({ label, className }) => {
+  const defaultStyle =
+    "h-8 pl-4 pr-4 duration-300 border-2 border-gray-300 rounded-3xl hover:bg-gray-300 hover:text-black";
+
   return (
-    <div className={className}>
-      <button className="border-gray-300 border-2 pr-4 pl-4 h-8 rounded-3xl hover:bg-gray-300 hover:text-black duration-300">
-        {label}
-      </button>
-    </div>
+    <button className={defaultStyle + (className ? ` ${className}` : "")}>
+      {label}
+    </button>
   );
 };
 

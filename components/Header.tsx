@@ -19,7 +19,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
   return (
     <div className={className}>
       <div className="flex justify-between h-16">
-        <div id="header-left" className="flex-none flex items-center">
+        <div id="header-left" className="flex items-center flex-none">
           <Link href={"/"}>
             <a>
               <Image
@@ -32,7 +32,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
             </a>
           </Link>
         </div>
-        <div id="header-right" className="flex-none flex items-center">
+        <div id="header-right" className="flex items-center flex-none">
           <IconBtn
             className="mr-2"
             onClick={() => console.log("change bright mode")}
@@ -50,7 +50,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
               <Link href="/write">
                 <a>
                   <LabelBtn
-                    className="mr-2 hidden first:block"
+                    className="hidden mr-2 first:block"
                     label="글쓰기"
                   />
                 </a>
