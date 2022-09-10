@@ -30,10 +30,9 @@ const Register: FC = () => {
         ></InputWithFloatingLabel>
 
         <LabelBtn
-          label="완료"
+          label="가입 완료!"
           rounded="lg"
-          height="14"
-          className="w-full text-xl"
+          className="h-12 text-xl"
         ></LabelBtn>
       </div>
     </div>
