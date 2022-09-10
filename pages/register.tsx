@@ -31,7 +31,7 @@ const Register: FC = () => {
 
         <LabelBtn
           label="완료"
-          height={"[60px]"}
+          height="[60px]"
           rounded="lg"
           className="w-full text-xl"
         ></LabelBtn>
