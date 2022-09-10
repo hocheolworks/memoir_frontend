@@ -31,7 +31,9 @@ const Register: FC = () => {
 
         <LabelBtn
           label="완료"
-          className="w-full h-[60px] rounded-md text-xl"
+          height={"[60px]"}
+          rounded="lg"
+          className="w-full text-xl"
         ></LabelBtn>
       </div>
     </div>
