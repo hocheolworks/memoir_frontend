@@ -9,7 +9,7 @@ const Register: FC = () => {
         <h1 className="mb-8 text-6xl font-bold tracking-wider">
           Welcome to MEMOIR.
         </h1>
-        <p className="mb-24 text-lg text-gray-400">
+        <p className="mb-24 text-xl leading-8 text-gray-400">
           Almost done! We need more information about you.
           <br />
           Complete the form and Log your memories to MEMOIR.
@@ -17,20 +17,20 @@ const Register: FC = () => {
         <InputWithFloatingLabel
           id="register_email"
           className="mb-10"
-          label="이메일"
+          label="Email"
           type="email"
           placeholder="example@mail.com"
         ></InputWithFloatingLabel>
         <InputWithFloatingLabel
           id="register_title"
           className="mb-32"
-          label="블로그 이름"
+          label="Blog Title"
           type="text"
           placeholder="Me, More!"
         ></InputWithFloatingLabel>
 
         <LabelBtn
-          label="가입 완료!"
+          label="Join Us!"
           rounded="lg"
           className="h-12 text-xl"
         ></LabelBtn>
