@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon, FaSearch } from "react-icons/fa";
 import LabelBtn from "./LabelBtn";
 import { useSelector } from "react-redux";
 import { selectAuthState, selectAuthUser } from "../redux/modules/authSlice";
+import { useTheme } from "next-themes";
 
 type HeaderPropType = {
   className?: string;
@@ -15,6 +16,17 @@ type HeaderPropType = {
 const Header: FC<HeaderPropType> = ({ className }) => {
   const isLoggedIn = useSelector(selectAuthState);
   const user = useSelector(selectAuthUser);
+
+  const { theme, setTheme } = useTheme();
+
+  const brightModeBtnClick = () => {
+    console.log(theme);
+    if (theme) {
+      setTheme(theme === "dark" ? "light" : "dark");
+    } else {
+      setTheme("dark");
+    }
+  };
 
   return (
     <div className={className}>
@@ -25,7 +37,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
               <Image
                 src="/logo/FontLogo5.png"
                 alt="FontLogo"
-                className="invert"
+                className="dark:invert"
                 width={150}
                 height={32}
               ></Image>
@@ -35,7 +47,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
         <div id="header-right" className="flex items-center flex-none">
           <IconBtn
             className="mr-2"
-            onClick={() => console.log("change bright mode")}
+            onClick={brightModeBtnClick}
             Icon={FaMoon}
             size={22}
           />
