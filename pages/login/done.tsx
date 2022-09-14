@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setAuthState, setAuthUser } from "../../redux/modules/authSlice";
+import { User } from "../../utils/types";
 
 const LoginDone: FC = () => {
   const router = useRouter();
@@ -25,9 +26,10 @@ const LoginDone: FC = () => {
       )
       .then((res) => {
         if (res.status === 201) {
-          dispatch(setAuthUser({ ...res.data.data }));
-          dispatch(setAuthState(true));
-          router.push("/");
+          const currentUser: User = res.data;
+          dispatch(setAuthUser({ ...currentUser }));
+          dispatch(setAuthState(currentUser.isMember));
+          router.push(currentUser.isMember ? "/" : "/register");
         } else {
           console.log(res.data);
         }

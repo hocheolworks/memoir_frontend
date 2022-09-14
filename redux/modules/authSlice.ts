@@ -27,10 +27,15 @@ export const authSlice = createSlice({
     setAuthUser(state, action) {
       state.authUser = action.payload;
     },
+
+    resetAuth(state) {
+      state.authState = false;
+      state.authUser = {};
+    },
   },
 });
 
-export const { setAuthState, setAuthUser } = authSlice.actions;
+export const { setAuthState, setAuthUser, resetAuth } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth.authState;
 export const selectAuthUser = (state: AppState) => state.auth.authUser;

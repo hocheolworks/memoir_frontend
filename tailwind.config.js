@@ -21,6 +21,9 @@ module.exports = {
         secondScreenWidth: "1376px",
         thirdScreenWidth: "1728px",
       },
+      colors: {
+        point: "#673147",
+      },
     },
   },
   plugins: [],

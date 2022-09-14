@@ -6,4 +6,10 @@ export type User = {
   location: string | null;
   githubAccessToken: string;
   isMember: boolean;
+  member?: Member;
+};
+
+export type Member = {
+  blogName: string;
+  email: string;
 };

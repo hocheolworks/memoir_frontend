@@ -82,11 +82,6 @@ const Header: FC<HeaderPropType> = ({ className }) => {
               >
                 <LabelBtn label="로그인"></LabelBtn>
               </a>
-              <Link href={"/register"}>
-                <a>
-                  <LabelBtn className="ml-2" label="회원가입"></LabelBtn>
-                </a>
-              </Link>
             </>
           )}
         </div>
