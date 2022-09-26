@@ -40,7 +40,11 @@ const InputWithFloatingLabel: FC<InputWithFloatingLabelProps> = ({
     <div className={"relative" + (className ? ` ${className}` : "")}>
       <input
         id={id}
-        className="placeholder:text-white dark:placeholder:text-black focus:placeholder:text-gray-600 dark:focus:placeholder:text-gray-600 block px-2.5 pb-2.5 pt-4 w-full text-2xl text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        className="peer block w-full appearance-none rounded-lg border-2 bg-transparent px-2.5 pb-2.5 pt-4 text-2xl text-gray-900 
+                  placeholder:text-white 
+                  valid:border-gray-300 invalid:border-red-500 
+                  focus:outline-none focus:ring-0 focus:placeholder:text-gray-600 focus:valid:border-point focus:invalid:border-red-600 
+                  dark:text-white dark:placeholder:text-black dark:valid:border-gray-600 dark:focus:placeholder:text-gray-600 dark:focus:valid:border-point"
         type={type}
         placeholder={placeholder}
         value={text}
@@ -49,11 +53,18 @@ const InputWithFloatingLabel: FC<InputWithFloatingLabelProps> = ({
       {label && (
         <label
           htmlFor={id}
-          className="absolute rounded-3xl text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-6 left-1"
+          className="absolute top-2 left-1 z-10 origin-[0] -translate-y-6 scale-75 transform rounded-3xl bg-white px-2 text-xl text-gray-500 duration-300 
+                      peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 
+                      peer-valid:text-point peer-invalid:text-red-600 
+                      peer-focus:top-2 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:px-2 
+                      peer-focus:peer-valid:text-point peer-focus:peer-invalid:text-red-600
+                      dark:bg-black dark:text-gray-400
+                      dark:peer-focus:peer-valid:text-point dark:peer-focus:peer-invalid:text-red-600"
         >
           {label}
         </label>
       )}
+      <div className="w-full border-white"></div>
     </div>
   );
 };

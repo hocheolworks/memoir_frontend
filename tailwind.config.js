@@ -22,7 +22,9 @@ module.exports = {
         thirdScreenWidth: "1728px",
       },
       colors: {
-        point: "#673147",
+        black: "#242021",
+        white: "#F4F4F4",
+        point: "#904CF9",
       },
     },
   },

@@ -24,7 +24,9 @@ class MyDocument extends Document {
           <meta name="description" content="Log your memories to MEMOIR." />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <body className="dark:text-white dark:bg-black">
+        <body
+          className="text-black bg-white dark:bg-black dark:text-white"
+        >
           <Main />
           <NextScript />
         </body>
