@@ -4870,10 +4870,10 @@
     "ini" "^1.3.5"
     "js-git" "^0.7.8"
 
-"vm2@^3.9.8":
-  "integrity" "sha512-AuECTSvwu2OHLAZYhG716YzwodKCIJxB6u1zG7PgSQwIgAlEaoXH52bxdcvT8GkGjnYK7r7yWDW0m0sOsPuBjQ=="
-  "resolved" "https://registry.npmjs.org/vm2/-/vm2-3.9.10.tgz"
-  "version" "3.9.10"
+"vm2@^3.9.11", "vm2@^3.9.8":
+  "integrity" "sha512-PFG8iJRSjvvBdisowQ7iVF580DXb1uCIiGaXgm7tynMR1uTBlv7UJlB1zdv5KJ+Tmq1f0Upnj3fayoEOPpCBKg=="
+  "resolved" "https://registry.npmjs.org/vm2/-/vm2-3.9.11.tgz"
+  "version" "3.9.11"
   dependencies:
     "acorn" "^8.7.0"
     "acorn-walk" "^8.2.0"
