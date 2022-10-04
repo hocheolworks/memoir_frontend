@@ -60,7 +60,7 @@ const Register: FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full mt-16">
       <div className="w-[650px] pb-64">
         <h1 className="mb-8 text-6xl font-bold tracking-wider">
           Welcome to MEMOIR.

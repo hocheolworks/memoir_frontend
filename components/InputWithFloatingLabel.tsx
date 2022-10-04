@@ -64,7 +64,6 @@ const InputWithFloatingLabel: FC<InputWithFloatingLabelProps> = ({
           {label}
         </label>
       )}
-      <div className="w-full border-white"></div>
     </div>
   );
 };
