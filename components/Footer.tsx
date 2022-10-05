@@ -7,8 +7,18 @@ type FooterPropType = {
 const Footer: FC<FooterPropType> = ({ className }) => {
   return (
     <div className={className}>
-      <hr className="ml-1 mr-1 border-gray-400" />
-      Footer
+      <hr className="mb-4 border-gray-600" />
+      <h1 className="mb-1 ml-1 text-3xl font-bold">📝 HoCheolWorks</h1>
+      <div className="flex mb-1 ml-1 text-gray-400">
+        <a href="#">기술 블로그</a>
+        <div className="mx-2"> | </div>
+        <a href="#">후원하기</a>
+        <div className="mx-2"> | </div>
+        <a href="#">개인정보처리방침</a>
+      </div>
+      <div className="mb-5 ml-1 text-gray-400">
+        E-mail : lhjeong60@naver.com | jclee7503@gmail.com
+      </div>
     </div>
   );
 };
