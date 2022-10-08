@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import InputWithFloatingLabel from "../components/InputWithFloatingLabel";
 import LabelBtn from "../components/LabelBtn";
 import { selectAuthUser, resetAuth } from "../redux/modules/authSlice";
+import { ValidateEmail } from "../utils/functions";
 
 const Register: FC = () => {
   const router = useRouter();
@@ -17,7 +18,13 @@ const Register: FC = () => {
   const [disableBtn, setDisableBtn] = useState<boolean>();
 
   useEffect(() => {
-    if (email && blogName && email !== "" && blogName !== "") {
+    if (
+      email &&
+      blogName &&
+      email !== "" &&
+      blogName !== "" &&
+      ValidateEmail(email)
+    ) {
       setDisableBtn(false);
     } else {
       setDisableBtn(true);
