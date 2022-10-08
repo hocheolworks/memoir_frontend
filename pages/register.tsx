@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { userAgent } from "next/server";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InputWithFloatingLabel from "../components/InputWithFloatingLabel";
@@ -41,6 +42,7 @@ const Register: FC = () => {
           githubId: user.githubId,
           blogName: blogName,
           email: email,
+          githubAccessToken: user.githubAccessToken,
         }),
         {
           headers: {

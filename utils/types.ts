@@ -6,4 +6,5 @@ export type User = {
   location: string | null;
   isMember: boolean;
   memoirAccessToken: string;
+  githubAccessToken: string;
 };
