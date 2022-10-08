@@ -1,3 +1,8 @@
+export type ResponseAPI = {
+  status: number;
+  data: any;
+};
+
 export type GithubCodeDto = {
   code: string;
 };
