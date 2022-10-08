@@ -8,6 +8,7 @@ import {
   strikethrough,
   titleN,
 } from "../components/ToolbarCommands";
+import { useTheme } from "next-themes";
 
 const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -15,11 +16,10 @@ const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
 
 const Write: FC = () => {
   const [content, setContent] = useState<string | undefined>("## Hello World");
-
-  const [isDarkmode, setIsDarkmode] = useState<boolean>(true);
+  const { theme } = useTheme();
 
   return (
-    <div className="h-full" data-color-mode={isDarkmode ? "dark" : "light"}>
+    <div className="h-full" data-color-mode={theme ?? "dark"}>
       <MDEditor
         value={content}
         onChange={setContent}

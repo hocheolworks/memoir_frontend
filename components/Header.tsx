@@ -20,10 +20,10 @@ const Header: FC<HeaderPropType> = ({ className }) => {
   const { theme, setTheme } = useTheme();
 
   const brightModeBtnClick = () => {
-    console.log(theme);
     if (theme) {
       setTheme(theme === "dark" ? "light" : "dark");
     } else {
+      // default theme
       setTheme("dark");
     }
   };
