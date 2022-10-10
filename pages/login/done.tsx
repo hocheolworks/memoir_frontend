@@ -1,7 +1,8 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { errorHandler } from "../../api/error";
+import UserAPI from "../../api/user/userAPI";
 import { setAuthState, setAuthUser } from "../../redux/modules/authSlice";
 import { User } from "../../utils/types";
 
@@ -10,36 +11,27 @@ const LoginDone: FC = () => {
   const dispatch = useDispatch();
   const { code } = router.query;
 
-  useEffect(() => {
+  const asyncWrapper = async () => {
     if (!code) return;
-    axios
-      .post(
-        "/api/users/login",
-        JSON.stringify({
-          code: code,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 201) {
-          const currentUser: User = res.data;
-          dispatch(setAuthUser({ ...currentUser }));
-          dispatch(setAuthState(currentUser.isMember));
-          router.push(currentUser.isMember ? "/" : "/register");
-        } else {
-          console.log(res.data);
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          alert("error");
-          console.log(err);
-        }
-      });
+
+    try {
+      const res = await UserAPI.login({ code: code as string });
+
+      if (res.status === 201) {
+        const currentUser: User = res.data;
+        dispatch(setAuthUser({ ...currentUser }));
+        dispatch(setAuthState(currentUser.isMember));
+        router.push(currentUser.isMember ? "/" : "/register");
+      } else {
+        console.log(`${res.status} Error with Success`);
+      }
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  useEffect(() => {
+    asyncWrapper();
   });
 
   return (

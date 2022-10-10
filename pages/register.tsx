@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useRouter } from "next/router";
-import { userAgent } from "next/server";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { errorHandler } from "../api/error";
+import UserAPI from "../api/user/userAPI";
 import InputWithFloatingLabel from "../components/InputWithFloatingLabel";
 import LabelBtn from "../components/LabelBtn";
 import { selectAuthUser, resetAuth } from "../redux/modules/authSlice";
@@ -32,40 +32,38 @@ const Register: FC = () => {
     }
   }, [email, blogName]);
 
-  const onSubmit = (e: { preventDefault: () => void }) => {
+  const onSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    axios
-      .post(
-        "/api/users",
-        JSON.stringify({
-          githubId: user.githubId,
-          blogName: blogName,
-          email: email,
-          githubAccessToken: user.githubAccessToken,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 201) {
-          alert("회원가입 완료!, 다시 로그인 해주세요.");
-          dispatch(resetAuth());
+    if (
+      !blogName ||
+      !email ||
+      !user ||
+      !user.githubId ||
+      !user.githubAccessToken
+    ) {
+      return;
+    }
 
-          router.push("/");
-        } else {
-          alert("error code : " + res.status);
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          alert("error");
-          console.log(err);
-        }
+    try {
+      const res = await UserAPI.signUp({
+        githubId: user.githubId,
+        blogName: blogName,
+        email: email,
+        githubAccessToken: user.githubAccessToken,
       });
+
+      if (res.status === 201) {
+        alert("회원가입 완료!, 다시 로그인 해주세요.");
+        dispatch(resetAuth());
+
+        router.push("/");
+      } else {
+        console.log(`${res.status} Error with Success`);
+      }
+    } catch (e) {
+      errorHandler(e);
+    }
   };
 
   return (

@@ -1,12 +1,12 @@
 import axios from "axios";
-import { GithubCodeDto, GithubSignUpDto } from "../types";
+import { GithubCodeDto, GithubSignUpDto } from "../dto";
 
 const UserAPI = {
-  login: ({ code }: GithubCodeDto) => {
+  login: (githubCodeDto: GithubCodeDto) => {
     return axios.post(
       "/api/users/login",
       JSON.stringify({
-        code: code,
+        code: githubCodeDto.code,
       }),
       {
         headers: {
