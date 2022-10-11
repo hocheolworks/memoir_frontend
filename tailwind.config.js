@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     screens: {
       // calc(100%-2rem)
+      zero: "767px",
       first: "1056px", // 1024px
       second: "1440px", // 1376px
       third: "1920px", // 1728px

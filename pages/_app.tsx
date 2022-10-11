@@ -12,7 +12,7 @@ import { ThemeProvider } from "next-themes";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider attribute="class">
-      <div className="w-full pl-4 pr-4 ml-auto mr-auto first:w-firstScreenWidth first:pl-0 first:pr-0 second:w-secondScreenWidth second:pl-0 second:pr-0 third:w-thirdScreenWidth third:pl-0 third:pr-0">
+      <div className="w-full pl-4 pr-4 ml-auto mr-auto first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0">
         <Head>
           <title>MEMOIR.</title>
         </Head>
