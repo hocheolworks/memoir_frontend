@@ -1,21 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon, FaSearch } from "react-icons/fa";
+import { GoTriangleDown } from "react-icons/go";
 import LabelBtn from "./LabelBtn";
-import { useSelector } from "react-redux";
-import { selectAuthState, selectAuthUser } from "../redux/modules/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  resetAuth,
+  selectAuthState,
+  selectAuthUser,
+} from "../redux/modules/authSlice";
 import { useTheme } from "next-themes";
+import DropdownMenu from "./DropdownMenu";
+import DropdownBtn from "./DropdownBtn";
 
 type HeaderPropType = {
   className?: string;
 };
 
 const Header: FC<HeaderPropType> = ({ className }) => {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectAuthState);
   const user = useSelector(selectAuthUser);
+
+  const [isDropdownMenuVisible, setIsDropdownMenuVisible] =
+    useState<boolean>(false);
 
   const { theme, setTheme } = useTheme();
 
@@ -28,8 +39,17 @@ const Header: FC<HeaderPropType> = ({ className }) => {
     }
   };
 
+  const dropdownMenuBtnClick = () => {
+    setIsDropdownMenuVisible(!isDropdownMenuVisible);
+  };
+
+  const logoutBtnOnClick = () => {
+    dispatch(resetAuth());
+    setIsDropdownMenuVisible(false);
+  };
+
   return (
-    <div className={className}>
+    <div className={className + " relative"}>
       <div className="flex justify-between h-16">
         <div id="header-left" className="flex items-center flex-none">
           <Link href={"/"}>
@@ -72,7 +92,16 @@ const Header: FC<HeaderPropType> = ({ className }) => {
                 alt={user.githubId as string}
                 width={"100%"}
                 height={"100%"}
-                className="w-10 h-10"
+                className="w-10 h-10 mr-2"
+              />
+              <IconBtn
+                Icon={GoTriangleDown}
+                className="-mr-2"
+                size={17}
+                onClick={dropdownMenuBtnClick}
+                onBlur={() => {
+                  setIsDropdownMenuVisible(false);
+                }}
               />
             </>
           ) : (
@@ -86,6 +115,24 @@ const Header: FC<HeaderPropType> = ({ className }) => {
           )}
         </div>
       </div>
+      <DropdownMenu isVisible={isDropdownMenuVisible}>
+        <DropdownBtn key={"dropdown-btn-me"} link="/me">
+          마이 페이지
+        </DropdownBtn>
+        <DropdownBtn key={"dropdown-btn-temp"} link="/temp">
+          임시 저장 목록
+        </DropdownBtn>
+        <DropdownBtn key={"dropdown-btn-setting"} link="/setting">
+          설정
+        </DropdownBtn>
+        <DropdownBtn
+          key={"dropdown-btn-logout"}
+          link="/"
+          onClick={logoutBtnOnClick}
+        >
+          로그아웃
+        </DropdownBtn>
+      </DropdownMenu>
     </div>
   );
 };

@@ -10,7 +10,7 @@ export interface AuthState {
 
 // Initial state
 const initialState: AuthState = {
-  authState: false,
+  authState: true,
   authUser: {},
 };
 

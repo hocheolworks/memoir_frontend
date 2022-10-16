@@ -9,6 +9,8 @@ import Head from "next/head";
 import { wrapper } from "../redux/store/store";
 import { ThemeProvider } from "next-themes";
 
+import { PersistGate } from "redux-persist/integration/react";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider attribute="class">

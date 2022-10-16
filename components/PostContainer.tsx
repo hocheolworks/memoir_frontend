@@ -1,9 +1,18 @@
 import React from "react";
 import Post from "./Post";
 
-function PostContainer() {
+type PostContainerPropType = {
+  className?: string;
+};
+
+function PostContainer({ className }: PostContainerPropType) {
   return (
-    <div className="flex flex-row flex-wrap items-center content-start justify-start w-full h-full -m-4 bg-blue-200 first:w-auto">
+    <div
+      className={
+        "-m-4 flex h-full w-full flex-row flex-wrap content-start items-center justify-start first:w-auto" +
+        (className ? ` ${className}` : "")
+      }
+    >
       <Post></Post>
       <Post></Post>
       <Post></Post>

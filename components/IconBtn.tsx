@@ -6,6 +6,7 @@ type IconBtnProps = {
   onClick: () => void;
   Icon: IconType;
   size?: number;
+  onBlur?: () => void;
 };
 
 const IconBtn: FC<IconBtnProps> = ({
@@ -13,13 +14,15 @@ const IconBtn: FC<IconBtnProps> = ({
   onClick,
   Icon,
   size,
+  onBlur,
 }: IconBtnProps) => {
   return (
     <button
-      className={`w-10 h-10 rounded-full hover:bg-gray-500 hover:bg-opacity-30 duration-300 text-center
-                  flex items-center justify-center
+      className={`flex h-10 w-10 items-center justify-center rounded-full text-center
+                  duration-300 hover:bg-gray-500 hover:bg-opacity-30
                   ${className}`}
       onClick={onClick}
+      onBlur={onBlur}
     >
       <Icon size={size} />
     </button>
