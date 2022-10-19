@@ -36,19 +36,3 @@ a {
     background: black;
   }
 } */
-
-/* write page */
-.w-md-editor-text-pre > code,
-.w-md-editor-text-input {
-  font-size: 23px !important;
-  line-height: 24px !important;
-}
-
-.w-md-editor-toolbar li > button {
-  height: 33px;
-  vertical-align: middle;
-}
-
-.w-md-editor-toolbar-divider {
-  height: 27px;
-}

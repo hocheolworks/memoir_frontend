@@ -49,7 +49,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
   };
 
   return (
-    <div className={className + " relative"}>
+    <div className={"relative" + (className ? ` ${className}` : "")}>
       <div className="flex justify-between h-16">
         <div id="header-left" className="flex items-center flex-none">
           <Link href={"/"}>

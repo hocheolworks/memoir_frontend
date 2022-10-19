@@ -1,0 +1,50 @@
+/* write page */
+.w-md-editor-text-pre > code,
+.w-md-editor-text-input {
+  font-size: 26px !important;
+  line-height: 27px !important;
+}
+
+.w-md-editor-toolbar li > button {
+  height: 33px;
+  vertical-align: middle;
+}
+
+.w-md-editor-toolbar-divider {
+  height: 27px;
+}
+
+.wmde-markdown {
+  font-size: 20px;
+}
+
+.wmde-markdown hr {
+  height: 1px;
+}
+
+.w-md-editor-fullscreen {
+  height: calc(100% - 190px) !important;
+  top: 190px;
+}
+
+[data-color-mode*="dark"] .wmde-markdown-var,
+[data-color-mode*="dark"] .wmde-markdown {
+  --color-fg-default: #f4f4f4 !important;
+  --color-fg-muted: #8b949e !important;
+  --color-fg-subtle: #484f58 !important;
+  --color-canvas-default: #242021 !important;
+  --color-canvas-subtle: #161b22 !important;
+  --color-border-default: #30363d !important;
+  --color-border-muted: #21262d !important;
+}
+
+[data-color-mode*="light"] .wmde-markdown-var,
+[data-color-mode*="light"] .wmde-markdown {
+  --color-fg-default: #242021 !important;
+  --color-fg-muted: #57606a !important;
+  --color-fg-subtle: #6e7781 !important;
+  --color-canvas-default: #f4f4f4 !important;
+  --color-canvas-subtle: #f6f8fa !important;
+  --color-border-default: #d0d7de !important;
+  --color-border-muted: hsl(210, 18%, 87%) !important;
+}

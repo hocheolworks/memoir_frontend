@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store/store";
 import { User } from "../../utils/types";
+import { env } from "process";
 
 // Type for our state
 export interface AuthState {
@@ -10,7 +11,7 @@ export interface AuthState {
 
 // Initial state
 const initialState: AuthState = {
-  authState: false,
+  authState: process.env.NODE_ENV !== "production",
   authUser: {},
 };
 
