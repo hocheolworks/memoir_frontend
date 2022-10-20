@@ -1,9 +1,10 @@
 import React, { FC } from "react";
+import { Children } from "../utils/types";
 
 type DropDownMenuPropType = {
   className?: string;
   isVisible: boolean;
-  children: JSX.Element | JSX.Element[] | string | string[];
+  children: Children;
 };
 
 const DropdownMenu: FC<DropDownMenuPropType> = ({

@@ -8,3 +8,5 @@ export type User = {
   memoirAccessToken: string;
   githubAccessToken: string;
 };
+
+export type Children = JSX.Element | JSX.Element[] | string | string[];

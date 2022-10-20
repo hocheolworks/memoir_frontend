@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Children } from "../utils/types";
 
 type DropdownBtnPropType = {
   className?: string;
   link: string;
-  children: JSX.Element | JSX.Element[] | string | string[];
+  children: Children;
   onClick?: () => void;
 };
 
