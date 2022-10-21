@@ -13,7 +13,7 @@ const TagInput = ({ className }: TagInputPropType) => {
 
   const isAdded = useRef<boolean>(false);
 
-  const addTag = (withEnter: boolean) => {
+  const addTag = (withEnter: boolean, tagName?: string) => {
     if (currentTag === "") {
       return;
     }
@@ -23,8 +23,14 @@ const TagInput = ({ className }: TagInputPropType) => {
       return;
     }
 
-    setTagList([...tagList, currentTag]);
-    if (!withEnter) isAdded.current = true;
+    if (withEnter) {
+      isAdded.current = true;
+      setTagList([...tagList, currentTag]);
+    } else {
+      if (tagName) {
+        setTagList([...tagList, tagName]);
+      }
+    }
     setCurrentTag("");
   };
 
@@ -42,7 +48,7 @@ const TagInput = ({ className }: TagInputPropType) => {
           </Tag>
         ))}
         <input
-          className="peer w-48 bg-white px-1 outline-none dark:bg-black"
+          className="peer m-1 w-48 bg-white px-1 py-0.5 outline-none dark:bg-black"
           onFocus={() => {
             setPopup(true);
             setIsHidden(false);
@@ -50,16 +56,14 @@ const TagInput = ({ className }: TagInputPropType) => {
           onBlur={() => setPopup(false)}
           onKeyDown={(e) => {
             // console.log("keydown");
-            if (e.key === "Enter" || e.key === ",") {
-              addTag(e.key === "Enter");
+            if (e.key === "Enter") {
+              addTag(true);
             }
           }}
           placeholder="태그를 입력하세요"
           value={currentTag}
           onChange={(e) => {
-            // console.log("onchange");
             if (isAdded.current) {
-              console.log(e.target.value);
               isAdded.current = false;
               return;
             }
@@ -68,7 +72,11 @@ const TagInput = ({ className }: TagInputPropType) => {
               return;
             }
 
-            setCurrentTag(e.target.value);
+            if (e.target.value.endsWith(",")) {
+              addTag(false, e.target.value.replaceAll(",", ""));
+            } else {
+              setCurrentTag(e.target.value);
+            }
           }}
         ></input>
         <div
