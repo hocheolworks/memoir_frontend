@@ -1,17 +1,35 @@
 /* write page */
 .w-md-editor-text-pre > code,
 .w-md-editor-text-input {
-  font-size: 26px !important;
-  line-height: 27px !important;
+  font-size: 22px !important;
+  line-height: 23px !important;
 }
 
 .w-md-editor-toolbar li > button {
-  height: 33px;
+  height: 40px;
   vertical-align: middle;
 }
 
+.w-md-editor-toolbar svg {
+  margin-left: 0.45rem;
+  margin-right: 0.45rem;
+}
+
+.w-md-editor-toolbar {
+  border-width: 0px;
+}
+
 .w-md-editor-toolbar-divider {
-  height: 27px;
+  height: 40px;
+  margin: 0 5px 0 5px !important;
+}
+
+.wmde-edit .w-md-editor-text {
+  padding-top: 1.5rem;
+}
+
+.wmde-edit textarea::placeholder {
+  font-style: italic;
 }
 
 .wmde-markdown {
@@ -34,6 +52,8 @@
   --color-fg-subtle: #484f58 !important;
   --color-canvas-default: #242021 !important;
   --color-canvas-subtle: #161b22 !important;
+  /* --color-border-default: #30363d !important;
+  --color-border-muted: #21262d !important; */
   --color-border-default: #30363d !important;
   --color-border-muted: #21262d !important;
 }

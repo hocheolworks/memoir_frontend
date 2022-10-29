@@ -65,7 +65,7 @@ const Write: NextPageWithLayout = () => {
         </div>
         <div className="h-full">
           <MDEditor
-            className=""
+            className="wmde-edit shadow-none"
             visibleDragbar={false}
             value={editContent}
             onChange={setEditContent}
@@ -80,6 +80,9 @@ const Write: NextPageWithLayout = () => {
             // ]}
             extraCommands={[]}
             preview={"edit"}
+            textareaProps={{
+              placeholder: "무엇을 느꼈나요?",
+            }}
           />
         </div>
       </div>
