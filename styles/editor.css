@@ -28,12 +28,17 @@
 
 .wmde-edit .w-md-editor-text {
   padding-top: 1.5rem;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 .wmde-edit textarea::placeholder {
   font-style: italic;
+}
+
+.w-md-editor-content {
+  margin-left: -3rem;
+  margin-right: -3rem;
 }
 
 .wmde-markdown {

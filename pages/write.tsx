@@ -46,8 +46,8 @@ const Write: NextPageWithLayout = () => {
       className="fixed top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden"
       data-color-mode={theme ?? "dark"}
     >
-      <div className="w-full flex-col px-12 pt-8 lg:w-1/2">
-        <div className="flex-1 bg-white dark:bg-black">
+      <div className="flex h-full w-full flex-col px-12 pt-8 lg:w-1/2">
+        <div className="bg-white dark:bg-black">
           <textarea
             ref={textareaRef}
             className="h-[52px] w-full resize-none overflow-hidden break-words bg-white text-5xl font-bold outline-none dark:bg-black"
@@ -62,27 +62,22 @@ const Write: NextPageWithLayout = () => {
           <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
           <TagInput className="mb-4" />
         </div>
-        <MDEditor
-          className="wmde-edit flex-1 shadow-none"
-          height={"100%"}
-          visibleDragbar={false}
-          value={editContent}
-          onChange={setEditContent}
-          commands={getCommands({ width: 18, height: 18 })}
-          // commands={[
-          //   ...[1, 2, 3, 4, 5, 6].map((val) => titleN(val)),
-          //   divider,
-          //   bold,
-          //   italic,
-          //   strikethrough,
-          // ]}
-          extraCommands={[]}
-          preview={"edit"}
-          textareaProps={{
-            placeholder: "오늘을 기록해보세요!",
-          }}
-        />
-        <BottomBar />
+        <div className="flex-grow-0 basis-full">
+          <MDEditor
+            className="wmde-edit max-h-full shadow-none"
+            height={"100%"}
+            visibleDragbar={false}
+            value={editContent}
+            onChange={setEditContent}
+            commands={getCommands({ width: 18, height: 18 })}
+            extraCommands={[]}
+            preview={"edit"}
+            textareaProps={{
+              placeholder: "오늘을 기록해보세요!",
+            }}
+          />
+        </div>
+        <BottomBar className="flex-shrink-0" />
       </div>
       <MDEditor
         className="hidden rounded-none p-12 lg:block lg:w-1/2"
@@ -90,13 +85,6 @@ const Write: NextPageWithLayout = () => {
         value={previewContent}
         height={"100%"}
         hideToolbar={true}
-        // commands={[
-        //   ...[1, 2, 3, 4, 5, 6].map((val) => titleN(val)),
-        //   divider,
-        //   bold,
-        //   italic,
-        //   strikethrough,
-        // ]}
         extraCommands={[]}
         preview={"preview"}
       />

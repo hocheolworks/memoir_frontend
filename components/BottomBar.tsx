@@ -3,7 +3,11 @@ import React from "react";
 import BottomBtn from "./BottomBtn";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-const BottomBar = () => {
+type BottomBarPropType = {
+  className?: string;
+};
+
+const BottomBar = ({ className }: BottomBarPropType) => {
   const router = useRouter();
 
   const onClickExit = () => {
@@ -17,7 +21,12 @@ const BottomBar = () => {
   };
 
   return (
-    <div className="fixed bottom-0 -mx-12 flex w-full flex-row justify-between rounded-t-md bg-gray-800 lg:w-1/2">
+    <div
+      className={
+        "relative left-0 right-0 bottom-0 -mx-12 flex flex-row justify-between rounded-t-md bg-gray-800" +
+        (className ? ` ${className}` : "")
+      }
+    >
       <div>
         <BottomBtn onClick={onClickExit} buttonClass="flex items-center">
           <AiOutlineArrowLeft className="mr-1" size={18} />
@@ -26,12 +35,7 @@ const BottomBar = () => {
       </div>
       <div className="flex">
         <BottomBtn onClick={onClickSaveTemp}>임시저장</BottomBtn>
-        <BottomBtn
-          onClick={onClickPublish}
-          className="ml-2"
-          buttonClass="bg-point"
-          hoverClass="brightness-90"
-        >
+        <BottomBtn onClick={onClickPublish} className="ml-1" isPoint={true}>
           발행하기
         </BottomBtn>
       </div>

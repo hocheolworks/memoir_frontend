@@ -5,21 +5,27 @@ type BottomBarPropType = {
   onClick?: () => void;
   children: Children;
   buttonClass?: string;
-  hoverClass?: string;
+  isPoint?: boolean;
 };
 
-const BottomBtn = (prop: BottomBarPropType) => {
+const BottomBtn = ({
+  className,
+  onClick,
+  children,
+  buttonClass,
+  isPoint,
+}: BottomBarPropType) => {
   return (
-    <div className={prop.className ?? ""}>
+    <div className={className ?? ""}>
       <button
         className={
-          "aa m-2 rounded-md px-5 py-2" +
-          (prop.buttonClass ? ` ${prop.buttonClass}` : "") +
-          (prop.hoverClass ? ` hover:${prop.hoverClass}` : " hover:bg-gray-700")
+          "m-2 rounded-md px-5 py-2 hover:brightness-90" +
+          (buttonClass ? ` ${buttonClass}` : "") +
+          (isPoint ? ` bg-point` : " hover:bg-gray-700")
         }
-        onClick={prop.onClick}
+        onClick={onClick}
       >
-        {prop.children}
+        {children}
       </button>
     </div>
   );
