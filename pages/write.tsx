@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import type { NextPageWithLayout } from "./_app";
 import TagInput from "../components/TagInput";
 import { getCommands } from "../components/MDEditor/commands";
+import BottomBar from "../components/BottomBar";
 
 // 스크롤 관련 애니메이션 정리
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
@@ -16,9 +17,7 @@ const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
 });
 
 const Write: NextPageWithLayout = () => {
-  const [editContent, setEditContent] = useState<string | undefined>(
-    "## 오늘을 기록해보세요!"
-  );
+  const [editContent, setEditContent] = useState<string | undefined>("");
   const [previewContent, setPreviewContent] = useState<string | undefined>("");
   const [title, setTitle] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -47,8 +46,8 @@ const Write: NextPageWithLayout = () => {
       className="fixed top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden"
       data-color-mode={theme ?? "dark"}
     >
-      <div className="w-1/2 px-12 pt-8">
-        <div className="bg-white dark:bg-black">
+      <div className="w-full flex-col px-12 pt-8 lg:w-1/2">
+        <div className="flex-1 bg-white dark:bg-black">
           <textarea
             ref={textareaRef}
             className="h-[52px] w-full resize-none overflow-hidden break-words bg-white text-5xl font-bold outline-none dark:bg-black"
@@ -60,34 +59,33 @@ const Write: NextPageWithLayout = () => {
             }}
             rows={1}
           />
-          <hr className="mt-4 mb-5 ml-0.5 w-1/3 border-2 border-gray-500" />
+          <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
           <TagInput className="mb-4" />
         </div>
-        <div className="h-full">
-          <MDEditor
-            className="wmde-edit shadow-none"
-            visibleDragbar={false}
-            value={editContent}
-            onChange={setEditContent}
-            height={"100%"}
-            commands={getCommands({ width: 18, height: 18 })}
-            // commands={[
-            //   ...[1, 2, 3, 4, 5, 6].map((val) => titleN(val)),
-            //   divider,
-            //   bold,
-            //   italic,
-            //   strikethrough,
-            // ]}
-            extraCommands={[]}
-            preview={"edit"}
-            textareaProps={{
-              placeholder: "무엇을 느꼈나요?",
-            }}
-          />
-        </div>
+        <MDEditor
+          className="wmde-edit flex-1 shadow-none"
+          height={"100%"}
+          visibleDragbar={false}
+          value={editContent}
+          onChange={setEditContent}
+          commands={getCommands({ width: 18, height: 18 })}
+          // commands={[
+          //   ...[1, 2, 3, 4, 5, 6].map((val) => titleN(val)),
+          //   divider,
+          //   bold,
+          //   italic,
+          //   strikethrough,
+          // ]}
+          extraCommands={[]}
+          preview={"edit"}
+          textareaProps={{
+            placeholder: "오늘을 기록해보세요!",
+          }}
+        />
+        <BottomBar />
       </div>
       <MDEditor
-        className="w-1/2 p-12"
+        className="hidden rounded-none p-12 lg:block lg:w-1/2"
         visibleDragbar={false}
         value={previewContent}
         height={"100%"}

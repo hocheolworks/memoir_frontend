@@ -8,15 +8,22 @@ module.exports = {
     "./components/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    screens: {
-      // calc(100%-2rem)
-      zero: "767px",
-      first: "1056px", // 1024px
-      second: "1440px", // 1376px
-      third: "1920px", // 1728px
-    },
+    // screens: {
+    //   // calc(100%-2rem)
+    //   zero: "767px",
+    //   first: "1056px", // 1024px
+    //   second: "1440px", // 1376px
+    //   third: "1920px", // 1728px
+    // },
 
     extend: {
+      screens: {
+        // calc(100%-2rem)
+        zero: "767px",
+        first: "1056px", // 1024px
+        second: "1440px", // 1376px
+        third: "1920px", // 1728px
+      },
       animation: {
         "slide-bottom":
           "slide-bottom 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",

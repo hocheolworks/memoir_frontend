@@ -13,6 +13,8 @@ const TagInput = ({ className }: TagInputPropType) => {
 
   const isAdded = useRef<boolean>(false);
 
+  // TODO: Enter로 추가시 다음 키입력 씹히는 버그 발견
+
   const addTag = (withEnter: boolean, tagName?: string) => {
     if (currentTag === "") {
       return;
