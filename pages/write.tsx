@@ -1,4 +1,4 @@
-import { MDEditorProps } from "@uiw/react-md-editor";
+import { ContextStore, MDEditorProps } from "@uiw/react-md-editor";
 import dynamic from "next/dynamic";
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
@@ -7,7 +7,12 @@ import TagInput from "../components/TagInput";
 import { getCommands } from "../components/MDEditor/commands";
 import BottomBar from "../components/BottomBar";
 
-// 스크롤 관련 애니메이션 정리
+// FIXME: 발견된 버그 및 개선필요사항 정리
+// 1. /n이 whitespace로 변환되어 preview에 입력됨
+// 2. edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
+// 3. unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상
+
+// TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
 // 2. A 상태에서 스크롤이 맨위에 닿은 채로 스크롤업이 입력되면 다시 제목과 태그 입력창이 펼치듯이 나타남(B 상태)
 // 3. B 상태에서 스크롤이 맨위에 닿지 않고 스크롤다운이 입력되면 다시 A 상태로 돌아감
@@ -24,12 +29,14 @@ const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
+    const tempEditContent = editContent?.replaceAll("\n", "<br/>");
+
     if (title === "") {
-      setPreviewContent(editContent);
+      setPreviewContent(tempEditContent);
     } else {
       // 제목에서 마크다운 문법을 무시하기 위함
       const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n<br/>\n\n`;
-      setPreviewContent(tempTitle + editContent);
+      setPreviewContent(tempTitle + tempEditContent);
     }
   }, [title, editContent]);
 
