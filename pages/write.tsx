@@ -11,6 +11,7 @@ import BottomBar from "../components/BottomBar";
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨
 // 2. (수정완료) edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
 // 3. unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상
+// 4. MDEditor는 csr로 처리되기 때문에 초기 렌더링 페이지가 ㅂㅅ임
 
 // TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)

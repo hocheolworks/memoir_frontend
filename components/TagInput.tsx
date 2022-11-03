@@ -12,9 +12,11 @@ const TagInput = ({ className }: TagInputPropType) => {
   const [currentTag, setCurrentTag] = useState<string>("");
 
   const isAdded = useRef<boolean>(false);
+  const isCompositionStart = useRef<boolean>(false);
+  const isCompositionEnd = useRef<boolean>(false);
 
   // FIXME: 발견된 버그 및 개선필요사항 정리
-  // 1. Enter로 추가시 다음 키입력 씹히는 버그 발견
+  // 1. (해결완료) Enter로 추가시 다음 키입력 씹히는 버그 발견
 
   const addTag = (withEnter: boolean, tagName?: string) => {
     if (currentTag === "") {
@@ -23,11 +25,27 @@ const TagInput = ({ className }: TagInputPropType) => {
 
     if (tagList.includes(currentTag)) {
       setCurrentTag("");
+
+      if (
+        withEnter &&
+        !isCompositionEnd.current &&
+        isCompositionStart.current
+      ) {
+        // 한글이 전부 조합되지 않은채라면, onChange 핸들러를 패스하게끔, 그리고 조합관련 플래그 초기화
+        isAdded.current = true;
+        isCompositionEnd.current = false;
+        isCompositionStart.current = false;
+      }
       return;
     }
 
     if (withEnter) {
-      isAdded.current = true;
+      if (!isCompositionEnd.current && isCompositionStart.current) {
+        // 한글이 전부 조합되지 않은채라면, onChange 핸들러를 패스하게끔, 그리고 조합관련 플래그 초기화
+        isAdded.current = true;
+        isCompositionEnd.current = false;
+        isCompositionStart.current = false;
+      }
       setTagList([...tagList, currentTag]);
     } else {
       if (tagName) {
@@ -66,6 +84,7 @@ const TagInput = ({ className }: TagInputPropType) => {
           placeholder="태그를 입력하세요"
           value={currentTag}
           onChange={(e) => {
+            // console.log("onchange");
             if (isAdded.current) {
               isAdded.current = false;
               return;
@@ -79,6 +98,18 @@ const TagInput = ({ className }: TagInputPropType) => {
               addTag(false, e.target.value.replaceAll(",", ""));
             } else {
               setCurrentTag(e.target.value);
+            }
+          }}
+          onCompositionStart={() => {
+            // console.log("start");
+            isCompositionStart.current = true;
+            isCompositionEnd.current = false;
+          }}
+          onCompositionEnd={() => {
+            // console.log("end");
+            if (isCompositionStart.current && !isCompositionEnd.current) {
+              isCompositionEnd.current = true;
+              isCompositionStart.current = false;
             }
           }}
         ></input>
