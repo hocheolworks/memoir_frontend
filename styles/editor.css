@@ -49,10 +49,10 @@
   height: 1px;
 }
 
-.w-md-editor-fullscreen {
+/* .w-md-editor-fullscreen {
   height: calc(100% - 190px) !important;
   top: 190px;
-}
+} */
 
 [data-color-mode*="dark"] .wmde-markdown-var,
 [data-color-mode*="dark"] .wmde-markdown {

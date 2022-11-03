@@ -8,8 +8,8 @@ import { getCommands } from "../components/MDEditor/commands";
 import BottomBar from "../components/BottomBar";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
-// 1. /n이 whitespace로 변환되어 preview에 입력됨
-// 2. edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
+// 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨
+// 2. (수정완료) edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
 // 3. unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상
 
 // TODO: 스크롤 관련 애니메이션
@@ -53,7 +53,7 @@ const Write: NextPageWithLayout = () => {
       className="fixed top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden"
       data-color-mode={theme ?? "dark"}
     >
-      <div className="flex h-full w-full flex-col px-12 pt-8 lg:w-1/2">
+      <div className="flex w-full flex-col px-12 pt-8 lg:w-1/2">
         <div className="bg-white dark:bg-black">
           <textarea
             ref={textareaRef}
@@ -69,25 +69,27 @@ const Write: NextPageWithLayout = () => {
           <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
           <TagInput className="mb-4" />
         </div>
-        <div className="flex-grow-0 basis-full">
-          <MDEditor
-            className="wmde-edit max-h-full shadow-none"
-            height={"100%"}
-            visibleDragbar={false}
-            value={editContent}
-            onChange={setEditContent}
-            commands={getCommands({ width: 18, height: 18 })}
-            extraCommands={[]}
-            preview={"edit"}
-            textareaProps={{
-              placeholder: "오늘을 기록해보세요!",
-            }}
-          />
-        </div>
-        <BottomBar className="flex-shrink-0" />
+
+        {/* preview와 다르게 왜 padding을 여기서 지정하지 않고 css로 지정하였나? 
+          -> 스크롤바까지 같이 padding 되기 때문에 텍스트 입력 창은 역 margin과 padding을 따로 지정해줘야 했음 */}
+        <MDEditor
+          className="wmde-edit flex-1 shadow-none"
+          visibleDragbar={false}
+          value={editContent}
+          hideToolbar={false}
+          extraCommands={[]}
+          preview={"edit"}
+          onChange={setEditContent}
+          commands={getCommands({ width: 18, height: 18 })}
+          textareaProps={{
+            placeholder: "오늘을 기록해보세요!",
+          }}
+        />
+
+        <BottomBar />
       </div>
       <MDEditor
-        className="hidden rounded-none p-12 lg:block lg:w-1/2"
+        className="hidden rounded-none px-12 pt-12 lg:block lg:w-1/2"
         visibleDragbar={false}
         value={previewContent}
         height={"100%"}
