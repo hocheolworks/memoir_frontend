@@ -23,7 +23,7 @@ const BottomBar = ({ className }: BottomBarPropType) => {
   return (
     <div
       className={
-        "left-0 right-0 bottom-0 -mx-12 flex flex-row justify-between rounded-t-md bg-gray-800" +
+        "left-0 right-0 bottom-0 -mx-12 flex flex-row justify-between rounded-t-md bg-gray-300 dark:bg-gray-800" +
         (className ? ` ${className}` : "")
       }
     >

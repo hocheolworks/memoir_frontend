@@ -36,10 +36,24 @@
   font-style: italic;
 }
 
+.w-md-editor-preview li::marker {
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+  text-indent: 0px !important;
+  text-align: start !important;
+  text-align-last: start !important;
+}
+
 .w-md-editor-content {
   margin-left: -3rem;
   margin-right: -3rem;
 }
+/* .w-md-editor-preview {
+  padding-top: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+} */
 
 .wmde-markdown {
   font-size: 20px;

@@ -12,6 +12,7 @@ import BottomBar from "../components/BottomBar";
 // 2. (수정완료) edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
 // 3. unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상
 // 4. MDEditor는 csr로 처리되기 때문에 초기 렌더링 페이지가 ㅂㅅ임
+// 5. (변경완료) preview 부분을 MDEditor가 아니라 MDEditor.Markdown으로 해야하는지 검토
 
 // TODO: 발행하기 클릭시 팝업 띄우기
 
@@ -23,6 +24,13 @@ import BottomBar from "../components/BottomBar";
 const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
+
+const MDEditorMarkdown = dynamic(
+  () => import("@uiw/react-md-editor").then((mod) => mod.default.Markdown),
+  {
+    ssr: false,
+  }
+);
 
 const Write: NextPageWithLayout = () => {
   const [editContent, setEditContent] = useState<string | undefined>("");
@@ -93,14 +101,18 @@ const Write: NextPageWithLayout = () => {
 
         <BottomBar />
       </div>
-      <MDEditor
-        className="hidden rounded-none px-12 pt-12 lg:block lg:w-1/2"
+      {/* <MDEditor
+        className="hidden rounded-none px-12 lg:block lg:w-1/2"
         visibleDragbar={false}
         value={previewContent}
         height={"100%"}
         hideToolbar={true}
         extraCommands={[]}
         preview={"preview"}
+      /> */}
+      <MDEditorMarkdown
+        source={previewContent}
+        className="hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
       />
     </div>
   );
