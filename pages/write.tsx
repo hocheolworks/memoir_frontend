@@ -10,9 +10,10 @@ import BottomBar from "../components/BottomBar";
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ
 // 2. (수정완료) edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
-// 3. unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상
+// 3. (수정완료) unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상 -> @tailwind base;때문에었음 ol, ul 태그를 react-md-editor의 default css와 동일하게 적용하여 해결
 // 4. MDEditor는 csr로 처리되기 때문에 초기 렌더링 페이지가 ㅂㅅ임
 // 5. (변경완료) preview 부분을 MDEditor가 아니라 MDEditor.Markdown으로 해야하는지 검토
+// 6. edit에서 작성시 preview에 스크롤이 생길만큼 내용이 많아지면 preview 영역이 알아서 매번 스크롤 하단으로 이동하게끔 개선 필요
 
 // TODO: 발행하기 클릭시 팝업 띄우기
 
@@ -112,7 +113,7 @@ const Write: NextPageWithLayout = () => {
       /> */}
       <MDEditorMarkdown
         source={previewContent}
-        className="hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
+        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
       />
     </div>
   );
