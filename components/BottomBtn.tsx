@@ -22,7 +22,7 @@ const BottomBtn = ({
           "m-2 rounded-md px-5 py-2 text-black hover:brightness-90 dark:text-white" +
           (buttonClass ? ` ${buttonClass}` : "") +
           (isPoint
-            ? ` bg-point text-white dark:text-black`
+            ? ` bg-point text-neutral-200 dark:text-white`
             : " hover:bg-gray-300 dark:hover:bg-gray-700")
         }
         onClick={onClick}

@@ -1,6 +1,17 @@
 import { MDEditorProps } from "@uiw/react-md-editor";
+import {
+  MarkdownPreviewRef,
+  MarkdownPreviewProps,
+} from "@uiw/react-markdown-preview";
 import dynamic from "next/dynamic";
-import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTheme } from "next-themes";
 import type { NextPageWithLayout } from "./_app";
 import TagInput from "../components/TagInput";
@@ -32,30 +43,34 @@ const MDEditorMarkdown = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"></div>
+      <div className="hidden h-full bg-neutral-50 dark:bg-neutral-900 lg:block lg:w-1/2"></div>
     ),
   }
 );
 
+const ForwardedRefMDEditorMarkdown = forwardRef<
+  MarkdownPreviewRef,
+  MarkdownPreviewProps
+>((props, ref) => <MDEditorMarkdown {...props} ref={ref} />);
+
 const Write: NextPageWithLayout = () => {
+  const { theme } = useTheme();
   const [editContent, setEditContent] = useState<string | undefined>("");
   const [previewContent, setPreviewContent] = useState<string | undefined>("");
   const [title, setTitle] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { theme } = useTheme();
+  const previewRef = useRef(null);
 
   useEffect(() => {
-    // const tempEditContent = editContent?.replaceAll("\n", "<br/>");
-
     if (title === "") {
-      // setPreviewContent(tempEditContent);
       setPreviewContent(editContent);
     } else {
       // 제목에서 마크다운 문법을 무시하기 위함
       const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n<br/>\n\n`;
-      // setPreviewContent(tempTitle + tempEditContent);
       setPreviewContent(tempTitle + editContent);
     }
+
+    scrollToBottom();
   }, [title, editContent]);
 
   const handleResizeHeight = useCallback(() => {
@@ -64,6 +79,24 @@ const Write: NextPageWithLayout = () => {
       textareaRef.current.style.height =
         textareaRef.current.scrollHeight + "px";
     }
+  }, []);
+
+  const scrollToBottom = useCallback(() => {
+    console.log(previewRef.current);
+
+    // if (
+    //   previewRef &&
+    //   previewRef.current &&
+    //   previewRef.current.mdp &&
+    //   previewRef.current.mdp.current
+    // ) {
+    //   console.log(`scrollTop : ${previewRef.current.mdp.current.scrollTop}`);
+    //   console.log(
+    //     `scrollHeight : ${previewRef.current.mdp.current.scrollHeight}`
+    //   );
+    //   previewRef.current.mdp.current.scrollTop =
+    //     previewRef.current.mdp.current.scrollHeight;
+    // }
   }, []);
 
   return (
@@ -97,7 +130,9 @@ const Write: NextPageWithLayout = () => {
           hideToolbar={false}
           extraCommands={[]}
           preview={"edit"}
-          onChange={setEditContent}
+          onChange={(value) => {
+            setEditContent(value);
+          }}
           commands={getCommands({ width: 18, height: 18 })}
           textareaProps={{
             placeholder: "오늘을 기록해보세요!",
@@ -106,19 +141,17 @@ const Write: NextPageWithLayout = () => {
 
         <BottomBar />
       </div>
-      {/* <MDEditor
-        className="hidden rounded-none px-12 lg:block lg:w-1/2"
-        visibleDragbar={false}
-        value={previewContent}
-        height={"100%"}
-        hideToolbar={true}
-        extraCommands={[]}
-        preview={"preview"}
-      /> */}
-      <MDEditorMarkdown
+      {/* <MDEditorMarkdown
         source={previewContent}
         className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
         style={{ whiteSpace: "pre-wrap" }}
+        ref={previewRef}
+      /> */}
+      <ForwardedRefMDEditorMarkdown
+        source={previewContent}
+        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
+        style={{ whiteSpace: "pre-wrap" }}
+        ref={previewRef}
       />
     </div>
   );
