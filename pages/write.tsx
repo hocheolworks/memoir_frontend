@@ -38,8 +38,18 @@ const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
   loading: () => <div className="flex-1"></div>,
 });
 
-const MDEditorMarkdown = dynamic(
-  () => import("@uiw/react-md-editor").then((mod) => mod.default.Markdown),
+// const MDEditorMarkdown = dynamic(
+//   () => import("@uiw/react-md-editor").then((mod) => mod.default.Markdown),
+//   {
+//     ssr: false,
+//     loading: () => (
+//       <div className="hidden h-full bg-neutral-50 dark:bg-neutral-900 lg:block lg:w-1/2"></div>
+//     ),
+//   }
+// );
+
+const Markdown = dynamic(
+  () => import("../components/MDEditor/wrappers/WrappedMarkdown"),
   {
     ssr: false,
     loading: () => (
@@ -48,10 +58,9 @@ const MDEditorMarkdown = dynamic(
   }
 );
 
-const ForwardedRefMDEditorMarkdown = forwardRef<
-  MarkdownPreviewRef,
-  MarkdownPreviewProps
->((props, ref) => <MDEditorMarkdown {...props} ref={ref} />);
+const ForwardRefMarkdown = forwardRef<MarkdownPreviewRef, MarkdownPreviewProps>(
+  (props, ref) => <Markdown {...props} markdownRef={ref} />
+);
 
 const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
@@ -59,14 +68,14 @@ const Write: NextPageWithLayout = () => {
   const [previewContent, setPreviewContent] = useState<string | undefined>("");
   const [title, setTitle] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const previewRef = useRef(null);
+  const previewRef = useRef<MarkdownPreviewRef>(null);
 
   useEffect(() => {
     if (title === "") {
       setPreviewContent(editContent);
     } else {
       // 제목에서 마크다운 문법을 무시하기 위함
-      const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n<br/>\n\n`;
+      const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
       setPreviewContent(tempTitle + editContent);
     }
 
@@ -82,21 +91,15 @@ const Write: NextPageWithLayout = () => {
   }, []);
 
   const scrollToBottom = useCallback(() => {
-    console.log(previewRef.current);
-
-    // if (
-    //   previewRef &&
-    //   previewRef.current &&
-    //   previewRef.current.mdp &&
-    //   previewRef.current.mdp.current
-    // ) {
-    //   console.log(`scrollTop : ${previewRef.current.mdp.current.scrollTop}`);
-    //   console.log(
-    //     `scrollHeight : ${previewRef.current.mdp.current.scrollHeight}`
-    //   );
-    //   previewRef.current.mdp.current.scrollTop =
-    //     previewRef.current.mdp.current.scrollHeight;
-    // }
+    if (
+      previewRef &&
+      previewRef.current &&
+      previewRef.current.mdp &&
+      previewRef.current.mdp.current
+    ) {
+      previewRef.current.mdp.current.scrollTop =
+        previewRef.current.mdp.current.scrollHeight;
+    }
   }, []);
 
   return (
@@ -141,15 +144,9 @@ const Write: NextPageWithLayout = () => {
 
         <BottomBar />
       </div>
-      {/* <MDEditorMarkdown
+      <ForwardRefMarkdown
         source={previewContent}
-        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
-        style={{ whiteSpace: "pre-wrap" }}
-        ref={previewRef}
-      /> */}
-      <ForwardedRefMDEditorMarkdown
-        source={previewContent}
-        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
+        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 p-12 dark:bg-neutral-900 lg:block lg:w-1/2"
         style={{ whiteSpace: "pre-wrap" }}
         ref={previewRef}
       />
