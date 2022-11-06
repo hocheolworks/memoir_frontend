@@ -1,4 +1,4 @@
-import { ContextStore, MDEditorProps } from "@uiw/react-md-editor";
+import { MDEditorProps } from "@uiw/react-md-editor";
 import dynamic from "next/dynamic";
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
@@ -8,7 +8,7 @@ import { getCommands } from "../components/MDEditor/commands";
 import BottomBar from "../components/BottomBar";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
-// 1. /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ
+// 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
 // 2. (수정완료) edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
 // 3. (수정완료) unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상 -> @tailwind base;때문에었음 ol, ul 태그를 react-md-editor의 default css와 동일하게 적용하여 해결
 // 4. MDEditor는 csr로 처리되기 때문에 초기 렌더링 페이지가 ㅂㅅ임
@@ -41,7 +41,7 @@ const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const tempEditContent = editContent?.replaceAll("\n", "<br/>");
+    // const tempEditContent = editContent?.replaceAll("\n", "<br/>");
 
     if (title === "") {
       // setPreviewContent(tempEditContent);
@@ -114,6 +114,7 @@ const Write: NextPageWithLayout = () => {
       <MDEditorMarkdown
         source={previewContent}
         className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 dark:bg-neutral-900 lg:block lg:w-1/2"
+        style={{ whiteSpace: "pre-wrap" }}
       />
     </div>
   );
