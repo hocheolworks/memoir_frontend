@@ -24,7 +24,7 @@ import BottomBar from "../components/BottomBar";
 // 3. (수정완료) unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상 -> @tailwind base;때문에었음 ol, ul 태그를 react-md-editor의 default css와 동일하게 적용하여 해결
 // 4. (수정완료) MDEditor는 csr로 처리되기 때문에 초기 렌더링 페이지가 ㅂㅅ임 -> 일단 loading시 컴포넌트로 대체
 // 5. (변경완료) preview 부분을 MDEditor가 아니라 MDEditor.Markdown으로 해야하는지 검토
-// 6. edit에서 작성시 preview에 스크롤이 생길만큼 내용이 많아지면 preview 영역이 알아서 매번 스크롤 하단으로 이동하게끔 개선 필요
+// 6. (개선완료) edit에서 작성시 preview에 스크롤이 생길만큼 내용이 많아지면 preview 영역이 알아서 매번 스크롤 하단으로 이동하게끔 개선 필요 => 아래 5줄내에서 엔터 입력시 preview의 스크롤 하단으로 이동되게 변경
 
 // TODO: 발행하기 클릭시 팝업 띄우기
 
@@ -66,6 +66,7 @@ const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
   const [editContent, setEditContent] = useState<string | undefined>("");
   const [previewContent, setPreviewContent] = useState<string | undefined>("");
+  const [selectionStart, setSelectionStart] = useState<number | undefined>(0);
   const [title, setTitle] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<MarkdownPreviewRef>(null);
@@ -78,8 +79,6 @@ const Write: NextPageWithLayout = () => {
       const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
       setPreviewContent(tempTitle + editContent);
     }
-
-    scrollToBottom();
   }, [title, editContent]);
 
   const handleResizeHeight = useCallback(() => {
@@ -101,6 +100,24 @@ const Write: NextPageWithLayout = () => {
         previewRef.current.mdp.current.scrollHeight;
     }
   }, []);
+
+  const isInsideOfLast5Lines = useCallback(
+    (content: string, currentPosition: number): boolean => {
+      let lastIndexOfLastLineBreak = 0;
+
+      for (let i = 0; i < 5; i++) {
+        if (content.includes("\n")) {
+          lastIndexOfLastLineBreak = content.lastIndexOf("\n");
+          content = content.slice(0, lastIndexOfLastLineBreak);
+        } else {
+          break;
+        }
+      }
+
+      return currentPosition >= lastIndexOfLastLineBreak;
+    },
+    []
+  );
 
   return (
     <div
@@ -133,12 +150,23 @@ const Write: NextPageWithLayout = () => {
           hideToolbar={false}
           extraCommands={[]}
           preview={"edit"}
-          onChange={(value) => {
+          onChange={(value, e) => {
+            setSelectionStart(e?.currentTarget.selectionStart);
             setEditContent(value);
           }}
           commands={getCommands({ width: 18, height: 18 })}
           textareaProps={{
             placeholder: "오늘을 기록해보세요!",
+          }}
+          onKeyDown={(e) => {
+            if (!editContent || !selectionStart) return;
+
+            if (
+              (e.key = "Enter") &&
+              isInsideOfLast5Lines(editContent, selectionStart)
+            ) {
+              scrollToBottom();
+            }
           }}
         />
 
@@ -146,7 +174,7 @@ const Write: NextPageWithLayout = () => {
       </div>
       <ForwardRefMarkdown
         source={previewContent}
-        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 p-12 dark:bg-neutral-900 lg:block lg:w-1/2"
+        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-900 lg:block lg:w-1/2"
         style={{ whiteSpace: "pre-wrap" }}
         ref={previewRef}
       />
