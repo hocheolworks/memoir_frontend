@@ -17,6 +17,7 @@ import type { NextPageWithLayout } from "./_app";
 import TagInput from "../components/TagInput";
 import { getCommands } from "../components/MDEditor/commands";
 import BottomBar from "../components/BottomBar";
+import PublishPopup from "../components/PublishPopup";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
@@ -64,10 +65,12 @@ const ForwardRefMarkdown = forwardRef<MarkdownPreviewRef, MarkdownPreviewProps>(
 
 const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
+  const [title, setTitle] = useState<string>("");
   const [editContent, setEditContent] = useState<string | undefined>("");
   const [previewContent, setPreviewContent] = useState<string | undefined>("");
   const [selectionStart, setSelectionStart] = useState<number | undefined>(0);
-  const [title, setTitle] = useState<string>("");
+  const [isPublishPopupOpen, setIsPublishPopupOpen] = useState<boolean>(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<MarkdownPreviewRef>(null);
 
@@ -119,66 +122,89 @@ const Write: NextPageWithLayout = () => {
     []
   );
 
+  const onClickSaveTemp = useCallback(() => {
+    // TODO: 임시저장 api 요청
+  }, []);
+  const onClickPublishPopup = useCallback(() => {
+    if (!isPublishPopupOpen) {
+      setIsPublishPopupOpen(true);
+    }
+  }, []);
+
   return (
-    <div
-      className="fixed top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden"
-      data-color-mode={theme ?? "dark"}
-    >
-      <div className="flex w-full flex-col px-12 pt-8 lg:w-1/2">
-        <div className="bg-white dark:bg-black">
-          <textarea
-            ref={textareaRef}
-            className="h-[52px] w-full resize-none overflow-hidden break-words bg-white text-5xl font-bold outline-none dark:bg-black"
-            placeholder="제목을 입력하세요"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-              handleResizeHeight();
-            }}
-            rows={1}
-          />
-          <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
-          <TagInput className="mb-4" />
-        </div>
+    <>
+      <div
+        className="fixed top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden"
+        data-color-mode={theme ?? "dark"}
+      >
+        <div className="flex w-full flex-col px-12 pt-8 lg:w-1/2">
+          <div className="bg-white dark:bg-black">
+            <textarea
+              ref={textareaRef}
+              className="h-[52px] w-full resize-none overflow-hidden break-words bg-white text-5xl font-bold outline-none dark:bg-black"
+              placeholder="제목을 입력하세요"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                handleResizeHeight();
+              }}
+              rows={1}
+            />
+            <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
+            <TagInput className="mb-4" />
+          </div>
 
-        {/* preview와 다르게 왜 padding을 여기서 지정하지 않고 css로 지정하였나? 
+          {/* preview와 다르게 왜 padding을 여기서 지정하지 않고 css로 지정하였나? 
           -> 스크롤바까지 같이 padding 되기 때문에 텍스트 입력 창은 역 margin과 padding을 따로 지정해줘야 했음 */}
-        <MDEditor
-          className="wmde-edit flex-1 shadow-none"
-          visibleDragbar={false}
-          value={editContent}
-          hideToolbar={false}
-          extraCommands={[]}
-          preview={"edit"}
-          onChange={(value, e) => {
-            setSelectionStart(e?.currentTarget.selectionStart);
-            setEditContent(value);
-          }}
-          commands={getCommands({ width: 18, height: 18 })}
-          textareaProps={{
-            placeholder: "오늘을 기록해보세요!",
-          }}
-          onKeyDown={(e) => {
-            if (!editContent || !selectionStart) return;
+          <MDEditor
+            className="wmde-edit flex-1 shadow-none"
+            visibleDragbar={false}
+            value={editContent}
+            hideToolbar={false}
+            extraCommands={[]}
+            preview={"edit"}
+            onChange={(value, e) => {
+              setSelectionStart(e?.currentTarget.selectionStart);
+              setEditContent(value);
+            }}
+            commands={getCommands({ width: 18, height: 18 })}
+            textareaProps={{
+              placeholder: "오늘을 기록해보세요!",
+            }}
+            onKeyDown={(e) => {
+              if (!editContent || !selectionStart) return;
 
-            if (
-              (e.key = "Enter") &&
-              isInsideOfLast5Lines(editContent, selectionStart)
-            ) {
-              scrollToBottom();
-            }
-          }}
+              if (
+                (e.key = "Enter") &&
+                isInsideOfLast5Lines(editContent, selectionStart)
+              ) {
+                scrollToBottom();
+              }
+            }}
+          />
+
+          <BottomBar
+            onClickSaveTemp={onClickSaveTemp}
+            onClickPublish={onClickPublishPopup}
+          />
+        </div>
+        <ForwardRefMarkdown
+          source={previewContent}
+          className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-900 lg:block lg:w-1/2"
+          style={{ whiteSpace: "pre-wrap" }}
+          ref={previewRef}
         />
-
-        <BottomBar />
       </div>
-      <ForwardRefMarkdown
-        source={previewContent}
-        className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-900 lg:block lg:w-1/2"
-        style={{ whiteSpace: "pre-wrap" }}
-        ref={previewRef}
-      />
-    </div>
+      {isPublishPopupOpen && (
+        <PublishPopup
+          title={title}
+          editContent={editContent ?? ""}
+          Popdown={() => {
+            setIsPublishPopupOpen(false);
+          }}
+        ></PublishPopup>
+      )}
+    </>
   );
 };
 

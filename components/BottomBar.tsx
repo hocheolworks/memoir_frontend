@@ -5,19 +5,19 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 
 type BottomBarPropType = {
   className?: string;
+  onClickSaveTemp: () => void;
+  onClickPublish: () => void;
 };
 
-const BottomBar = ({ className }: BottomBarPropType) => {
+const BottomBar = ({
+  className,
+  onClickSaveTemp,
+  onClickPublish,
+}: BottomBarPropType) => {
   const router = useRouter();
 
   const onClickExit = () => {
     router.back();
-  };
-  const onClickSaveTemp = () => {
-    // TODO: 임시저장 api 요청
-  };
-  const onClickPublish = () => {
-    // TODO: 발행 api 요청
   };
 
   return (

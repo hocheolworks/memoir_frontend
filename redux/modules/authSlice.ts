@@ -12,7 +12,8 @@ export interface AuthState {
 // Initial state
 const initialState: AuthState = {
   authState: process.env.NODE_ENV !== "production",
-  authUser: {},
+  authUser:
+    process.env.NODE_ENV !== "production" ? { githubId: "lhjeong60" } : {},
 };
 
 // Actual Slice
