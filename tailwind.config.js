@@ -25,13 +25,17 @@ module.exports = {
         third: "1920px", // 1728px
       },
       animation: {
-        "slide-bottom":
-          "slide-bottom 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+        "slide-down":
+          "slide-down 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "slide-up":
           "slide-up 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+        "slide-top":
+          "slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+        "slide-bottom":
+          "slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
       },
       keyframes: {
-        "slide-bottom": {
+        "slide-down": {
           "0%": {
             "-webkit-transform": "translateY(0)",
             transform: "translateY(0)",
@@ -53,6 +57,26 @@ module.exports = {
             "-webkit-transform": "translateY(-0.5rem)",
             transform: "translateY(-0.5rem)",
             opacity: 0,
+          },
+        },
+        "slide-top": {
+          "0%": {
+            "-webkit-transform": "translateY(100%)",
+            transform: "translateY(100%)",
+          },
+          "100%": {
+            "-webkit-transform": "translateY(0)",
+            transform: "translateY(0)",
+          },
+        },
+        "slide-bottom": {
+          "0%": {
+            "-webkit-transform": "translateY(0)",
+            transform: "translateY(0)",
+          },
+          "100%": {
+            "-webkit-transform": "translateY(100%)",
+            transform: "translateY(100%)",
           },
         },
       },

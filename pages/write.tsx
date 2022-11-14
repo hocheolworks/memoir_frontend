@@ -197,6 +197,7 @@ const Write: NextPageWithLayout = () => {
       </div>
       {isPublishPopupOpen && (
         <PublishPopup
+          isPopup={isPublishPopupOpen}
           title={title}
           editContent={editContent ?? ""}
           Popdown={() => {

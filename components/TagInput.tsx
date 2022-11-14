@@ -116,7 +116,7 @@ const TagInput = ({ className }: TagInputPropType) => {
         <div
           className={
             "absolute -bottom-11 left-1 z-10 origin-bottom animate-slide-up rounded-sm bg-gray-600 py-2 px-4 text-xs" +
-            (popup ? " animate-slide-bottom" : " animate-slide-up") +
+            (popup ? " animate-slide-down" : " animate-slide-up") +
             (isHidden ? " hidden" : "")
           }
           onAnimationEnd={() => {

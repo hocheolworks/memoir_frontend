@@ -1,22 +1,30 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
 import {
   MdOutlinePublic,
   MdLockOutline,
   MdOutlinePlaylistAdd,
   MdOutlineAccountTree,
+  MdOutlineImage,
 } from "react-icons/md";
+
+import { IoImageOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../redux/modules/authSlice";
 import BottomBtn from "./BottomBtn";
 
+// TODO: 라이트모드 적용
+// TODO: refactoring
+
 type PublishPopupProps = {
+  isPopup: boolean;
   title: string;
   editContent: string;
   Popdown: () => void;
 };
 
 const PublishPopup: FC<PublishPopupProps> = ({
+  isPopup,
   title,
   editContent,
   Popdown,
@@ -26,11 +34,50 @@ const PublishPopup: FC<PublishPopupProps> = ({
 
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [url, setUrl] = useState<string>(title);
+  const [abstract, setAbstract] = useState<string>();
+  const [isCancel, setIsCancel] = useState<boolean>(false);
 
   return (
-    <div className="fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center bg-white dark:bg-black">
+    <div
+      className={`fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center bg-white dark:bg-black${
+        isPopup ? " animate-slide-top" : ""
+      }${isCancel ? " animate-slide-bottom" : ""}`}
+      onAnimationEnd={() => {
+        if (isCancel) {
+          Popdown();
+        }
+      }}
+    >
       <div className="flex w-[768px]">
-        <div className="flex-1 bg-neutral-100 text-center">left</div>
+        <div className="flex-1">
+          <h2 className="mb-2 text-left text-lg font-medium">미리보기</h2>
+          <div className="flex w-full flex-col items-center justify-center rounded-sm py-12 dark:bg-neutral-700">
+            <IoImageOutline size={100}></IoImageOutline>
+            <button className="w-32 rounded-[0.25rem] py-1 text-point hover:brightness-90 dark:bg-neutral-800">
+              썸네일 업로드
+            </button>
+          </div>
+          <div className="mt-8 w-full">
+            <h4 className="text-left text-lg font-medium">{title ?? ""}</h4>
+            <textarea
+              className="mt-2 h-[7.5rem] w-full resize-none appearance-none rounded-sm px-3 py-2 text-sm focus:outline-none"
+              maxLength={150}
+              value={abstract}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value.length <= 150) {
+                  setAbstract(value);
+                }
+              }}
+              placeholder="150자 요약 가능?"
+            ></textarea>
+            <div
+              className={`text-right text-xs text-neutral-500${
+                abstract?.length === 150 ? " text-red-700" : ""
+              }`}
+            >{`${abstract?.length ?? 0}/150`}</div>
+          </div>
+        </div>
         <div className="mx-8 w-0.5 bg-neutral-500 text-center opacity-50"></div>
         <div className="flex flex-1 flex-col text-center">
           <div className="w-full">
@@ -64,7 +111,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                 /{user.githubId}/
               </div>
               <input
-                className="w-full flex-1 appearance-none py-1 text-lg focus:outline-none focus:ring-0"
+                className="w-full flex-1 appearance-none py-1 text-lg focus:outline-none"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />
@@ -86,8 +133,14 @@ const PublishPopup: FC<PublishPopupProps> = ({
               <div>카테고리 설정</div>
             </button>
           </div>
-          <div className="mt-16 flex w-full justify-end">
-            <BottomBtn onClick={Popdown}>취소</BottomBtn>
+          <div className="mt-10 flex w-full justify-end">
+            <BottomBtn
+              onClick={() => {
+                setIsCancel(true);
+              }}
+            >
+              취소
+            </BottomBtn>
             <BottomBtn isPoint={true}>발행하기</BottomBtn>
           </div>
         </div>
