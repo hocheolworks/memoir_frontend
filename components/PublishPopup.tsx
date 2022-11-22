@@ -60,7 +60,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
           <div className="mt-8 w-full">
             <h4 className="text-left text-lg font-medium">{title ?? ""}</h4>
             <textarea
-              className="mt-2 h-[7.5rem] w-full resize-none appearance-none rounded-sm bg-neutral-200 px-3 py-2 text-sm focus:outline-none"
+              className="mt-2 h-[7.5rem] w-full resize-none appearance-none rounded-sm bg-neutral-200 px-3 py-2 text-sm focus:outline-none dark:bg-neutral-700"
               maxLength={150}
               value={abstract}
               onChange={(e) => {
@@ -107,11 +107,11 @@ const PublishPopup: FC<PublishPopupProps> = ({
           <div className="mt-6 w-full">
             <h2 className="mb-2 text-left text-lg font-medium">URL 설정</h2>
             <div className="flex">
-              <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-[#3B3B3B]">
+              <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-neutral-700">
                 /{user.githubId}/
               </div>
               <input
-                className="w-full flex-1 appearance-none bg-neutral-200 py-1 text-lg focus:outline-none"
+                className="w-full flex-1 appearance-none bg-neutral-200 py-1 text-lg focus:outline-none dark:bg-neutral-700"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />
