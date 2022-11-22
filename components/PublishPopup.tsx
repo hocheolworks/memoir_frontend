@@ -12,6 +12,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../redux/modules/authSlice";
 import BottomBtn from "./BottomBtn";
+import ContainerWithTitle from "./ContainerWithTitle";
 
 // TODO: 라이트모드 적용
 // TODO: refactoring
@@ -49,8 +50,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
       }}
     >
       <div className="-mt-12 flex w-[768px]">
-        <div className="flex-1">
-          <h2 className="mb-2 text-left text-lg font-medium">미리보기</h2>
+        <ContainerWithTitle className="flex-1" title="미리보기">
           <div className="flex w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
             <IoImageOutline size={100}></IoImageOutline>
             <button className="w-32 rounded-[0.25rem] bg-neutral-300 py-1 text-point hover:brightness-90 dark:bg-neutral-800">
@@ -77,11 +77,10 @@ const PublishPopup: FC<PublishPopupProps> = ({
               }`}
             >{`${abstract?.length ?? 0}/150`}</div>
           </div>
-        </div>
+        </ContainerWithTitle>
         <div className="mx-8 w-0.5 bg-neutral-500 text-center opacity-50"></div>
         <div className="flex flex-1 flex-col text-center">
-          <div className="w-full">
-            <h2 className="mb-2 text-left text-lg font-medium">공개 설정</h2>
+          <ContainerWithTitle className="w-full" title="공개 설정">
             <div className="flex">
               <ToggleBtn
                 isSelected={!isPrivate}
@@ -103,9 +102,8 @@ const PublishPopup: FC<PublishPopupProps> = ({
                 label="비공개"
               />
             </div>
-          </div>
-          <div className="mt-6 w-full">
-            <h2 className="mb-2 text-left text-lg font-medium">URL 설정</h2>
+          </ContainerWithTitle>
+          <ContainerWithTitle className="mt-6 w-full" title="URL 설정">
             <div className="flex">
               <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-neutral-700">
                 /{user.githubId}/
@@ -116,23 +114,19 @@ const PublishPopup: FC<PublishPopupProps> = ({
                 onChange={(e) => setUrl(e.target.value)}
               />
             </div>
-          </div>
-          <div className="mt-6 w-full">
-            <h2 className="mb-2 text-left text-lg font-medium">시리즈 설정</h2>
+          </ContainerWithTitle>
+          <ContainerWithTitle className="mt-6 w-full" title="시리즈 설정">
             <button className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2 text-lg hover:text-point dark:bg-neutral-700">
               <MdOutlinePlaylistAdd className="mr-2" size={iconSize + 4} />
               <div>시리즈에 추가하기</div>
             </button>
-          </div>
-          <div className="mt-6 w-full">
-            <h2 className="mb-2 text-left text-lg font-medium">
-              카테고리 설정
-            </h2>
+          </ContainerWithTitle>
+          <ContainerWithTitle className="mt-6 w-full" title="카테고리 설정">
             <button className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2 text-lg hover:text-point dark:bg-neutral-700">
               <MdOutlineAccountTree className="mr-2" size={iconSize - 2} />
               <div>카테고리 설정</div>
             </button>
-          </div>
+          </ContainerWithTitle>
           <div className="mt-10 flex w-full justify-end">
             <BottomBtn
               onClick={() => {
