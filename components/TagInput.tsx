@@ -8,7 +8,7 @@ type TagInputPropType = {
 const TagInput = ({ className }: TagInputPropType) => {
   const [tagList, setTagList] = useState<Array<string>>([]);
   const [popup, setPopup] = useState<boolean>(false);
-  const [isHidden, setIsHidden] = useState<boolean>(false);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
   const [currentTag, setCurrentTag] = useState<string>("");
 
   const isAdded = useRef<boolean>(false);
@@ -113,21 +113,19 @@ const TagInput = ({ className }: TagInputPropType) => {
             }
           }}
         ></input>
-        {!isHidden && (
-          <div
-            className={
-              "absolute -bottom-11 left-1 z-10 origin-bottom animate-slide-up rounded-sm bg-gray-300 py-2 px-4 text-xs dark:bg-gray-600" +
-              (popup ? " animate-slide-down" : " animate-slide-up") +
-              (isHidden ? " hidden" : "")
-            }
-            onAnimationEnd={() => {
-              if (!popup && !isHidden) setIsHidden(true);
-            }}
-          >
-            태그와 함께 쉼표 또는 엔터를 입력하면 태그가 추가됩니다. <br />
-            추가된 태그를 삭제하려면 클릭하세요.
-          </div>
-        )}
+        <div
+          className={
+            "absolute -bottom-11 left-1 z-10 origin-bottom animate-slide-up rounded-sm bg-gray-300 py-2 px-4 text-xs dark:bg-gray-600" +
+            (popup ? " animate-slide-down" : " animate-slide-up") +
+            (isHidden ? " hidden" : "")
+          }
+          onAnimationEnd={() => {
+            if (!popup && !isHidden) setIsHidden(true);
+          }}
+        >
+          태그와 함께 쉼표 또는 엔터를 입력하면 태그가 추가됩니다. <br />
+          추가된 태그를 삭제하려면 클릭하세요.
+        </div>
       </div>
     </div>
   );

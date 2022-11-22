@@ -30,9 +30,9 @@ module.exports = {
         "slide-up":
           "slide-up 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "slide-top":
-          "slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+          "slide-top 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "slide-bottom":
-          "slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+          "slide-bottom 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
       },
       keyframes: {
         "slide-down": {
