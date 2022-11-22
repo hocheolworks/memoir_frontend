@@ -24,7 +24,7 @@ const ToggleBtn: FC<ToggleBtnProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`flex flex-1 items-center rounded-md border-[1px] py-2.5 pl-4 text-black dark:bg-neutral-700 dark:text-white
+      className={`flex flex-1 items-center rounded-md border-[1px] bg-neutral-200 py-2.5 pl-4 text-black dark:bg-neutral-700 dark:text-white
       ${isSelected ? " border-point" : "border-transparent"}
       ${className ? " " + className : ""}`}
     >

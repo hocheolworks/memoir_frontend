@@ -48,19 +48,19 @@ const PublishPopup: FC<PublishPopupProps> = ({
         }
       }}
     >
-      <div className="flex w-[768px]">
+      <div className="-mt-12 flex w-[768px]">
         <div className="flex-1">
           <h2 className="mb-2 text-left text-lg font-medium">미리보기</h2>
-          <div className="flex w-full flex-col items-center justify-center rounded-sm py-12 dark:bg-neutral-700">
+          <div className="flex w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
             <IoImageOutline size={100}></IoImageOutline>
-            <button className="w-32 rounded-[0.25rem] py-1 text-point hover:brightness-90 dark:bg-neutral-800">
+            <button className="w-32 rounded-[0.25rem] bg-neutral-300 py-1 text-point hover:brightness-90 dark:bg-neutral-800">
               썸네일 업로드
             </button>
           </div>
           <div className="mt-8 w-full">
             <h4 className="text-left text-lg font-medium">{title ?? ""}</h4>
             <textarea
-              className="mt-2 h-[7.5rem] w-full resize-none appearance-none rounded-sm px-3 py-2 text-sm focus:outline-none"
+              className="mt-2 h-[7.5rem] w-full resize-none appearance-none rounded-sm bg-neutral-200 px-3 py-2 text-sm focus:outline-none"
               maxLength={150}
               value={abstract}
               onChange={(e) => {
@@ -107,11 +107,11 @@ const PublishPopup: FC<PublishPopupProps> = ({
           <div className="mt-6 w-full">
             <h2 className="mb-2 text-left text-lg font-medium">URL 설정</h2>
             <div className="flex">
-              <div className="self-center bg-[#3B3B3B] py-1 pl-2 text-lg text-neutral-500">
+              <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-[#3B3B3B]">
                 /{user.githubId}/
               </div>
               <input
-                className="w-full flex-1 appearance-none py-1 text-lg focus:outline-none"
+                className="w-full flex-1 appearance-none bg-neutral-200 py-1 text-lg focus:outline-none"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />
@@ -119,7 +119,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
           </div>
           <div className="mt-6 w-full">
             <h2 className="mb-2 text-left text-lg font-medium">시리즈 설정</h2>
-            <button className="flex w-full items-center justify-center rounded-md py-2 text-lg hover:text-point dark:bg-neutral-700">
+            <button className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2 text-lg hover:text-point dark:bg-neutral-700">
               <MdOutlinePlaylistAdd className="mr-2" size={iconSize + 4} />
               <div>시리즈에 추가하기</div>
             </button>
@@ -128,7 +128,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
             <h2 className="mb-2 text-left text-lg font-medium">
               카테고리 설정
             </h2>
-            <button className="flex w-full items-center justify-center rounded-md py-2 text-lg hover:text-point dark:bg-neutral-700">
+            <button className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2 text-lg hover:text-point dark:bg-neutral-700">
               <MdOutlineAccountTree className="mr-2" size={iconSize - 2} />
               <div>카테고리 설정</div>
             </button>
