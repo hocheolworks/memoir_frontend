@@ -84,7 +84,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
             >{`${abstract?.length ?? 0}/150`}</div>
           </div>
         </ContainerWithTitle>
-        <div className="mx-8 w-0.5 bg-neutral-500 text-center opacity-50"></div>
+        <div className="mx-8 w-0.5 bg-neutral-300 text-center opacity-50 dark:bg-neutral-500"></div>
 
         <div className="flex flex-1 flex-col text-center">
           {isClickedAddToSeries && !isClickedSetCategory && (
@@ -121,7 +121,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
               <ContainerWithTitle className="mt-6 w-full" title="URL 설정">
                 <div className="flex">
                   <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-neutral-700">
-                    /{user.githubId}/
+                    /@{user.githubId}/
                   </div>
                   <input
                     className="w-full flex-1 appearance-none bg-neutral-200 py-1 text-lg focus:outline-none dark:bg-neutral-700"
@@ -169,7 +169,9 @@ const PublishPopup: FC<PublishPopupProps> = ({
             >
               취소
             </BottomBtn>
-            <BottomBtn isPoint={true}>발행하기</BottomBtn>
+            <BottomBtn className="-mr-2" isPoint={true}>
+              발행하기
+            </BottomBtn>
           </div>
         </div>
       </div>

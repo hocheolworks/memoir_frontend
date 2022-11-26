@@ -33,8 +33,27 @@ module.exports = {
           "slide-top 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "slide-bottom":
           "slide-bottom 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
+        "fade-in":
+          "fade-in 0.25s cubic-bezier(0.390, 0.575, 0.565, 1.000) both",
+        "fade-out": "fade-out 0.25s ease-out both",
       },
       keyframes: {
+        "fade-in": {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
+        "fade-out": {
+          "0%": {
+            opacity: 1,
+          },
+          "100%": {
+            opacity: 0,
+          },
+        },
         "slide-down": {
           "0%": {
             "-webkit-transform": "translateY(0)",
