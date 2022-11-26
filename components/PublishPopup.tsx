@@ -46,7 +46,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
 
   return (
     <div
-      className={`fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center bg-white dark:bg-black${
+      className={`fixed top-0 left-0 z-30 flex h-full w-full items-start justify-center bg-white zero:items-center dark:bg-black${
         isPopup ? " animate-slide-top" : ""
       }${isCancel ? " animate-slide-bottom" : ""}`}
       onAnimationEnd={() => {
@@ -55,9 +55,9 @@ const PublishPopup: FC<PublishPopupProps> = ({
         }
       }}
     >
-      <div className="-mt-12 flex min-h-[486px] w-[768px]">
+      <div className="mt-6 flex min-h-[486px] w-full flex-col px-6 zero:-mt-12 zero:w-[704px] zero:flex-row zero:px-0 lg:w-[768px]">
         <ContainerWithTitle className="flex-1" title="미리보기">
-          <div className="flex w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
+          <div className="flex aspect-video w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
             <IoImageOutline size={100}></IoImageOutline>
             <button className="w-32 rounded-[0.25rem] bg-neutral-300 py-1 text-point hover:brightness-90 dark:bg-neutral-800">
               썸네일 업로드
