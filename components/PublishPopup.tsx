@@ -107,7 +107,10 @@ const PublishPopup: FC<PublishPopupProps> = ({
             ></AddToSeriesArea>
           )}
           {!isClickedAddToSeries && isClickedSetCategory && (
-            <SetCategoryArea className="flex w-full flex-1 flex-col"></SetCategoryArea>
+            <SetCategoryArea
+              className="flex min-h-[494px] w-full flex-1 flex-col"
+              getOut={getOut}
+            ></SetCategoryArea>
           )}
           {!isClickedAddToSeries && !isClickedSetCategory && (
             <>
@@ -155,7 +158,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                     setIsClickedSetCategory(true);
                   }}
                 >
-                  <MdOutlineAccountTree className="mr-2" size={iconSize - 2} />
+                  <MdOutlineAccountTree className="mr-2" size={iconSize} />
                   <div>카테고리 설정</div>
                 </button>
               </ContainerWithTitle>
@@ -198,7 +201,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                       className="mr-2"
                       size={iconSize + 4}
                     />
-                    <div>시리즈에 추가하기</div>
+                    <div>시리즈에 추가</div>
                   </button>
                 )}
               </ContainerWithTitle>
