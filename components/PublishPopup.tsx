@@ -146,6 +146,19 @@ const PublishPopup: FC<PublishPopupProps> = ({
                   />
                 </div>
               </ContainerWithTitle>
+
+              <ContainerWithTitle className="mt-6 w-full" title="카테고리 설정">
+                <button
+                  className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2.5 text-lg hover:text-point dark:bg-neutral-700"
+                  onClick={() => {
+                    setIsClickedAddToSeries(false);
+                    setIsClickedSetCategory(true);
+                  }}
+                >
+                  <MdOutlineAccountTree className="mr-2" size={iconSize - 2} />
+                  <div>카테고리 설정</div>
+                </button>
+              </ContainerWithTitle>
               <ContainerWithTitle className="mt-6 w-full" title="시리즈 설정">
                 {selectedSeries ? (
                   <div className="relative">
@@ -188,18 +201,6 @@ const PublishPopup: FC<PublishPopupProps> = ({
                     <div>시리즈에 추가하기</div>
                   </button>
                 )}
-              </ContainerWithTitle>
-              <ContainerWithTitle className="mt-6 w-full" title="카테고리 설정">
-                <button
-                  className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2.5 text-lg hover:text-point dark:bg-neutral-700"
-                  onClick={() => {
-                    setIsClickedAddToSeries(false);
-                    setIsClickedSetCategory(true);
-                  }}
-                >
-                  <MdOutlineAccountTree className="mr-2" size={iconSize - 2} />
-                  <div>카테고리 설정</div>
-                </button>
               </ContainerWithTitle>
               <div className="mt-10 flex w-full flex-1 items-end justify-end">
                 <BottomBtn

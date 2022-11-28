@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../redux/modules/authSlice";
 import BottomBtn from "./BottomBtn";
@@ -34,6 +34,8 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isCancelClicked, setIsCancelClicked] = useState<boolean>(false);
 
+  const isUrlModified = useRef<boolean>(false);
+
   useLayoutEffect(() => {}, []);
 
   const onClickAddSeries = () => {
@@ -52,6 +54,9 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
             value={newSeries}
             onChange={(e) => {
               setNewSeries(e.target.value);
+              if (!isUrlModified.current) {
+                setSeriesUrl(e.target.value);
+              }
             }}
             placeholder="새로운 시리즈를 입력하세요."
             onFocus={() => setIsFocused(true)}
@@ -76,6 +81,11 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
                   className="w-full flex-1 appearance-none bg-neutral-100 py-1 focus:outline-none dark:bg-neutral-800"
                   value={seriesUrl}
                   onChange={(e) => setSeriesUrl(e.target.value)}
+                  onKeyDown={() => {
+                    if (!isUrlModified.current) {
+                      isUrlModified.current = true;
+                    }
+                  }}
                 />
               </div>
               <div className="mt-1 flex items-center justify-end">
