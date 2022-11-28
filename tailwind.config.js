@@ -33,9 +33,8 @@ module.exports = {
           "slide-top 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
         "slide-bottom":
           "slide-bottom 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
-        "fade-in":
-          "fade-in 0.25s cubic-bezier(0.390, 0.575, 0.565, 1.000) both",
-        "fade-out": "fade-out 0.25s ease-out both",
+        "fade-in": "fade-in 0.25s ease-out both",
+        "fade-out": "fade-out 0.03s ease-in both",
       },
       keyframes: {
         "fade-in": {

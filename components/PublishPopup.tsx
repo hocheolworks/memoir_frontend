@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
 import {
   MdOutlinePublic,
   MdLockOutline,
   MdOutlinePlaylistAdd,
   MdOutlineAccountTree,
-  MdOutlineImage,
+  MdOutlineEditNote,
 } from "react-icons/md";
 
 import { IoImageOutline } from "react-icons/io5";
@@ -16,8 +16,8 @@ import ContainerWithTitle from "./ContainerWithTitle";
 import AddToSeriesArea from "./AddToSeriesArea";
 import SetCategoryArea from "./SetCategoryArea";
 
-// TODO: 라이트모드 적용
-// TODO: refactoring
+// TODO: (적용완료) 라이트모드 적용
+// TODO: (적용완료) refactoring
 
 type PublishPopupProps = {
   isPopup: boolean;
@@ -44,6 +44,15 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const [isClickedSetCategory, setIsClickedSetCategory] =
     useState<boolean>(false);
 
+  const [selectedSeries, setSelectedSeries] = useState<string>("");
+
+  const onClickPublish = () => {};
+
+  const getOut = useCallback(() => {
+    setIsClickedAddToSeries(false);
+    setIsClickedSetCategory(false);
+  }, []);
+
   return (
     <div
       className={`fixed top-0 left-0 z-30 flex h-full w-full items-start justify-center bg-white zero:items-center dark:bg-black${
@@ -55,7 +64,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
         }
       }}
     >
-      <div className="mt-6 flex min-h-[486px] w-full flex-col px-6 zero:-mt-12 zero:w-[704px] zero:flex-row zero:px-0 lg:w-[768px]">
+      <div className="mt-6 flex min-h-[494px] w-full flex-col px-6 zero:-mt-12 zero:w-[704px] zero:flex-row zero:px-0 lg:w-[768px]">
         <ContainerWithTitle className="flex-1" title="미리보기">
           <div className="flex aspect-video w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
             <IoImageOutline size={100}></IoImageOutline>
@@ -84,11 +93,18 @@ const PublishPopup: FC<PublishPopupProps> = ({
             >{`${abstract?.length ?? 0}/150`}</div>
           </div>
         </ContainerWithTitle>
-        <div className="mx-8 w-0.5 bg-neutral-300 text-center opacity-50 dark:bg-neutral-500"></div>
+        <div className="mx-8 w-0.5 bg-neutral-300 text-center opacity-50 dark:bg-neutral-500">
+          {/*divider*/}
+        </div>
 
         <div className="flex flex-1 flex-col text-center">
           {isClickedAddToSeries && !isClickedSetCategory && (
-            <AddToSeriesArea className="flex w-full flex-1 flex-col"></AddToSeriesArea>
+            <AddToSeriesArea
+              className="flex min-h-[494px] w-full flex-1 flex-col"
+              selectedSeries={selectedSeries}
+              setSelectedSeries={setSelectedSeries}
+              getOut={getOut}
+            ></AddToSeriesArea>
           )}
           {!isClickedAddToSeries && isClickedSetCategory && (
             <SetCategoryArea className="flex w-full flex-1 flex-col"></SetCategoryArea>
@@ -131,20 +147,51 @@ const PublishPopup: FC<PublishPopupProps> = ({
                 </div>
               </ContainerWithTitle>
               <ContainerWithTitle className="mt-6 w-full" title="시리즈 설정">
-                <button
-                  className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2 text-lg hover:text-point dark:bg-neutral-700"
-                  onClick={() => {
-                    setIsClickedAddToSeries(true);
-                    setIsClickedSetCategory(false);
-                  }}
-                >
-                  <MdOutlinePlaylistAdd className="mr-2" size={iconSize + 4} />
-                  <div>시리즈에 추가하기</div>
-                </button>
+                {selectedSeries ? (
+                  <div className="relative">
+                    <div className="flex w-full rounded-md bg-neutral-200 text-lg dark:bg-neutral-700">
+                      <span className="flex-1 py-2.5 pl-4 text-left">
+                        {selectedSeries}
+                      </span>
+                      <button
+                        className="rounded-md bg-point py-2.5 pl-4 pr-2.5 text-white hover:brightness-90"
+                        onClick={() => {
+                          setIsClickedAddToSeries(true);
+                        }}
+                      >
+                        <MdOutlineEditNote size={iconSize + 6} />
+                      </button>
+                    </div>
+                    <div className="absolute top-[3.1rem] right-0.5">
+                      <button
+                        className="text-sm text-neutral-500 hover:underline hover:underline-offset-auto"
+                        onClick={() => {
+                          setSelectedSeries("");
+                        }}
+                      >
+                        초기화
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2.5 text-lg hover:text-point dark:bg-neutral-700"
+                    onClick={() => {
+                      setIsClickedAddToSeries(true);
+                      setIsClickedSetCategory(false);
+                    }}
+                  >
+                    <MdOutlinePlaylistAdd
+                      className="mr-2"
+                      size={iconSize + 4}
+                    />
+                    <div>시리즈에 추가하기</div>
+                  </button>
+                )}
               </ContainerWithTitle>
               <ContainerWithTitle className="mt-6 w-full" title="카테고리 설정">
                 <button
-                  className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2 text-lg hover:text-point dark:bg-neutral-700"
+                  className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2.5 text-lg hover:text-point dark:bg-neutral-700"
                   onClick={() => {
                     setIsClickedAddToSeries(false);
                     setIsClickedSetCategory(true);
@@ -154,29 +201,32 @@ const PublishPopup: FC<PublishPopupProps> = ({
                   <div>카테고리 설정</div>
                 </button>
               </ContainerWithTitle>
+              <div className="mt-10 flex w-full flex-1 items-end justify-end">
+                <BottomBtn
+                  onClick={() => {
+                    if (isClickedAddToSeries || isClickedSetCategory) {
+                      setIsClickedAddToSeries(false);
+                      setIsClickedSetCategory(false);
+                    } else {
+                      setIsCancel(true);
+                    }
+                  }}
+                >
+                  취소
+                </BottomBtn>
+                <BottomBtn
+                  className="-mr-2"
+                  isPoint={true}
+                  onClick={onClickPublish}
+                >
+                  발행하기
+                </BottomBtn>
+              </div>
             </>
           )}
-          <div className="mt-10 flex w-full justify-end">
-            <BottomBtn
-              onClick={() => {
-                if (isClickedAddToSeries || isClickedSetCategory) {
-                  setIsClickedAddToSeries(false);
-                  setIsClickedSetCategory(false);
-                } else {
-                  setIsCancel(true);
-                }
-              }}
-            >
-              취소
-            </BottomBtn>
-            <BottomBtn className="-mr-2" isPoint={true}>
-              발행하기
-            </BottomBtn>
-          </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default PublishPopup;
