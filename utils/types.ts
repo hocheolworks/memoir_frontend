@@ -10,3 +10,17 @@ export type User = {
 };
 
 export type Children = JSX.Element | JSX.Element[] | string | string[];
+
+export type TreeNodeChild = {
+  id: number;
+  name: string;
+};
+
+export type TreeNodeParent = TreeNodeChild & {
+  children?: TreeNodeChild[];
+};
+
+export type DefaultProps = {
+  className?: string;
+  children?: Children;
+};

@@ -46,7 +46,7 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
     <ContainerWithTitle className={className} title="시리즈 설정">
       <div className="flex flex-1 flex-col rounded-sm">
         <div
-          className={`w-full bg-neutral-200 px-4 py-4 outline-none transition-all duration-300 ease-out dark:bg-neutral-700
+          className={`w-full bg-neutral-200 p-4 outline-none transition-all duration-300 ease-out dark:bg-neutral-700
           ${isFocused ? "h-[9.7rem]" : "h-16"}`}
         >
           <input
