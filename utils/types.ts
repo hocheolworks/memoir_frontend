@@ -14,6 +14,7 @@ export type Children = JSX.Element | JSX.Element[] | string | string[];
 export type TreeNodeChild = {
   id: number;
   name: string;
+  parentName?: string;
 };
 
 export type TreeNodeParent = TreeNodeChild & {
@@ -23,4 +24,11 @@ export type TreeNodeParent = TreeNodeChild & {
 export type DefaultProps = {
   className?: string;
   children?: Children;
+};
+
+export type Category = {
+  id: number;
+  isParent: boolean;
+  depth1: string;
+  depth2: string;
 };

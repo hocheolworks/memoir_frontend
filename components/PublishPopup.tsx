@@ -15,6 +15,7 @@ import BottomBtn from "./BottomBtn";
 import ContainerWithTitle from "./ContainerWithTitle";
 import AddToSeriesArea from "./AddToSeriesArea";
 import SetCategoryArea from "./SetCategoryArea";
+import { TreeNodeChild, TreeNodeParent } from "../utils/types";
 
 // TODO: (적용완료) 라이트모드 적용
 // TODO: (적용완료) refactoring
@@ -33,6 +34,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   Popdown,
 }) => {
   const iconSize = 22;
+
   const user = useSelector(selectAuthUser);
 
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
@@ -45,6 +47,9 @@ const PublishPopup: FC<PublishPopupProps> = ({
     useState<boolean>(false);
 
   const [selectedSeries, setSelectedSeries] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<
+    TreeNodeParent | TreeNodeChild | null
+  >(null);
 
   const onClickPublish = () => {};
 
@@ -110,6 +115,8 @@ const PublishPopup: FC<PublishPopupProps> = ({
             <SetCategoryArea
               className="flex min-h-[494px] w-full flex-1 flex-col"
               getOut={getOut}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
             ></SetCategoryArea>
           )}
           {!isClickedAddToSeries && !isClickedSetCategory && (
@@ -151,16 +158,46 @@ const PublishPopup: FC<PublishPopupProps> = ({
               </ContainerWithTitle>
 
               <ContainerWithTitle className="mt-6 w-full" title="카테고리 설정">
-                <button
-                  className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2.5 text-lg hover:text-point dark:bg-neutral-700"
-                  onClick={() => {
-                    setIsClickedAddToSeries(false);
-                    setIsClickedSetCategory(true);
-                  }}
-                >
-                  <MdOutlineAccountTree className="mr-2" size={iconSize} />
-                  <div>카테고리 설정</div>
-                </button>
+                {selectedCategory ? (
+                  <div className="relative">
+                    <div className="flex w-full rounded-md bg-neutral-200 text-lg dark:bg-neutral-700">
+                      <span className="flex-1 py-2.5 pl-4 text-left">
+                        {(selectedCategory.parentName
+                          ? selectedCategory.parentName + "/"
+                          : "") + selectedCategory.name}
+                      </span>
+                      <button
+                        className="rounded-md bg-point py-2.5 pl-4 pr-2.5 text-white hover:brightness-90"
+                        onClick={() => {
+                          setIsClickedSetCategory(true);
+                        }}
+                      >
+                        <MdOutlineEditNote size={iconSize + 6} />
+                      </button>
+                    </div>
+                    <div className="absolute top-[3.1rem] right-0.5">
+                      <button
+                        className="text-sm text-neutral-500 hover:underline hover:underline-offset-auto"
+                        onClick={() => {
+                          setSelectedCategory(null);
+                        }}
+                      >
+                        초기화
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    className="flex w-full items-center justify-center rounded-md bg-neutral-200 py-2.5 text-lg hover:text-point dark:bg-neutral-700"
+                    onClick={() => {
+                      setIsClickedAddToSeries(false);
+                      setIsClickedSetCategory(true);
+                    }}
+                  >
+                    <MdOutlineAccountTree className="mr-2" size={iconSize} />
+                    <div>카테고리 설정</div>
+                  </button>
+                )}
               </ContainerWithTitle>
               <ContainerWithTitle className="mt-6 w-full" title="시리즈 설정">
                 {selectedSeries ? (

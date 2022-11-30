@@ -46,7 +46,7 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
     <ContainerWithTitle className={className} title="시리즈 설정">
       <div className="flex flex-1 flex-col rounded-sm">
         <div
-          className={`w-full bg-neutral-200 p-4 outline-none transition-all duration-300 ease-out dark:bg-neutral-700
+          className={`w-full rounded-t-sm bg-neutral-200 p-4 outline-none transition-all duration-300 ease-out dark:bg-neutral-700
           ${isFocused ? "h-[9.7rem]" : "h-16"}`}
         >
           <input
@@ -107,15 +107,16 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
             </div>
           )}
         </div>
-        <ul className="h-[295px] resize-none overflow-y-auto bg-neutral-200 dark:bg-neutral-700">
-          {existingSeries.map((value) => (
+        <ul className="h-[295px] resize-none overflow-y-auto rounded-b-sm bg-neutral-200 dark:bg-neutral-700">
+          {existingSeries.map((value, idx) => (
             <li
-              className={`border-b-[1px] border-neutral-50 py-3.5 px-4 text-left text-sm dark:border-neutral-500${
+              className={`cursor-pointer border-b-[1px] border-neutral-50 py-3.5 px-4 text-left text-sm dark:border-neutral-500${
                 value === clickedSeries
                   ? " bg-point text-white brightness-95"
-                  : ""
+                  : " hover:bg-neutral-300 dark:hover:bg-neutral-600"
               }`}
               onClick={() => setClickedSeries(value)}
+              key={`series#${idx}`}
             >
               {value}
             </li>
@@ -130,6 +131,7 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
               setSelectedSeries(clickedSeries);
               getOut();
             }}
+            isDisabled={!Boolean(clickedSeries)}
           >
             선택하기
           </BottomBtn>
