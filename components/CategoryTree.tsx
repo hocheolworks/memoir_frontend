@@ -26,7 +26,7 @@ const CategoryTree: FC<CategoryTreeProps> = ({
 
   return (
     <div className={className}>
-      <div className="absolute top-0 right-4 z-10 flex justify-end py-[7px] pl-3.5 zero:left-[239px] lg:left-[270px]">
+      <div className="absolute top-0 right-4 z-10 flex justify-end py-[7px] pl-3.5 zero:left-[239px] zero:right-auto lg:left-[270px] lg:right-auto">
         <button
           className="rounded-sm p-1 brightness-75 hover:brightness-100"
           onClick={() => {
