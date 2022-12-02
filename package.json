@@ -26,7 +26,8 @@
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
-    "vm2": "^3.9.11"
+    "vm2": "^3.9.11",
+    "loader-utils": "^2.0.4"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
