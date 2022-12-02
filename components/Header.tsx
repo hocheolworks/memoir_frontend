@@ -3,8 +3,9 @@ import Link from "next/link";
 import React, { FC, useEffect, useState } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
-import { FaMoon, FaSearch } from "react-icons/fa";
-import { GoTriangleDown } from "react-icons/go";
+import { FaMoon } from "@react-icons/all-files/fa/FaMoon";
+import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
+import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
 import LabelBtn from "./LabelBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -50,8 +51,8 @@ const Header: FC<HeaderPropType> = ({ className }) => {
 
   return (
     <div className={"relative" + (className ? ` ${className}` : "")}>
-      <div className="flex justify-between h-16">
-        <div id="header-left" className="flex items-center flex-none">
+      <div className="flex h-16 justify-between">
+        <div id="header-left" className="flex flex-none items-center">
           <Link href={"/"}>
             <a>
               <Image
@@ -64,7 +65,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
             </a>
           </Link>
         </div>
-        <div id="header-right" className="flex items-center flex-none">
+        <div id="header-right" className="flex flex-none items-center">
           <IconBtn
             className="mr-2"
             onClick={brightModeBtnClick}
@@ -82,7 +83,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
               <Link href="/write">
                 <a>
                   <LabelBtn
-                    className="hidden mr-2 first:block"
+                    className="mr-2 hidden first:block"
                     label="글쓰기"
                   />
                 </a>
@@ -92,7 +93,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
                 alt={user.githubId as string}
                 width={"100%"}
                 height={"100%"}
-                className="w-10 h-10 mr-2"
+                className="mr-2 h-10 w-10"
               />
               <IconBtn
                 Icon={GoTriangleDown}

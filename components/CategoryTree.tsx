@@ -6,7 +6,8 @@ import {
   TreeNodeParent,
 } from "../utils/types";
 import CategoryTreeNode from "./CategoryTreeNode";
-import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
+import { VscExpandAll } from "@react-icons/all-files/vsc/VscExpandAll";
+import { VscCollapseAll } from "@react-icons/all-files/vsc/VscCollapseAll";
 
 type CategoryTreeProps = DefaultProps & {
   tree: TreeNodeParent[];

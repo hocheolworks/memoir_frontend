@@ -1,14 +1,13 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
-import {
-  MdOutlinePublic,
-  MdLockOutline,
-  MdOutlinePlaylistAdd,
-  MdOutlineAccountTree,
-  MdOutlineEditNote,
-} from "react-icons/md";
+import { BiEdit } from "@react-icons/all-files/bi/BiEdit";
 
-import { IoImageOutline } from "react-icons/io5";
+import { MdLockOutline } from "@react-icons/all-files/md/MdLockOutline";
+import { MdPublic } from "@react-icons/all-files/md/MdPublic";
+import { MdPlaylistAdd } from "@react-icons/all-files/md/MdPlaylistAdd";
+
+import { VscListTree } from "@react-icons/all-files/vsc/VscListTree";
+import { IoImageOutline } from "@react-icons/all-files/io5/IoImageOutline";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../redux/modules/authSlice";
 import BottomBtn from "./BottomBtn";
@@ -128,7 +127,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                     onClick={() => {
                       setIsPrivate(false);
                     }}
-                    Icon={MdOutlinePublic}
+                    Icon={MdPublic}
                     iconSize={iconSize}
                     label="전체 공개"
                   ></ToggleBtn>
@@ -167,12 +166,12 @@ const PublishPopup: FC<PublishPopupProps> = ({
                           : "") + selectedCategory.name}
                       </span>
                       <button
-                        className="rounded-md bg-point py-2.5 pl-4 pr-2.5 text-white hover:brightness-90"
+                        className="rounded-md bg-point py-2.5 px-3 text-white hover:brightness-90"
                         onClick={() => {
                           setIsClickedSetCategory(true);
                         }}
                       >
-                        <MdOutlineEditNote size={iconSize + 6} />
+                        <BiEdit size={iconSize + 2} />
                       </button>
                     </div>
                     {/* <div className="absolute top-[3.1rem] right-0.5">
@@ -194,7 +193,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                       setIsClickedSetCategory(true);
                     }}
                   >
-                    <MdOutlineAccountTree className="mr-2" size={iconSize} />
+                    <VscListTree className="mr-2" size={iconSize} />
                     <div>카테고리 설정</div>
                   </button>
                 )}
@@ -207,12 +206,12 @@ const PublishPopup: FC<PublishPopupProps> = ({
                         {selectedSeries}
                       </span>
                       <button
-                        className="rounded-md bg-point py-2.5 pl-4 pr-2.5 text-white hover:brightness-90"
+                        className="rounded-md bg-point py-2.5 px-3 text-white hover:brightness-90"
                         onClick={() => {
                           setIsClickedAddToSeries(true);
                         }}
                       >
-                        <MdOutlineEditNote size={iconSize + 6} />
+                        <BiEdit size={iconSize + 2} />
                       </button>
                     </div>
                     <div className="absolute top-[3.1rem] right-0.5">
@@ -234,10 +233,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                       setIsClickedSetCategory(false);
                     }}
                   >
-                    <MdOutlinePlaylistAdd
-                      className="mr-2"
-                      size={iconSize + 4}
-                    />
+                    <MdPlaylistAdd className="mr-2" size={iconSize + 4} />
                     <div>시리즈에 추가</div>
                   </button>
                 )}

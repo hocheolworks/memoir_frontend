@@ -62,6 +62,7 @@ const Markdown = dynamic(
 const ForwardRefMarkdown = forwardRef<MarkdownPreviewRef, MarkdownPreviewProps>(
   (props, ref) => <Markdown {...props} markdownRef={ref} />
 );
+ForwardRefMarkdown.displayName = "ForwardRefMarkdown";
 
 const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();

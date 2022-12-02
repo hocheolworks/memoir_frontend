@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import BottomBtn from "./BottomBtn";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft } from "@react-icons/all-files/ai/AiOutlineArrowLeft";
 
 type BottomBarPropType = {
   className?: string;

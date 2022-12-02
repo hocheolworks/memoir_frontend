@@ -5,7 +5,7 @@ import {
   TreeNodeChild,
   TreeNodeParent,
 } from "../utils/types";
-import { MdExpandMore } from "react-icons/md";
+import { MdExpandMore } from "@react-icons/all-files/md/MdExpandMore";
 
 type CategoryTreeNodeProps = DefaultProps & {
   node: TreeNodeParent;

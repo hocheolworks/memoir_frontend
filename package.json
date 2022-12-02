@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@types/react-icons": "^3.0.0",
     "@types/redux": "^3.6.0",
@@ -30,6 +31,7 @@
     "vm2": "^3.9.11"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^13.0.6",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
