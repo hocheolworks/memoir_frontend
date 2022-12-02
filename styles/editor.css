@@ -34,6 +34,7 @@
 
 .wmde-edit textarea::placeholder {
   font-style: italic;
+  font-size: 22px;
 }
 
 .wmde-preview ul {

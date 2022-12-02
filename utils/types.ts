@@ -32,3 +32,7 @@ export type Category = {
   depth1: string;
   depth2: string;
 };
+
+export type IsAllExpandedWrapper = {
+  value: boolean;
+};

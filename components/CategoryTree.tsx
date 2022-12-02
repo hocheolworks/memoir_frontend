@@ -1,30 +1,69 @@
-import { FC, useState } from "react";
-import { DefaultProps, TreeNodeChild, TreeNodeParent } from "../utils/types";
+import { FC, useEffect, useState } from "react";
+import {
+  DefaultProps,
+  IsAllExpandedWrapper,
+  TreeNodeChild,
+  TreeNodeParent,
+} from "../utils/types";
 import CategoryTreeNode from "./CategoryTreeNode";
+import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
 
 type CategoryTreeProps = DefaultProps & {
   tree: TreeNodeParent[];
-  selectedCategory: TreeNodeChild | TreeNodeParent | null;
-  setSelectedCategory: (category: TreeNodeParent | TreeNodeChild) => void;
+  clickedCategory: TreeNodeChild | TreeNodeParent | null;
+  setClickedCategory: (category: TreeNodeParent | TreeNodeChild) => void;
 };
 
 const CategoryTree: FC<CategoryTreeProps> = ({
   className,
   tree,
-  selectedCategory,
-  setSelectedCategory,
+  clickedCategory,
+  setClickedCategory,
 }) => {
+  const [isAllExpanded, setIsAllExpanded] = useState<IsAllExpandedWrapper>({
+    value: true,
+  });
+
   return (
-    <ul className={className}>
-      {tree.map((value, idx) => (
+    <div className={className}>
+      <div className="absolute top-0 right-4 z-10 flex justify-end py-[7px] pl-3.5 zero:left-[239px] lg:left-[270px]">
+        <button
+          className="rounded-sm p-1 brightness-75 hover:brightness-100"
+          onClick={() => {
+            setIsAllExpanded({ value: true });
+          }}
+        >
+          <VscExpandAll size={18} />
+        </button>
+        <button
+          className="rounded-sm p-1 brightness-75 hover:brightness-100"
+          onClick={() => {
+            setIsAllExpanded({ value: false });
+          }}
+        >
+          <VscCollapseAll size={18} />
+        </button>
+      </div>
+      <ul>
         <CategoryTreeNode
-          className=""
-          node={value}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
-      ))}
-    </ul>
+          node={{ id: -1, name: "전체" }}
+          clickedCategory={clickedCategory}
+          setClickedCategory={setClickedCategory}
+          isAllExpandedWrapper={isAllExpanded}
+          key="RootNode"
+        ></CategoryTreeNode>
+        {tree.map((value, idx) => (
+          <CategoryTreeNode
+            className=""
+            node={value}
+            clickedCategory={clickedCategory}
+            setClickedCategory={setClickedCategory}
+            isAllExpandedWrapper={isAllExpanded}
+            key={`CategoryTreeNode#${idx}`}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

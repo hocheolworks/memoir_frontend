@@ -49,7 +49,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const [selectedSeries, setSelectedSeries] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<
     TreeNodeParent | TreeNodeChild | null
-  >(null);
+  >({ id: -1, name: "전체" });
 
   const onClickPublish = () => {};
 
@@ -175,7 +175,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                         <MdOutlineEditNote size={iconSize + 6} />
                       </button>
                     </div>
-                    <div className="absolute top-[3.1rem] right-0.5">
+                    {/* <div className="absolute top-[3.1rem] right-0.5">
                       <button
                         className="text-sm text-neutral-500 hover:underline hover:underline-offset-auto"
                         onClick={() => {
@@ -184,7 +184,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                       >
                         초기화
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 ) : (
                   <button

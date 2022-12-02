@@ -1,8 +1,40 @@
 import React, { FC, useState } from "react";
-import { TreeNodeChild, TreeNodeParent } from "../utils/types";
+import { DefaultProps, TreeNodeChild, TreeNodeParent } from "../utils/types";
 import BottomBtn from "./BottomBtn";
 import CategoryTree from "./CategoryTree";
 import ContainerWithTitle from "./ContainerWithTitle";
+
+type SmallBtnProps = DefaultProps & {
+  onClick: () => void;
+  isDisabled?: boolean;
+  isPoint?: boolean;
+};
+
+const SmallBtn: FC<SmallBtnProps> = ({
+  className,
+  onClick,
+  isDisabled = false,
+  children,
+  isPoint = false,
+}) => {
+  return (
+    <div className={className}>
+      <button
+        className={`rounded-md py-1 px-2.5 ${
+          isDisabled
+            ? "cursor-not-allowed bg-neutral-500"
+            : isPoint
+            ? " bg-point text-white hover:brightness-95"
+            : "hover:bg-neutral-600"
+        }`}
+        onClick={onClick}
+        disabled={isDisabled}
+      >
+        {children}
+      </button>
+    </div>
+  );
+};
 
 type SetCategoryAreaProps = {
   className?: string;
@@ -50,20 +82,73 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
     TreeNodeParent | TreeNodeChild | null
   >(selectedCategory);
 
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isCancelClicked, setIsCancelClicked] = useState<boolean>(false);
+
+  const onClickAddCategory = () => {
+    // 시리즈 추가 api 호출
+  };
+
   return (
     <ContainerWithTitle className={className} title="카테고리 설정">
       <div className="flex flex-1 flex-col rounded-sm">
-        <div className="w-full rounded-t-sm bg-neutral-200 p-4 dark:bg-neutral-700">
+        <div
+          className={`w-full rounded-t-sm bg-neutral-200 p-4 transition-[height] duration-300 ease-out dark:bg-neutral-700${
+            isFocused ? " h-[6.3rem]" : " h-16"
+          }`}
+        >
           <input
             className="w-full bg-neutral-100 py-1 px-2 outline-none dark:bg-neutral-800"
             placeholder="새로운 카테고리를 입력하세요."
+            onFocus={() => {
+              setIsFocused(true);
+            }}
           />
+          {isFocused && (
+            <div
+              className={`${
+                isCancelClicked ? "animate-fade-out" : "animate-fade-in"
+              }`}
+              onAnimationEnd={() => {
+                if (isCancelClicked) {
+                  setIsCancelClicked(false);
+                  setIsFocused(false);
+                }
+              }}
+            >
+              <div className="mt-2 flex items-center justify-end">
+                <SmallBtn
+                  isPoint
+                  className="mr-2"
+                  onClick={() => {}}
+                  isDisabled={clickedCategory === null}
+                >
+                  추가
+                </SmallBtn>
+                <SmallBtn
+                  isPoint
+                  className="mr-2"
+                  onClick={() => {}}
+                  isDisabled={clickedCategory === null}
+                >
+                  삭제
+                </SmallBtn>
+                <SmallBtn
+                  onClick={() => {
+                    setIsCancelClicked(true);
+                  }}
+                >
+                  취소
+                </SmallBtn>
+              </div>
+            </div>
+          )}
         </div>
         <CategoryTree
-          className="h-[295px] w-full resize-none overflow-y-auto rounded-b-sm bg-neutral-200 dark:bg-neutral-700"
+          className="relative h-[295px] w-full resize-none overflow-y-auto rounded-b-sm bg-neutral-200 dark:bg-neutral-700"
           tree={dummyTree}
-          selectedCategory={clickedCategory}
-          setSelectedCategory={setClickedCategory}
+          clickedCategory={clickedCategory}
+          setClickedCategory={setClickedCategory}
         ></CategoryTree>
         <div className="mt-[43px] flex w-full items-end justify-end">
           <BottomBtn onClick={getOut}>취소</BottomBtn>

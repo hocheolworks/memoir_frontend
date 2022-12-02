@@ -141,7 +141,7 @@ const Write: NextPageWithLayout = () => {
           <div className="bg-white dark:bg-black">
             <textarea
               ref={textareaRef}
-              className="h-[52px] w-full resize-none overflow-hidden break-words bg-white text-5xl font-bold outline-none dark:bg-black"
+              className="h-[52px] w-full resize-none overflow-hidden break-words bg-white text-5xl font-bold outline-none placeholder:text-5xl dark:bg-black"
               placeholder="제목을 입력하세요"
               value={title}
               onChange={(e) => {
