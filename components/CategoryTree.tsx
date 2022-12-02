@@ -29,7 +29,7 @@ const CategoryTree: FC<CategoryTreeProps> = ({
     <div className={className}>
       <div className="absolute top-0 right-4 z-10 flex justify-end py-[7px] pl-3.5 zero:left-[239px] zero:right-auto lg:left-[270px] lg:right-auto">
         <button
-          className="rounded-sm p-1 brightness-75 hover:brightness-100"
+          className="rounded-sm p-1 text-white brightness-75 hover:brightness-100"
           onClick={() => {
             setIsAllExpanded({ value: true });
           }}
@@ -37,7 +37,7 @@ const CategoryTree: FC<CategoryTreeProps> = ({
           <VscExpandAll size={18} />
         </button>
         <button
-          className="rounded-sm p-1 brightness-75 hover:brightness-100"
+          className="rounded-sm p-1 text-white brightness-75 hover:brightness-100"
           onClick={() => {
             setIsAllExpanded({ value: false });
           }}

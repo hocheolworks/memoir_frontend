@@ -49,7 +49,7 @@ const CategoryTreeNode: FC<CategoryTreeNodeProps> = ({
         className={`flex w-full cursor-pointer items-center px-3 py-2.5${
           isSelected(node, clickedCategory)
             ? " bg-point text-white brightness-95"
-            : " text-neutral-400 hover:bg-neutral-300 dark:hover:bg-neutral-600"
+            : " text-neutral-500 hover:bg-neutral-300 dark:text-neutral-400 dark:hover:bg-neutral-600"
         }`}
         onClick={() => {
           setClickedCategory(node);
@@ -103,7 +103,7 @@ const CategoryTreeNode: FC<CategoryTreeNodeProps> = ({
               className={`cursor-pointer py-2.5 px-8 text-left text-sm${
                 isSelected(value, clickedCategory)
                   ? " bg-point font-medium text-white brightness-95"
-                  : " text-neutral-500 hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                  : " text-neutral-400 hover:bg-neutral-300 dark:text-neutral-500 dark:hover:bg-neutral-600"
               }`}
               key={`childNode#${value.id}`}
               onClick={() => setClickedCategory(value)}
