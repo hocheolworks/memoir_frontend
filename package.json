@@ -15,8 +15,6 @@
     "@types/redux-persist": "^4.3.1",
     "@uiw/react-md-editor": "^3.18.1",
     "axios": "^0.27.2",
-    "babel-loader": "^9.1.0",
-    "loader-utils": "^2.0.4",
     "next": "12.2.5",
     "next-redux-wrapper": "^7.0.5",
     "next-remove-imports": "^1.0.7",
