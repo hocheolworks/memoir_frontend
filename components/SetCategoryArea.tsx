@@ -75,7 +75,7 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
         { id: 1007, name: "MySQL", parentName: "DB" },
       ],
     },
-    { id: 4, name: "Network" },
+    { id: 4, name: "Network", children: [] },
   ];
 
   const [clickedCategory, setClickedCategory] = useState<
@@ -85,8 +85,80 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isCancelClicked, setIsCancelClicked] = useState<boolean>(false);
 
+  const [newCategory, setNewCategory] = useState<string>("");
+
+  const [categoryTree, setCategoryTree] = useState<TreeNodeParent[]>(dummyTree);
+
   const onClickAddCategory = () => {
-    // 시리즈 추가 api 호출
+    if (!clickedCategory || !newCategory) return;
+
+    // 현재 선택된 카테고리가 ~일 경우
+    if (clickedCategory.id === -1) {
+      // 전체
+      setCategoryTree([...categoryTree, { id: -11, name: newCategory }]);
+    } else if (clickedCategory.parentName === undefined) {
+      // 부모
+      let flag = false;
+      const newCategoryTree = [...categoryTree];
+      for (const node of newCategoryTree) {
+        if (node.id === clickedCategory.id) {
+          if (node.children) {
+            node.children.push({
+              id: -11,
+              name: newCategory,
+              parentName: clickedCategory.name,
+            });
+          } else {
+            node.children = [{ id: -11, name: newCategory }];
+          }
+
+          flag = true;
+          break;
+        }
+        if (flag) setCategoryTree(newCategoryTree);
+      }
+    } else {
+      // 자식
+    }
+
+    setNewCategory("");
+  };
+
+  const onClickDeleteCategory = () => {
+    if (!clickedCategory) return;
+
+    if (clickedCategory.id !== -11) return;
+
+    if (!clickedCategory.parentName) {
+      // 선택된 카테고리가 부모노드인 경우
+      setClickedCategory({ id: -1, name: "전체" });
+      setCategoryTree(
+        categoryTree.filter(
+          (value) =>
+            value.id !== clickedCategory.id ||
+            value.name !== clickedCategory.name
+        )
+      );
+    } else {
+      // 선택된 카테고리가 자식노드인 경우
+      const newCategoryTree = [...categoryTree];
+      let parentNode = null;
+      for (const node of newCategoryTree) {
+        if (node.name === clickedCategory.parentName) {
+          parentNode = node;
+          if (node.children) {
+            node.children = node.children.filter(
+              (value) =>
+                value.id !== clickedCategory.id ||
+                value.name !== clickedCategory.name ||
+                value.parentName !== clickedCategory.parentName
+            );
+          }
+        }
+      }
+      setClickedCategory(parentNode);
+      setCategoryTree(newCategoryTree);
+    }
   };
 
   return (
@@ -103,6 +175,8 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
             onFocus={() => {
               setIsFocused(true);
             }}
+            onChange={({ target: { value } }) => setNewCategory(value)}
+            value={newCategory}
           />
           {isFocused && (
             <div
@@ -116,23 +190,35 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
                 }
               }}
             >
-              <div className="mt-2 flex items-center justify-end">
-                <SmallBtn
-                  isPoint
-                  className="mr-2"
-                  onClick={() => {}}
-                  isDisabled={clickedCategory === null}
-                >
-                  추가
-                </SmallBtn>
-                <SmallBtn
-                  isPoint
-                  className="mr-2"
-                  onClick={() => {}}
-                  isDisabled={clickedCategory === null}
-                >
-                  삭제
-                </SmallBtn>
+              <div className="mt-2 flex items-center justify-between">
+                <div className="flex items-center justify-start">
+                  <SmallBtn
+                    isPoint
+                    className="mr-2"
+                    onClick={() => {
+                      onClickAddCategory();
+                    }}
+                    isDisabled={
+                      !newCategory ||
+                      clickedCategory === null ||
+                      clickedCategory.parentName !== undefined
+                    }
+                  >
+                    추가
+                  </SmallBtn>
+                  <SmallBtn
+                    isPoint
+                    className="mr-2"
+                    onClick={() => {
+                      onClickDeleteCategory();
+                    }}
+                    isDisabled={
+                      clickedCategory === null || clickedCategory?.id !== -11
+                    }
+                  >
+                    삭제
+                  </SmallBtn>
+                </div>
                 <SmallBtn
                   onClick={() => {
                     setIsCancelClicked(true);
@@ -146,7 +232,7 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
         </div>
         <CategoryTree
           className="relative h-[295px] w-full resize-none overflow-y-auto rounded-b-sm bg-neutral-200 dark:bg-neutral-700"
-          tree={dummyTree}
+          tree={categoryTree}
           clickedCategory={clickedCategory}
           setClickedCategory={setClickedCategory}
         ></CategoryTree>

@@ -6,6 +6,7 @@ import {
   TreeNodeParent,
 } from "../utils/types";
 import { MdExpandMore } from "@react-icons/all-files/md/MdExpandMore";
+import { FaStarOfLife } from "@react-icons/all-files/fa/FaStarOfLife";
 
 type CategoryTreeNodeProps = DefaultProps & {
   node: TreeNodeParent;
@@ -69,38 +70,19 @@ const CategoryTreeNode: FC<CategoryTreeNodeProps> = ({
           </button>
         )}
         <div
-          className={`font-semibold${node.id === -1 ? " flex-1 pl-1.5" : ""}`}
+          className={`flex items-center font-semibold${
+            node.id === -1 ? " flex-1 pl-1.5" : ""
+          }`}
         >
           {node.name}
+          {node.id === -11 && <FaStarOfLife className="ml-2" size={8} />}
         </div>
-        {/* {node.id === -1 && (
-          <div className="flex flex-1 justify-end pl-3.5">
-            <button
-              className="mr-2 rounded-sm brightness-75 hover:brightness-110"
-              onClick={(e) => {
-                e.stopPropagation();
-                console.log("expand");
-              }}
-            >
-              <VscExpandAll size={18} />
-            </button>
-            <button
-              className="rounded-sm brightness-75 hover:brightness-110"
-              onClick={(e) => {
-                e.stopPropagation();
-                console.log("collapse");
-              }}
-            >
-              <VscCollapseAll size={18} />
-            </button>
-          </div>
-        )} */}
       </div>
       {isExpanded && (
         <ul className="w-full overflow-y-auto bg-neutral-200 dark:bg-neutral-700">
           {node.children?.map((value) => (
             <li
-              className={`cursor-pointer py-2.5 px-8 text-left text-sm${
+              className={`flex cursor-pointer items-center py-2.5 px-8 text-left text-sm${
                 isSelected(value, clickedCategory)
                   ? " bg-point font-medium text-white brightness-95"
                   : " text-neutral-400 hover:bg-neutral-300 dark:text-neutral-500 dark:hover:bg-neutral-600"
@@ -108,7 +90,8 @@ const CategoryTreeNode: FC<CategoryTreeNodeProps> = ({
               key={`childNode#${value.id}`}
               onClick={() => setClickedCategory(value)}
             >
-              ㄴ {value.name}
+              ㄴ {value.name}{" "}
+              {value.id === -11 && <FaStarOfLife className="ml-2" size={8} />}
             </li>
           ))}
         </ul>

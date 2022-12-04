@@ -33,7 +33,6 @@ export const titleN = (N: number): ICommand => {
           <button
             style={{ fontSize: getFontSize(N), textAlign: "left" }}
             onClick={(e) => {
-              e.stopPropagation();
               executeCommand(command, command.groupName);
             }}
           >{`Title ${N}`}</button>
