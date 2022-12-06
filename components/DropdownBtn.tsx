@@ -20,12 +20,12 @@ const DropdownBtn = ({
   return (
     <div
       className={
-        "bg-gray-200 text-black hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600" +
+        "bg-gray-200 text-black hover:bg-gray-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600" +
         (className ? ` ${className}` : "")
       }
     >
       <button
-        className="w-full h-10 pl-3 text-base text-left"
+        className="h-10 w-full pl-3 text-left text-base"
         onMouseDown={() => {
           router.push(link);
           if (onClick) {
