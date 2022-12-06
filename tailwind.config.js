@@ -24,6 +24,9 @@ module.exports = {
         second: "1440px", // 1376px
         third: "1920px", // 1728px
       },
+      fontFamily: {
+        // helsinki: src
+      },
       animation: {
         "slide-down":
           "slide-down 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",

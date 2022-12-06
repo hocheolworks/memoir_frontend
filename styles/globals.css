@@ -27,6 +27,14 @@ a {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "helsinki";
+  src: url("../public/font/helsinki-webfont.woff");
+}
+
+.font-helsinki {
+  font-family: "helsinki";
+}
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
