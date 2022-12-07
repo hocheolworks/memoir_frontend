@@ -1,7 +1,6 @@
 import { ErrorProps } from "next/error";
 import { NextPageContext } from "next";
 import { getErrorMessage } from "../utils/functions";
-import BottomBtn from "../components/BottomBtn";
 
 const Error = ({ statusCode }: ErrorProps) => {
   const errorMessage = getErrorMessage(statusCode);

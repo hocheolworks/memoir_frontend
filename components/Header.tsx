@@ -117,7 +117,14 @@ const Header: FC<HeaderPropType> = ({ className }) => {
         </div>
       </div>
       <DropdownMenu isVisible={isDropdownMenuVisible}>
-        <DropdownBtn key={"dropdown-btn-me"} link={`/@${user.githubId}`}>
+        <DropdownBtn
+          key={"dropdown-btn-write"}
+          className="block first:hidden"
+          link={`/write`}
+        >
+          글쓰기
+        </DropdownBtn>
+        <DropdownBtn key={"dropdown-btn-me"} link={`/${user.githubId}`}>
           마이 페이지
         </DropdownBtn>
         <DropdownBtn key={"dropdown-btn-temp"} link="/temp">
