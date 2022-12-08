@@ -35,7 +35,7 @@ const LoginDone: FC = () => {
   });
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex h-full w-full items-center justify-center">
       Login Done
     </div>
   );
