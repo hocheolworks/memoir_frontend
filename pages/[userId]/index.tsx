@@ -7,6 +7,7 @@ import { selectAuthUser } from "../../redux/modules/authSlice";
 import Link from "next/link";
 import GithubIcon from "../../public/logo/social/github-mark-white.svg";
 import { User } from "../../utils/types";
+import Image from "next/image";
 
 const index: NextPage = () => {
   const router = useRouter();
@@ -46,11 +47,17 @@ const index: NextPage = () => {
               </Link>
             </div>
           </div>
-          <div
-            id="contribution"
-            className="mt-4 h-[200px] bg-neutral-200 text-black"
-          >
-            잔디영역
+          <div id="contribution" className="mt-4 h-[200px] text-black">
+            <p className="pl-1 text-left text-sm text-black dark:text-white">
+              ?? contributions in the last year
+            </p>
+            <Image
+              height={120}
+              width={768}
+              className="border-[1px] border-neutral-500 bg-black"
+              src={`https://ghchart.rshah.org/904CF9/${user.githubId}`}
+              alt="contribution graph"
+            />
           </div>
         </div>
         <div className="my-4 h-0.5 w-full bg-neutral-500 opacity-50"></div>

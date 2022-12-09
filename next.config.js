@@ -26,7 +26,9 @@ const nextConfig = {
   },
   swcMinify: true,
   images: {
-    domains: ["avatars.githubusercontent.com"],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    domains: ["avatars.githubusercontent.com", "ghchart.rshah.org"],
   },
   env: {
     BASE_URL: process.env.BASE_URL,
