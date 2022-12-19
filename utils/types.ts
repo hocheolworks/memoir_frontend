@@ -36,3 +36,9 @@ export type Category = {
 export type IsAllExpandedWrapper = {
   value: boolean;
 };
+
+export type ContributionTile = {
+  count: number;
+  level: number;
+  date: Date;
+};

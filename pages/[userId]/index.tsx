@@ -8,6 +8,7 @@ import Link from "next/link";
 import GithubIcon from "../../public/logo/social/github-mark-white.svg";
 import { User } from "../../utils/types";
 import Image from "next/image";
+import ContributionGraph from "../../components/ContributionGraph/ContributionGraph";
 
 const index: NextPage = () => {
   const router = useRouter();
@@ -51,13 +52,14 @@ const index: NextPage = () => {
             <p className="pl-1 text-left text-sm text-black dark:text-white">
               ?? contributions in the last year
             </p>
-            <Image
+            {/* <Image
               height={120}
               width={768}
               className="border-[1px] border-neutral-500 bg-black"
               src={`https://ghchart.rshah.org/904CF9/${user.githubId}`}
               alt="contribution graph"
-            />
+            /> */}
+            <ContributionGraph width={823} height={128} />
           </div>
         </div>
         <div className="my-4 h-0.5 w-full bg-neutral-500 opacity-50"></div>

@@ -1,3 +1,5 @@
+import { ContributionTile } from "./types";
+
 export function ValidateEmail(mail: string): boolean {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
@@ -22,4 +24,26 @@ export const getErrorMessage = (statusCode: number) => {
     default:
       return "이게 머선129";
   }
+};
+
+export const getRandomArbitrary = (min: number, max: number) => {
+  // min보다 크거나 같으며 max보다 작은 난수
+  return Math.random() * (max - min) + min;
+};
+
+export const dateForYear = (year: number) => {
+  const result: ContributionTile[][] = Array(53).fill(
+    Array(7)
+      .fill(0)
+      .map((value, index) => value + index)
+  );
+
+  const date365: Date[] = Array(365)
+    .fill(null)
+    .map((value, index) => {
+      const newDate = new Date(year, 0, 1);
+      newDate.setDate(newDate.getDate() + index);
+      console.log(newDate.toDateString());
+      return newDate;
+    });
 };
