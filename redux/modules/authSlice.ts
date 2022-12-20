@@ -21,7 +21,7 @@ const initialState: AuthState = {
           isMember: true,
           description: "내가 제일 짱",
           location: "꼬레아",
-          githubAccessToken: "tokenblahblah",
+          githubAccessToken: "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", //expire on Tue, Dec 27 2022.
           memoirAccessToken: "tokenmemoirmemoir",
         }
       : {},

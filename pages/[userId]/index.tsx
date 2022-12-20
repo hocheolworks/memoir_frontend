@@ -49,9 +49,6 @@ const index: NextPage = () => {
             </div>
           </div>
           <div id="contribution" className="mt-4 h-[200px] text-black">
-            <p className="pl-1 text-left text-sm text-black dark:text-white">
-              ?? contributions in the last year
-            </p>
             {/* <Image
               height={120}
               width={768}

@@ -7,7 +7,7 @@ type RectProps = {
   date: string;
   count: number;
   level: number;
-  setData: (date: string, count: number) => void;
+  setData: (x: number, y: number, date: string, count: number) => void;
 };
 
 const Rect: FC<RectProps> = memo(
@@ -31,7 +31,7 @@ const Rect: FC<RectProps> = memo(
       <rect
         className={getLevelColor(level)}
         onMouseOver={() => {
-          setData(date, count);
+          setData(x, y, date, count);
         }}
         width={size}
         height={size}

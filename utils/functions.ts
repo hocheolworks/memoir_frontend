@@ -1,4 +1,4 @@
-import { ContributionTile } from "./types";
+import { ContributionLevel, ContributionTile } from "./types";
 
 export function ValidateEmail(mail: string): boolean {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -62,4 +62,19 @@ export const dateForYear = (year: number) => {
       // );
       return newDate;
     });
+};
+
+export const parseLevel = (level: ContributionLevel): number => {
+  switch (level) {
+    case "FIRST_QUARTILE":
+      return 1;
+    case "SECOND_QUARTILE":
+      return 2;
+    case "THIRD_QUARTILE":
+      return 3;
+    case "FOURTH_QUARTILE":
+      return 4;
+    default:
+      return 0;
+  }
 };

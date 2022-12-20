@@ -42,3 +42,26 @@ export type ContributionTile = {
   level: number;
   date: Date;
 };
+
+export type ContributionLevel =
+  | "NONE"
+  | "FIRST_QUARTILE"
+  | "SECOND_QUARTILE"
+  | "THIRD_QUARTILE"
+  | "FOURTH_QUARTILE";
+
+export type ContributionCalendarDay = {
+  contributionCount: number;
+  contributionLevel: ContributionLevel;
+  date: string;
+  weekday: number;
+};
+
+export type ContributionCalendarWeek = {
+  contributionDays: ContributionCalendarDay[];
+};
+
+export type ContributionCalendar = {
+  totalContributions: number;
+  weeks: ContributionCalendarWeek[];
+};

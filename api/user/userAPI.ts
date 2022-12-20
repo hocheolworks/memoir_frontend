@@ -31,6 +31,38 @@ const UserAPI = {
       }
     );
   },
+
+  getContributionData: (token: string, username: string, year: number) => {
+    const query = `query {
+      user(login: "${username}") {
+        contributionsCollection(from: "${year}-01-01T00:00:00" , to:"${year}-12-31T23:59:59") {
+            contributionCalendar {
+                totalContributions
+                weeks {
+                    contributionDays {
+                        contributionCount
+                        contributionLevel
+                        date
+                        weekday
+                    }
+                }
+            }
+        }
+      }
+    }`;
+
+    return axios.post(
+      "https://api.github.com/graphql",
+      JSON.stringify({
+        query,
+      }),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  },
 };
 
 export default UserAPI;
