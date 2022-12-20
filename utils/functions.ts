@@ -28,7 +28,17 @@ export const getErrorMessage = (statusCode: number) => {
 
 export const getRandomArbitrary = (min: number, max: number) => {
   // min보다 크거나 같으며 max보다 작은 난수
-  return Math.random() * (max - min) + min;
+  return Math.round(Math.random() * (max - min) + min);
+};
+
+export const getWeekNumber = (date: Date) => {
+  const startDate = new Date(date.getFullYear(), 0, 1);
+  const days = Math.floor(
+    (date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000)
+  );
+  const weekNumber = Math.ceil(days / 7);
+
+  return weekNumber;
 };
 
 export const dateForYear = (year: number) => {
@@ -43,7 +53,28 @@ export const dateForYear = (year: number) => {
     .map((value, index) => {
       const newDate = new Date(year, 0, 1);
       newDate.setDate(newDate.getDate() + index);
-      console.log(newDate.toDateString());
+      // console.log(
+      //   newDate.toDateString() +
+      //     " -> " +
+      //     getWeekNumber(newDate) +
+      //     " " +
+      //     newDate.getDay()
+      // );
       return newDate;
     });
+};
+
+export const getLevelColor = (level: number): string => {
+  switch (level) {
+    case 1:
+      return "fill-defaultGraphLev1";
+    case 2:
+      return "fill-defaultGraphLev2";
+    case 3:
+      return "fill-defaultGraphLev3";
+    case 4:
+      return "fill-defaultGraphLev4";
+    default:
+      return "fill-neutral-200 dark:fill-neutral-700";
+  }
 };

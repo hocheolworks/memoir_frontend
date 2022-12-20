@@ -1,11 +1,8 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useCallback, useMemo, useState } from "react";
 import { Children } from "../../utils/types";
 import index from "../../pages/[userId]/index";
-import { dateForYear } from "../../utils/functions";
-
-const weeks = Array(53)
-  .fill(0)
-  .map((value, index) => index * 16);
+import { dateForYear, getLevelColor } from "../../utils/functions";
+import { getDummyContributionData } from "../../utils/dummy";
 
 const months: [string, number][] = [
   ["Jan", 16],
@@ -41,9 +38,10 @@ type RectProps = {
   size: number;
   x: number;
   y: number;
-  count: number;
   date: string;
+  count: number;
   level: number;
+  setData: (date: string, count: number) => void;
 };
 
 type CalenderLabelProps = {
@@ -56,58 +54,95 @@ type CalenderLabelProps = {
   dy?: number;
 };
 
-const Rect: FC<RectProps> = ({ size, x, y, count, date, level }) => {
-  return (
-    <rect
-      className="fill-neutral-200 dark:fill-neutral-700"
-      onMouseOver={() => {}}
-      width={size}
-      height={size}
-      x={x}
-      y={y}
-      rx={2}
-      ry={2}
-    ></rect>
-  );
-};
+const Rect: FC<RectProps> = memo(
+  ({ size, x, y, count, date, level, setData }) => {
+    const getLevelColor = useCallback((level: number) => {
+      switch (level) {
+        case 1:
+          return "fill-defaultGraphLev1";
+        case 2:
+          return "fill-defaultGraphLev2";
+        case 3:
+          return "fill-defaultGraphLev3";
+        case 4:
+          return "fill-defaultGraphLev4";
+        default:
+          return "fill-neutral-200 dark:fill-neutral-700";
+      }
+    }, []);
 
-const CalenderLabel: FC<CalenderLabelProps> = ({ children, ...props }) => {
+    return (
+      <rect
+        className={getLevelColor(level)}
+        onMouseOver={() => {
+          setData(date, count);
+        }}
+        width={size}
+        height={size}
+        x={x}
+        y={y}
+        rx={2}
+        ry={2}
+      ></rect>
+    );
+  }
+);
+
+const CalenderLabel: FC<CalenderLabelProps> = memo(({ children, ...props }) => {
   return (
     <text {...props} className="fill-black text-xs dark:fill-white">
       {children}
     </text>
   );
-};
+});
 
 const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
   const [hoverDate, setHoverDate] = useState<{
-    count: number;
     date: string;
+    count: number;
     left: number;
     top: number;
-  }>();
+  }>({ date: "-1", count: -1, left: -1, top: -1 });
 
-  dateForYear(2022); // server side에서만 실행되어야함
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear()
+  );
+
+  const dummyData = useMemo(
+    () => getDummyContributionData(selectedYear),
+    [selectedYear]
+  );
 
   return (
     <div className="relative">
       <svg width={width} height={height}>
         <g transform="translate(15, 20)">
-          {weeks.map((value, weekIdx) => (
-            <g key={`weeks${weekIdx}`} transform={`translate(${value}, 0)`}>
-              {Array(7)
-                .fill(0)
-                .map((value, index) => (
-                  <Rect
-                    size={11}
-                    x={16 - weekIdx}
-                    y={index * 15}
-                    count={0}
-                    date="aa"
-                    level={0}
-                    key={`date${16 - weekIdx}-${index * 15}`}
-                  ></Rect>
-                ))}
+          {dummyData.map((week, weekIdx) => (
+            <g
+              key={`weeks${weekIdx}`}
+              transform={`translate(${weekIdx * 16}, 0)`}
+            >
+              {week.map(
+                (day, dayIdx) =>
+                  day !== null && (
+                    <Rect
+                      size={11}
+                      x={16 - weekIdx}
+                      y={dayIdx * 15}
+                      count={day?.count ?? 0}
+                      date={day?.date.toLocaleDateString() ?? ""}
+                      level={day?.level ?? 0}
+                      key={`date${16 - weekIdx}-${dayIdx * 15}`}
+                      setData={useCallback((date: string, count: number) => {
+                        setHoverDate({
+                          ...hoverDate,
+                          date: date,
+                          count: count,
+                        });
+                      }, [])}
+                    ></Rect>
+                  )
+              )}
             </g>
           ))}
           {months.map((value) => (
