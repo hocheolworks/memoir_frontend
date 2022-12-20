@@ -63,18 +63,3 @@ export const dateForYear = (year: number) => {
       return newDate;
     });
 };
-
-export const getLevelColor = (level: number): string => {
-  switch (level) {
-    case 1:
-      return "fill-defaultGraphLev1";
-    case 2:
-      return "fill-defaultGraphLev2";
-    case 3:
-      return "fill-defaultGraphLev3";
-    case 4:
-      return "fill-defaultGraphLev4";
-    default:
-      return "fill-neutral-200 dark:fill-neutral-700";
-  }
-};
