@@ -21,7 +21,7 @@ const initialState: AuthState = {
           isMember: true,
           description: "내가 제일 짱",
           location: "꼬레아",
-          githubAccessToken: "abcded", //expire on Tue, Dec 27 2022.
+          githubAccessToken: process.env.NEXT_PUBLIC_GITHUB_PAT_FOR_TEST, //expire on Tue, Dec 27 2022.
           memoirAccessToken: "tokenmemoirmemoir",
         }
       : {},

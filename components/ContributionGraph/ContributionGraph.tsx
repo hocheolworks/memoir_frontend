@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectAuthUser } from "../../redux/modules/authSlice";
 import { ContributionCalendar } from "../../utils/types";
 import { parseLevel } from "../../utils/functions";
+import { errorHandler } from "../../api/error";
 
 type ContributionGraphProps = {
   width: number;
@@ -27,11 +28,6 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
     new Date().getFullYear()
   );
 
-  // const dummyData = useMemo(
-  //   () => getDummyContributionData(selectedYear),
-  //   [selectedYear]
-  // );
-
   const [contributionData, setContributionData] =
     useState<ContributionCalendar>();
 
@@ -47,16 +43,24 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
     []
   );
 
-  useEffect(() => {
-    UserAPI.getContributionData(
-      user.githubAccessToken ?? "",
-      user.githubId ?? "",
-      selectedYear
-    ).then((res) => {
+  const getContributionData = async () => {
+    try {
+      const res = await UserAPI.getContributionData(
+        user.githubAccessToken ?? "",
+        user.githubId ?? "",
+        selectedYear
+      );
+
       const contributionCalendar: ContributionCalendar =
         res.data.data.user.contributionsCollection.contributionCalendar;
       setContributionData(contributionCalendar);
-    });
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  useEffect(() => {
+    getContributionData();
   }, []);
 
   return (
@@ -89,34 +93,6 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
             </g>
           ))}
 
-          {/* {dummyData.map((week, weekIdx) => (
-            <g
-              key={`weeks${weekIdx}`}
-              transform={`translate(${weekIdx * 16}, 0)`}
-            >
-              {week.map(
-                (day, dayIdx) =>
-                  day !== null && (
-                    <Rect
-                      size={11}
-                      x={16 - weekIdx}
-                      y={dayIdx * 15}
-                      count={day?.count ?? 0}
-                      date={day?.date.toLocaleDateString() ?? ""}
-                      level={day?.level ?? 0}
-                      key={`date${16 - weekIdx}-${dayIdx * 15}`}
-                      setData={useCallback((date: string, count: number) => {
-                        setHoverDate({
-                          ...hoverDate,
-                          date: date,
-                          count: count,
-                        });
-                      }, [])}
-                    ></Rect>
-                  )
-              )}
-            </g>
-          ))} */}
           {monthLabels.map((value) => (
             <CalenderLabel key={value[0]} x={value[1]} y={-8}>
               {value[0]}
