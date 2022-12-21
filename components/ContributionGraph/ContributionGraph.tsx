@@ -6,9 +6,13 @@ import { monthLabels, weekDayLabels } from "../../utils/constants";
 import UserAPI from "../../api/user/userAPI";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../../redux/modules/authSlice";
-import { ContributionCalendar } from "../../utils/types";
+import {
+  ContributionCalendar,
+  ContributionTooltipData,
+} from "../../utils/types";
 import { parseLevel } from "../../utils/functions";
 import { errorHandler } from "../../api/error";
+import ContributionTooltip from "./ContributionTooltip";
 
 type ContributionGraphProps = {
   width: number;
@@ -17,12 +21,8 @@ type ContributionGraphProps = {
 
 const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
   const user = useSelector(selectAuthUser);
-  const [hoverDate, setHoverDate] = useState<{
-    date: string;
-    count: number;
-    left: number;
-    top: number;
-  }>();
+  const [tooltipData, setTooltipData] = useState<ContributionTooltipData>();
+  const [isHover, setIsHover] = useState<boolean>(false);
 
   const [selectedYear, setSelectedYear] = useState<number>(
     new Date().getFullYear()
@@ -33,9 +33,9 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
 
   const setData = useCallback(
     (x: number, y: number, date: string, count: number) => {
-      setHoverDate({
-        left: x,
-        top: y,
+      setTooltipData({
+        weekIdx: 16 - x,
+        weekday: y / 15,
         date: date,
         count: count,
       });
@@ -65,8 +65,9 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
 
   return (
     <div className="relative">
-      <p className="pl-1 text-left text-sm text-black dark:text-white">
-        {contributionData?.totalContributions} contributions in the last year
+      <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
+        {contributionData?.totalContributions} contributions in{" "}
+        {selectedYear ?? "the last year"}
       </p>
       <svg width={width} height={height}>
         <g transform="translate(15, 20)">
@@ -87,12 +88,13 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
                       level={parseLevel(day.contributionLevel)}
                       key={`date${16 - weekIdx}-${dayIdx * 15}`}
                       setData={setData}
+                      setIsHover={setIsHover}
                     ></Rect>
                   )
               )}
             </g>
           ))}
-
+          {/* TODO: Month Label 동적으로 수정 필요 */}
           {monthLabels.map((value) => (
             <CalenderLabel key={value[0]} x={value[1]} y={-8}>
               {value[0]}
@@ -111,13 +113,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
           ))}
         </g>
       </svg>
-      {hoverDate && (
-        <div className="absolute z-50 p-1 text-xs text-black dark:text-white">
-          <strong>
-            {hoverDate.count ?? "No"} contribution on {hoverDate.date}
-          </strong>
-        </div>
-      )}
+      {isHover && tooltipData && <ContributionTooltip data={tooltipData} />}
     </div>
   );
 };

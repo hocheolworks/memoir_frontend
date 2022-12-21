@@ -22,7 +22,7 @@ const index: NextPage = () => {
   return (
     <div className="flex h-full w-full items-start justify-center">
       <div className="flex-1 bg-black text-center brightness-75">left</div>
-      <div className="flex w-[768px] flex-col items-center text-center">
+      <div className="flex w-[832px] flex-col items-center text-center">
         <div className="w-full px-1 pt-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -49,13 +49,6 @@ const index: NextPage = () => {
             </div>
           </div>
           <div id="contribution" className="mt-4 h-[200px] text-black">
-            {/* <Image
-              height={120}
-              width={768}
-              className="border-[1px] border-neutral-500 bg-black"
-              src={`https://ghchart.rshah.org/904CF9/${user.githubId}`}
-              alt="contribution graph"
-            /> */}
             <ContributionGraph width={823} height={128} />
           </div>
         </div>

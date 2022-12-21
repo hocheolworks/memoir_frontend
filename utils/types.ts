@@ -65,3 +65,10 @@ export type ContributionCalendar = {
   totalContributions: number;
   weeks: ContributionCalendarWeek[];
 };
+
+export type ContributionTooltipData = {
+  date: string;
+  count: number;
+  weekIdx: number;
+  weekday: number;
+};

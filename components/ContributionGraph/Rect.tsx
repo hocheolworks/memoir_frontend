@@ -8,10 +8,11 @@ type RectProps = {
   count: number;
   level: number;
   setData: (x: number, y: number, date: string, count: number) => void;
+  setIsHover: (isHover: boolean) => void;
 };
 
 const Rect: FC<RectProps> = memo(
-  ({ size, x, y, count, date, level, setData }) => {
+  ({ size, x, y, count, date, level, setData, setIsHover }) => {
     const getLevelColor = useCallback((level: number) => {
       switch (level) {
         case 1:
@@ -32,6 +33,10 @@ const Rect: FC<RectProps> = memo(
         className={getLevelColor(level)}
         onMouseOver={() => {
           setData(x, y, date, count);
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          // setIsHover(false);
         }}
         width={size}
         height={size}
