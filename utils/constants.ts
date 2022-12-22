@@ -1,16 +1,16 @@
-export const monthLabels: [string, number][] = [
-  ["Jan", 16],
-  ["Feb", 106],
-  ["Mar", 166],
-  ["Apr", 226],
-  ["May", 286],
-  ["Jun", 361],
-  ["Jul", 421],
-  ["Aug", 496],
-  ["Sep", 556],
-  ["Oct", 616],
-  ["Nov", 691],
-  ["Dec", 751],
+export const monthLabels: string[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 export const weekDayLabels: [string, number][] = [

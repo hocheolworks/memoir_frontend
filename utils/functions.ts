@@ -1,3 +1,4 @@
+import { monthLabels } from "./constants";
 import { ContributionLevel, ContributionTile } from "./types";
 
 export function ValidateEmail(mail: string): boolean {
@@ -77,4 +78,11 @@ export const parseLevel = (level: ContributionLevel): number => {
     default:
       return 0;
   }
+};
+
+export const isSameMonth = (date1: string, date2: string): [number, string] => {
+  const month1 = new Date(date1).getMonth();
+  const month2 = new Date(date2).getMonth();
+
+  return month1 === month2 ? [month1, monthLabels[month1]] : [-1, "Not Same"];
 };

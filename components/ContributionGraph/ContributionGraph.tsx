@@ -1,12 +1,12 @@
-import React, { FC, useCallback, useState } from "react";
+import { FC, Fragment, useCallback, useState } from "react";
 import Rect from "./Rect";
 import CalenderLabel from "./CalenderLabel";
-import { monthLabels, weekDayLabels } from "../../utils/constants";
+import { weekDayLabels } from "../../utils/constants";
 import {
   ContributionCalendar,
   ContributionTooltipData,
 } from "../../utils/types";
-import { parseLevel } from "../../utils/functions";
+import { isSameMonth, parseLevel } from "../../utils/functions";
 import ContributionTooltip from "./ContributionTooltip";
 
 type ContributionGraphProps = {
@@ -20,6 +20,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
   height,
   contributionData,
 }) => {
+  let prevMonthNumber = 0; // month label을 동적으로 표시하기 위한 플래그
   const [tooltipData, setTooltipData] = useState<ContributionTooltipData>();
   const [isHover, setIsHover] = useState<boolean>(false);
   const [selectedYear, setSelectedYear] = useState<number>(
@@ -56,36 +57,56 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
       <svg width={width} height={height}>
         <g transform="translate(15, 20)">
           {contributionData?.weeks.map((week, weekIdx) => {
+            const days = week.contributionDays;
+
+            const [monthNumber, monthName] = isSameMonth(
+              days[0].date,
+              days[days.length - 1].date
+            );
+
+            const displayFlag =
+              monthNumber !== -1 && prevMonthNumber === monthNumber;
+
+            if (prevMonthNumber === monthNumber) {
+              prevMonthNumber++;
+            }
             return (
-              <g
-                key={`weeks${weekIdx}`}
-                transform={`translate(${weekIdx * 16}, 0)`}
-              >
-                {week.contributionDays.map(
-                  (day, dayIdx) =>
-                    day && (
-                      <Rect
-                        size={11}
-                        x={16 - weekIdx}
-                        y={day.weekday * 15}
-                        count={day.contributionCount ?? 0}
-                        date={day.date}
-                        level={parseLevel(day.contributionLevel)}
-                        key={`date${16 - weekIdx}-${dayIdx * 15}`}
-                        setData={setData}
-                        setIsHover={setIsHover}
-                      ></Rect>
-                    )
+              <Fragment key={`fragment${weekIdx}`}>
+                <g
+                  key={`weeks${weekIdx}`}
+                  transform={`translate(${weekIdx * 16}, 0)`}
+                >
+                  {days.map(
+                    (day) =>
+                      day && (
+                        <Rect
+                          size={11}
+                          x={16 - weekIdx}
+                          y={day.weekday * 15}
+                          count={day.contributionCount ?? 0}
+                          date={day.date}
+                          level={parseLevel(day.contributionLevel)}
+                          key={`date${day.date}`}
+                          setData={setData}
+                          setIsHover={setIsHover}
+                        ></Rect>
+                      )
+                  )}
+                </g>
+                {displayFlag && (
+                  <CalenderLabel x={15 * weekIdx + 16} y={-8}>
+                    {monthName}
+                  </CalenderLabel>
                 )}
-              </g>
+              </Fragment>
             );
           })}
           {/* TODO: Month Label 동적으로 수정 필요 */}
-          {monthLabels.map((value) => (
+          {/* {monthLabels.map((value) => (
             <CalenderLabel key={value[0]} x={value[1]} y={-8}>
               {value[0]}
             </CalenderLabel>
-          ))}
+          ))} */}
           {weekDayLabels.map((value, index) => (
             <CalenderLabel
               key={value[0]}
@@ -102,11 +123,17 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
       <div className="mt-1 flex w-full items-center justify-end px-0 text-xs text-neutral-500">
         Less
         <svg className="px-1" width={74} height={10}>
-          <Rect x={0} y={0} size={10} level={0} count={-1} date="-1"></Rect>
-          <Rect x={14} y={0} size={10} level={1} count={-1} date="-1"></Rect>
-          <Rect x={28} y={0} size={10} level={2} count={-1} date="-1"></Rect>
-          <Rect x={42} y={0} size={10} level={3} count={-1} date="-1"></Rect>
-          <Rect x={56} y={0} size={10} level={4} count={-1} date="-1"></Rect>
+          {[0, 1, 2, 3, 4].map((value) => (
+            <Rect
+              key={"LessMore" + value}
+              x={value * 14}
+              y={0}
+              size={10}
+              level={value}
+              count={-1}
+              date="-1"
+            ></Rect>
+          ))}
         </svg>
         More
       </div>
