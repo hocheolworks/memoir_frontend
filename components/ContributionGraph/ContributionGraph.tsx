@@ -16,19 +16,22 @@ import ContributionTooltip from "./ContributionTooltip";
 type ContributionGraphProps = {
   width: number;
   height: number;
+  contributionData: ContributionCalendar;
 };
 
-const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
+const ContributionGraph: FC<ContributionGraphProps> = ({
+  width,
+  height,
+  contributionData,
+}) => {
   const user = useSelector(selectAuthUser);
   const [tooltipData, setTooltipData] = useState<ContributionTooltipData>();
   const [isHover, setIsHover] = useState<boolean>(false);
-
   const [selectedYear, setSelectedYear] = useState<number>(
     new Date().getFullYear()
   );
-
-  const [contributionData, setContributionData] =
-    useState<ContributionCalendar>();
+  // const [contributionData, setContributionData] =
+  //   useState<ContributionCalendar>();
 
   const setData = useCallback(
     (
@@ -51,25 +54,25 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
     []
   );
 
-  const getContributionData = async () => {
-    try {
-      const res = await UserAPI.getContributionData(
-        user.githubAccessToken ?? "",
-        user.githubId ?? "",
-        selectedYear
-      );
+  // const getContributionData = async () => {
+  //   try {
+  //     const res = await UserAPI.getContributionData(
+  //       user.githubAccessToken ?? "",
+  //       user.githubId ?? "",
+  //       selectedYear
+  //     );
 
-      const contributionCalendar: ContributionCalendar =
-        res.data.data.user.contributionsCollection.contributionCalendar;
-      setContributionData(contributionCalendar);
-    } catch (e) {
-      errorHandler(e);
-    }
-  };
+  //     const contributionCalendar: ContributionCalendar =
+  //       res.data.data.user.contributionsCollection.contributionCalendar;
+  //     setContributionData(contributionCalendar);
+  //   } catch (e) {
+  //     errorHandler(e);
+  //   }
+  // };
 
-  useEffect(() => {
-    getContributionData();
-  }, []);
+  // useEffect(() => {
+  //   getContributionData();
+  // }, []);
 
   return (
     <div>

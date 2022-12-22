@@ -3,10 +3,9 @@ import { HYDRATE } from "next-redux-wrapper";
 
 import auth, { AuthState } from "./authSlice";
 
-const reducer = (
-  state: CombinedState<{ auth: AuthState }> | undefined,
-  action: AnyAction
-) => {
+export type RootState = CombinedState<{ auth: AuthState }> | undefined;
+
+const reducer = (state: RootState, action: AnyAction) => {
   if (action.type === HYDRATE) {
     return {
       ...state,

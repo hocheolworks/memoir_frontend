@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import CircleAvatar from "../../components/CircleAvatar";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { selectAuthUser } from "../../redux/modules/authSlice";
 import Link from "next/link";
 import GithubIcon from "../../public/logo/social/github-mark-white.svg";
-import { User } from "../../utils/types";
-import Image from "next/image";
 import ContributionGraph from "../../components/ContributionGraph/ContributionGraph";
+import { wrapper } from "../../redux/store/store";
+import { RootState } from "../../redux/modules";
+import { ContributionCalendar } from "../../utils/types";
+import UserAPI from "../../api/user/userAPI";
+import { errorHandler } from "../../api/error";
 
-const index: NextPage = () => {
-  const router = useRouter();
-
+const index: NextPage<{ contributionData: ContributionCalendar }> = ({
+  contributionData,
+}) => {
   const user = useSelector(selectAuthUser);
 
   useEffect(() => {
@@ -49,7 +51,11 @@ const index: NextPage = () => {
             </div>
           </div>
           <div id="contribution" className="mt-4 h-[200px] text-black">
-            <ContributionGraph width={823} height={128} />
+            <ContributionGraph
+              width={823}
+              height={128}
+              contributionData={contributionData}
+            />
           </div>
         </div>
         <div className="my-4 h-0.5 w-full bg-neutral-500 opacity-50"></div>
@@ -61,4 +67,28 @@ const index: NextPage = () => {
   );
 };
 
-export default index;
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async () => {
+    const user = store.getState().auth.authUser;
+
+    try {
+      const res = await UserAPI.getContributionData(
+        user.githubAccessToken ?? "",
+        user.githubId ?? "",
+        new Date().getFullYear()
+      );
+
+      const contributionCalendar: ContributionCalendar =
+        res.data.data.user.contributionsCollection.contributionCalendar;
+
+      return { props: { contributionData: contributionCalendar } };
+    } catch (e) {
+      errorHandler(e);
+      return {
+        props: { contributionData: { totalContributions: 0, weeks: [] } },
+      };
+    }
+  }
+);
+
+export default connect((state: RootState) => state)(index);
