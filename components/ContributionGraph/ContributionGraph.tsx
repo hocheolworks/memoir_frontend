@@ -54,26 +54,6 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
     []
   );
 
-  // const getContributionData = async () => {
-  //   try {
-  //     const res = await UserAPI.getContributionData(
-  //       user.githubAccessToken ?? "",
-  //       user.githubId ?? "",
-  //       selectedYear
-  //     );
-
-  //     const contributionCalendar: ContributionCalendar =
-  //       res.data.data.user.contributionsCollection.contributionCalendar;
-  //     setContributionData(contributionCalendar);
-  //   } catch (e) {
-  //     errorHandler(e);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getContributionData();
-  // }, []);
-
   return (
     <div>
       <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
@@ -124,6 +104,42 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
           ))}
         </g>
       </svg>
+      <div className="mt-1 flex w-full items-center justify-end px-0 text-xs text-neutral-500">
+        Less
+        <svg className="px-1" width={74} height={10}>
+          <rect
+            className="fill-neutral-200 dark:fill-neutral-700"
+            width={10}
+            height={10}
+            transform={"translate(0, 0)"}
+          ></rect>
+          <rect
+            className="fill-defaultGraphLev1"
+            width={10}
+            height={10}
+            transform={"translate(14, 0)"}
+          ></rect>
+          <rect
+            className="fill-defaultGraphLev2"
+            width={10}
+            height={10}
+            transform={"translate(28, 0)"}
+          ></rect>
+          <rect
+            className="fill-defaultGraphLev3"
+            width={10}
+            height={10}
+            transform={"translate(42, 0)"}
+          ></rect>
+          <rect
+            className="fill-defaultGraphLev4"
+            width={10}
+            height={10}
+            transform={"translate(56, 0)"}
+          ></rect>
+        </svg>
+        More
+      </div>
       {isHover && tooltipData && <ContributionTooltip data={tooltipData} />}
     </div>
   );
