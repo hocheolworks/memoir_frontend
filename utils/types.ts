@@ -69,6 +69,8 @@ export type ContributionCalendar = {
 export type ContributionTooltipData = {
   date: string;
   count: number;
+  clientLeft: number;
+  clientTop: number;
   weekIdx: number;
   weekday: number;
 };

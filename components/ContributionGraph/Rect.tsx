@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from "react";
+import { FC, memo, useCallback, useRef } from "react";
 
 type RectProps = {
   size: number;
@@ -7,12 +7,21 @@ type RectProps = {
   date: string;
   count: number;
   level: number;
-  setData: (x: number, y: number, date: string, count: number) => void;
+  setData: (
+    x: number,
+    y: number,
+    clientLeft: number,
+    clientTop: number,
+    date: string,
+    count: number
+  ) => void;
   setIsHover: (isHover: boolean) => void;
 };
 
 const Rect: FC<RectProps> = memo(
   ({ size, x, y, count, date, level, setData, setIsHover }) => {
+    const rectRef = useRef<SVGRectElement>(null);
+
     const getLevelColor = useCallback((level: number) => {
       switch (level) {
         case 1:
@@ -30,13 +39,24 @@ const Rect: FC<RectProps> = memo(
 
     return (
       <rect
+        ref={rectRef}
         className={getLevelColor(level)}
         onMouseOver={() => {
-          setData(x, y, date, count);
-          setIsHover(true);
+          const clientRect = rectRef.current?.getBoundingClientRect();
+          if (clientRect) {
+            setData(
+              x,
+              y,
+              clientRect.left + scrollX,
+              clientRect.top + scrollY,
+              date,
+              count
+            );
+            setIsHover(true);
+          }
         }}
         onMouseLeave={() => {
-          // setIsHover(false);
+          setIsHover(false);
         }}
         width={size}
         height={size}

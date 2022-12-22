@@ -32,10 +32,19 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
     useState<ContributionCalendar>();
 
   const setData = useCallback(
-    (x: number, y: number, date: string, count: number) => {
+    (
+      x: number,
+      y: number,
+      clientLeft: number,
+      clientTop: number,
+      date: string,
+      count: number
+    ) => {
       setTooltipData({
         weekIdx: 16 - x,
         weekday: y / 15,
+        clientLeft,
+        clientTop,
         date: date,
         count: count,
       });
@@ -64,7 +73,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="static">
       <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
         {contributionData?.totalContributions} contributions in{" "}
         {selectedYear ?? "the last year"}
@@ -113,7 +122,9 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
           ))}
         </g>
       </svg>
-      {isHover && tooltipData && <ContributionTooltip data={tooltipData} />}
+      {isHover && tooltipData && (
+        <ContributionTooltip data={tooltipData} hidden={isHover} />
+      )}
     </div>
   );
 };
