@@ -3,14 +3,10 @@ import { ContributionTooltipData } from "../../utils/types";
 
 type ContributionTooltipProps = {
   data: ContributionTooltipData;
-  hidden: boolean;
 };
 
-const ContributionTooltip: FC<ContributionTooltipProps> = ({
-  data,
-  hidden,
-}) => {
-  const { weekIdx, weekday, clientLeft, clientTop, count, date } = data;
+const ContributionTooltip: FC<ContributionTooltipProps> = ({ data }) => {
+  const { clientLeft, clientTop, count, date } = data;
   const divRef = useRef<HTMLDivElement>(null);
 
   const [currentSize, setCurrentSize] = useState<{

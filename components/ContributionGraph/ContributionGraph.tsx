@@ -1,5 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { getDummyContributionData } from "../../utils/dummy";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import Rect from "./Rect";
 import CalenderLabel from "./CalenderLabel";
 import { monthLabels, weekDayLabels } from "../../utils/constants";
@@ -73,7 +72,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
   }, []);
 
   return (
-    <div className="static">
+    <div>
       <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
         {contributionData?.totalContributions} contributions in{" "}
         {selectedYear ?? "the last year"}
@@ -122,9 +121,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({ width, height }) => {
           ))}
         </g>
       </svg>
-      {isHover && tooltipData && (
-        <ContributionTooltip data={tooltipData} hidden={isHover} />
-      )}
+      {isHover && tooltipData && <ContributionTooltip data={tooltipData} />}
     </div>
   );
 };
