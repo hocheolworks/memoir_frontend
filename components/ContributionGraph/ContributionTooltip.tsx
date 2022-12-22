@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ContributionTooltipData } from "../../utils/types";
 
 type ContributionTooltipProps = {
@@ -14,7 +14,7 @@ const ContributionTooltip: FC<ContributionTooltipProps> = ({ data }) => {
     height: number;
   }>({ width: 0, height: 0 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCurrentSize({
       width: divRef.current?.offsetWidth ?? 0,
       height: divRef.current?.offsetHeight ?? 0,
@@ -30,9 +30,8 @@ const ContributionTooltip: FC<ContributionTooltipProps> = ({ data }) => {
         top: clientTop - currentSize?.height - 10,
       }}
     >
-      <strong>
-        {count === 0 ? "No" : count} contribution on {date}
-      </strong>
+      <strong>{count === 0 ? "No" : count} contribution </strong>
+      on {date}
     </div>
   );
 };

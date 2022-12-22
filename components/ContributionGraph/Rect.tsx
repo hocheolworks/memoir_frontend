@@ -7,7 +7,7 @@ type RectProps = {
   date: string;
   count: number;
   level: number;
-  setData: (
+  setData?: (
     x: number,
     y: number,
     clientLeft: number,
@@ -15,7 +15,7 @@ type RectProps = {
     date: string,
     count: number
   ) => void;
-  setIsHover: (isHover: boolean) => void;
+  setIsHover?: (isHover: boolean) => void;
 };
 
 const Rect: FC<RectProps> = memo(
@@ -41,23 +41,30 @@ const Rect: FC<RectProps> = memo(
       <rect
         ref={rectRef}
         className={getLevelColor(level)}
-        onMouseOver={() => {
-          const clientRect = rectRef.current?.getBoundingClientRect();
-          if (clientRect) {
-            setData(
-              x,
-              y,
-              clientRect.left + scrollX,
-              clientRect.top + scrollY,
-              date,
-              count
-            );
-            setIsHover(true);
-          }
-        }}
-        onMouseLeave={() => {
-          setIsHover(false);
-        }}
+        onMouseOver={
+          setData &&
+          setIsHover &&
+          (() => {
+            const clientRect = rectRef.current?.getBoundingClientRect();
+            if (clientRect) {
+              setData(
+                x,
+                y,
+                clientRect.left + scrollX,
+                clientRect.top + scrollY,
+                date,
+                count
+              );
+              setIsHover(true);
+            }
+          })
+        }
+        onMouseLeave={
+          setIsHover &&
+          (() => {
+            setIsHover(false);
+          })
+        }
         width={size}
         height={size}
         x={x}
