@@ -42,29 +42,6 @@ export const getWeekNumber = (date: Date) => {
   return weekNumber;
 };
 
-export const dateForYear = (year: number) => {
-  const result: ContributionTile[][] = Array(53).fill(
-    Array(7)
-      .fill(0)
-      .map((value, index) => value + index)
-  );
-
-  const date365: Date[] = Array(365)
-    .fill(null)
-    .map((value, index) => {
-      const newDate = new Date(year, 0, 1);
-      newDate.setDate(newDate.getDate() + index);
-      // console.log(
-      //   newDate.toDateString() +
-      //     " -> " +
-      //     getWeekNumber(newDate) +
-      //     " " +
-      //     newDate.getDay()
-      // );
-      return newDate;
-    });
-};
-
 export const parseLevel = (level: ContributionLevel): number => {
   switch (level) {
     case "FIRST_QUARTILE":

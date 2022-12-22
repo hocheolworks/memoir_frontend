@@ -101,12 +101,6 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
               </Fragment>
             );
           })}
-          {/* TODO: Month Label 동적으로 수정 필요 */}
-          {/* {monthLabels.map((value) => (
-            <CalenderLabel key={value[0]} x={value[1]} y={-8}>
-              {value[0]}
-            </CalenderLabel>
-          ))} */}
           {weekDayLabels.map((value, index) => (
             <CalenderLabel
               key={value[0]}
