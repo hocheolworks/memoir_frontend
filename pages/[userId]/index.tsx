@@ -71,6 +71,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
     const user = store.getState().auth.authUser;
 
+    console.log(user.githubId);
+    console.log(user.githubAccessToken);
+
     try {
       const res = await UserAPI.getContributionData(
         user.githubAccessToken ?? "",

@@ -13,7 +13,7 @@ export interface AuthState {
 const initialState: AuthState = {
   authState: process.env.NODE_ENV !== "production",
   authUser:
-    process.env.NODE_ENV !== "production"
+    process.env.NODE_ENV === "production"
       ? {
           githubId: "lhjeong60",
           avatar: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
