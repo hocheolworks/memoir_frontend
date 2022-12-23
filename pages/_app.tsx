@@ -12,6 +12,7 @@ import { ThemeProvider } from "next-themes";
 import Layout from "../components/MainLayout";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
+import { Provider } from "react-redux";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -28,17 +29,19 @@ function MyApp({ Component, ...pageProps }: AppPropsWithLayout) {
   const { store, props } = wrapper.useWrappedStore(pageProps);
 
   return (
-    <ThemeProvider attribute="class">
-      <div className="ml-auto mr-auto w-full pl-4 pr-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0">
-        <Head>
-          <title>MEMOIR.</title>
-        </Head>
-        <div className="flex h-full flex-col">
-          {getLayout(<Component {...props.pageProps} />)}
+    <Provider store={store}>
+      <ThemeProvider attribute="class">
+        <div className="ml-auto mr-auto w-full pl-4 pr-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0">
+          <Head>
+            <title>MEMOIR.</title>
+          </Head>
+          <div className="flex h-full flex-col">
+            {getLayout(<Component {...props.pageProps} />)}
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
