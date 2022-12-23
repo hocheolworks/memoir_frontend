@@ -7,10 +7,11 @@ export type ErrorResponse = {
 };
 
 export const errorHandler = (e: any) => {
-  console.log(e);
   if (axios.isAxiosError(e) && e.response) {
     const { statusCode, message } = e.response.data as ErrorResponse; // as 안쓸 방법이 없을까..?
-    console.log(`${statusCode} Error`);
+    console.log(
+      `Error :${statusCode ? " " + statusCode + " " : ""} ${message}`
+    );
     if (typeof window !== "undefined") {
       alert(message);
     }

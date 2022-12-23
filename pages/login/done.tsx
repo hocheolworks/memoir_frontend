@@ -20,6 +20,11 @@ const LoginDone: FC = () => {
       if (res.status === 201) {
         const currentUser: User = res.data;
         dispatch(setAuthUser({ ...currentUser }));
+        if (typeof window === "undefined") {
+          console.log(
+            `login done : ${currentUser.githubId} ${currentUser.githubAccessToken}`
+          );
+        }
         dispatch(setAuthState(currentUser.isMember));
         router.push(currentUser.isMember ? "/" : "/register");
       } else {
