@@ -6,16 +6,19 @@ import auth, { AuthState } from "./authSlice";
 export type RootState = CombinedState<{ auth: AuthState }> | undefined;
 
 const reducer = (state: RootState, action: AnyAction) => {
-  if (action.type === HYDRATE) {
-    return {
-      ...state,
-      ...action.payload,
-    };
+  switch (action.type) {
+    case HYDRATE:
+      const nextState = {
+        ...state,
+        ...action.payload,
+      };
+      return nextState;
+    default:
+      return combineReducers({
+        auth,
+        // 여기에 추가
+      })(state, action);
   }
-  return combineReducers({
-    auth,
-    // 여기에 추가
-  })(state, action);
 };
 
 export default reducer;

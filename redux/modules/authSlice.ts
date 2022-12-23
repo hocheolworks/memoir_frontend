@@ -38,6 +38,8 @@ export const authSlice = createSlice({
     },
 
     setAuthUser(state, action) {
+      console.log(action.payload.githubId);
+      console.log(action.payload.githubAccessToken);
       state.authUser = action.payload;
     },
 

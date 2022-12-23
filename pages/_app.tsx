@@ -32,16 +32,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <title>MEMOIR.</title>
         </Head>
         <div className="flex h-full flex-col">
-          {/* <header>
-            <Header />
-          </header> */}
-          {/* <Layout>
-            <Component {...pageProps} />
-          </Layout> */}
           {getLayout(<Component {...pageProps} />)}
-          {/* <footer>
-            <Footer />
-          </footer> */}
         </div>
       </div>
     </ThemeProvider>
