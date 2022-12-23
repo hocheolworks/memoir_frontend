@@ -14,6 +14,7 @@ import { errorHandler } from "../../api/error";
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
+    console.log(store);
     const user = store.getState().auth.authUser;
 
     console.log("user.githubId : " + user.githubId);
