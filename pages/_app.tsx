@@ -21,9 +21,11 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({ Component, ...pageProps }: AppPropsWithLayout) {
   // getLayout 정의가 있으면 해당 레이아웃 사용, 아니라면 기본 레이아웃 함수
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
+
+  const { store, props } = wrapper.useWrappedStore(pageProps);
 
   return (
     <ThemeProvider attribute="class">
@@ -32,7 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <title>MEMOIR.</title>
         </Head>
         <div className="flex h-full flex-col">
-          {getLayout(<Component {...pageProps} />)}
+          {getLayout(<Component {...props.pageProps} />)}
         </div>
       </div>
     </ThemeProvider>
