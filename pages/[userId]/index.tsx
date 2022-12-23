@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import CircleAvatar from "../../components/CircleAvatar";
 import { connect, useSelector } from "react-redux";
@@ -16,10 +16,34 @@ const index: NextPage<{ contributionData: ContributionCalendar }> = ({
   contributionData,
 }) => {
   const user = useSelector(selectAuthUser);
+  const [contribution, setContribution] =
+    useState<ContributionCalendar>(contributionData);
 
   useEffect(() => {
     if (!user) alert("회원정보가 없습니다.");
   }, [user]);
+
+  const retryBtnClick = async () => {
+    if (!user) {
+      return;
+    }
+
+    try {
+      const res = await UserAPI.getContributionData(
+        user.githubAccessToken ?? "",
+        user.githubId ?? "",
+        new Date().getFullYear()
+      );
+
+      const contributionCalendar: ContributionCalendar =
+        res.data.data.user.contributionsCollection.contributionCalendar;
+
+      setContribution(contributionCalendar);
+    } catch (e) {
+      errorHandler(e);
+      setContribution({ totalContributions: -1, weeks: [] });
+    }
+  };
 
   return (
     <div className="flex h-full w-full items-start justify-center">
@@ -51,11 +75,25 @@ const index: NextPage<{ contributionData: ContributionCalendar }> = ({
             </div>
           </div>
           <div id="contribution" className="mt-4 h-[200px] text-black">
-            <ContributionGraph
-              width={823}
-              height={128}
-              contributionData={contributionData}
-            />
+            {contribution.totalContributions !== -1 ? (
+              <ContributionGraph
+                width={823}
+                height={128}
+                contributionData={contribution}
+              />
+            ) : (
+              <div className="flex h-[184px] w-full flex-col items-center justify-center rounded-md bg-neutral-300 dark:bg-neutral-700">
+                <p className="text-md mb-3 dark:text-neutral-400">
+                  contribution 정보를 불러올 수 없습니다.
+                </p>
+                <button
+                  className="w-20 rounded-[0.25rem] bg-neutral-200 py-1 text-sm text-neutral-900 hover:brightness-90 dark:bg-neutral-800 dark:text-neutral-300"
+                  onClick={retryBtnClick}
+                >
+                  다시 시도
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className="my-4 h-0.5 w-full bg-neutral-500 opacity-50"></div>
@@ -88,7 +126,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     } catch (e) {
       errorHandler(e);
       return {
-        props: { contributionData: { totalContributions: 0, weeks: [] } },
+        props: { contributionData: { totalContributions: -1, weeks: [] } },
       };
     }
   }
