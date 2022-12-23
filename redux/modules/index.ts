@@ -25,4 +25,19 @@ const reducer = (state: RootState, action: AnyAction) => {
   }
 };
 
-export default reducer;
+const rootReducer = combineReducers({
+  index: (state: RootState, action) => {
+    switch (action.type) {
+      case HYDRATE:
+        return {
+          ...state,
+          ...action.payload,
+        };
+      default:
+        return state;
+    }
+  },
+  auth,
+});
+
+export default rootReducer;

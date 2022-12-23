@@ -74,7 +74,7 @@ const Index: NextPage<{ contributionData: ContributionCalendar }> = ({
 
   return (
     <div className="flex h-full w-full items-start justify-center">
-      <div className="flex-1 bg-black text-center brightness-75">left</div>
+      <div className="flex-1 bg-black text-center brightness-75"></div>
       <div className="flex w-[832px] flex-col items-center text-center">
         <div className="w-full px-1 pt-8">
           <div className="flex items-center justify-between">
@@ -86,7 +86,7 @@ const Index: NextPage<{ contributionData: ContributionCalendar }> = ({
                 width={50}
                 height={50}
               ></CircleAvatar>
-              <p className="ml-2 text-2xl">{user.name}</p>
+              <p className="ml-2 text-2xl">{user.githubId}</p>
             </div>
             <div className="flex h-8 items-center">
               {/* <p className="mr-2 text-xs text-neutral-500">{user.githubId}</p> */}
