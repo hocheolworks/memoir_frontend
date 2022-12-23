@@ -7,16 +7,16 @@ export type RootState = CombinedState<{ auth: AuthState }> | undefined;
 
 const reducer = (state: RootState, action: AnyAction) => {
   switch (action.type) {
-    // case HYDRATE:
-    //   console.log(action.state);
-    //   console.log(action.payload);
+    case HYDRATE:
+      console.log(action.state);
+      console.log(action.payload);
 
-    //   const nextState = {
-    //     ...state,
-    //     ...action.payload,
-    //   };
+      const nextState = {
+        ...state,
+        ...action.payload,
+      };
 
-    //   return nextState;
+      return nextState;
     default:
       return combineReducers({
         auth,
@@ -25,19 +25,19 @@ const reducer = (state: RootState, action: AnyAction) => {
   }
 };
 
-const rootReducer = combineReducers({
-  index: (state: RootState, action) => {
-    switch (action.type) {
-      case HYDRATE:
-        return {
-          ...state,
-          ...action.payload,
-        };
-      default:
-        return state;
-    }
-  },
-  auth,
-});
+// const rootReducer = combineReducers({
+//   index: (state: RootState, action) => {
+//     switch (action.type) {
+//       case HYDRATE:
+//         return {
+//           ...state,
+//           ...action.payload,
+//         };
+//       default:
+//         return state;
+//     }
+//   },
+//   auth,
+// });
 
-export default rootReducer;
+export default reducer;
