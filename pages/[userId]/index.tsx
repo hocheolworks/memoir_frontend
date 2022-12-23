@@ -39,7 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 );
 
-const index: NextPage<{ contributionData: ContributionCalendar }> = ({
+const Index: NextPage<{ contributionData: ContributionCalendar }> = ({
   contributionData,
 }) => {
   const user = useSelector(selectAuthUser);
@@ -132,4 +132,4 @@ const index: NextPage<{ contributionData: ContributionCalendar }> = ({
   );
 };
 
-export default index;
+export default Index;

@@ -14,7 +14,8 @@ import storageSession from "redux-persist/lib/storage/session";
 const makeStore = () =>
   configureStore({
     reducer: reducer,
-    devTools: process.env.NODE_ENV !== "production",
+    // devTools: process.env.NODE_ENV !== "production",
+    devTools: true,
   });
 
 export type AppStore = ReturnType<typeof makeStore>;
@@ -26,4 +27,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action
 >;
 
-export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });
+export const wrapper = createWrapper<AppStore>(makeStore);
