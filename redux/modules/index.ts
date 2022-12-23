@@ -15,6 +15,7 @@ const reducer = (state: RootState, action: AnyAction) => {
         ...state,
         ...action.payload,
       };
+      if (state?.auth) nextState.auth = state.auth;
 
       return nextState;
     default:
