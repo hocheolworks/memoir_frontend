@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import CircleAvatar from "../../components/CircleAvatar";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectAuthUser } from "../../redux/modules/authSlice";
 import Link from "next/link";
 import GithubIcon from "../../public/logo/social/github-mark-white.svg";
 import ContributionGraph from "../../components/ContributionGraph/ContributionGraph";
 import { wrapper } from "../../redux/store/store";
-import { RootState } from "../../redux/modules";
 import { ContributionCalendar } from "../../utils/types";
 import UserAPI from "../../api/user/userAPI";
 import { errorHandler } from "../../api/error";
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
-    console.log(store);
+    console.log(store.getState());
     const user = store.getState().auth.authUser;
 
     console.log("user.githubId : " + user.githubId);
