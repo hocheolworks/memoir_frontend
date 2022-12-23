@@ -11,12 +11,14 @@ import storageSession from "redux-persist/lib/storage/session";
 
 // const persistedReducer = persistReducer(persistConfig, reducer);
 
-const makeStore = () =>
-  configureStore({
-    reducer: reducer,
-    devTools: process.env.NODE_ENV !== "production",
-  });
+const store = configureStore({
+  reducer: reducer,
+  devTools: process.env.NODE_ENV !== "production",
+});
 
+const makeStore = () => {
+  return store;
+};
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore["getState"]>;
 export type AppThunk<ReturnType = void> = ThunkAction<
