@@ -7,16 +7,16 @@ export type RootState = CombinedState<{ auth: AuthState }> | undefined;
 
 const reducer = (state: RootState, action: AnyAction) => {
   switch (action.type) {
-    case HYDRATE:
-      console.log(action.state);
-      console.log(action.payload);
+    // case HYDRATE:
+    //   console.log(action.state);
+    //   console.log(action.payload);
 
-      const nextState = {
-        ...state,
-        ...action.payload,
-      };
+    //   const nextState = {
+    //     ...state,
+    //     ...action.payload,
+    //   };
 
-      return nextState;
+    //   return nextState;
     default:
       return combineReducers({
         auth,

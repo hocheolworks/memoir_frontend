@@ -20,7 +20,7 @@ const LoginDone: FC = () => {
       if (res.status === 201) {
         const currentUser: User = res.data;
         dispatch(setAuthUser({ ...currentUser }));
-        dispatch(setAuthState(currentUser.isMember));
+        // dispatch(setAuthState(currentUser.isMember));
         router.push(currentUser.isMember ? "/" : "/register");
       } else {
         console.log(`${res.status} Error with Success`);
