@@ -132,4 +132,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 );
 
-export default connect((state: RootState) => state)(index);
+export default index;
