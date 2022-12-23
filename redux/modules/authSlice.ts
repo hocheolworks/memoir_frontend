@@ -51,7 +51,10 @@ export const authSlice = createSlice({
   extraReducers: {
     [HYDRATE]: (state, action) => {
       console.log("HYDRATE", state, action.payload);
-      return action.payload;
+      return {
+        ...state,
+        auth: action.payload.auth,
+      };
     },
   },
 });
