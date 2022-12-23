@@ -53,7 +53,6 @@ export const authSlice = createSlice({
       console.log("HYDRATE", state, action.payload);
       return {
         ...state,
-        auth: action.payload.auth,
       };
     },
   },
