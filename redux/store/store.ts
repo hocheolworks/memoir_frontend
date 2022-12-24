@@ -1,8 +1,17 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import reducer from "../modules";
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  AnyAction,
+  CombinedState,
+  EnhancedStore,
+} from "@reduxjs/toolkit";
+import reducer, { RootState } from "../modules";
 import { createWrapper } from "next-redux-wrapper";
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
+import { ThunkMiddleware } from "redux-thunk";
+import { AuthState } from "../modules/authSlice";
 
 // const persistConfig = {
 //   key: "root",
@@ -11,12 +20,12 @@ import storageSession from "redux-persist/lib/storage/session";
 
 // const persistedReducer = persistReducer(persistConfig, reducer);
 
-const makeStore = () =>
-  configureStore({
+const makeStore = () => {
+  return configureStore({
     reducer: reducer,
-    // devTools: process.env.NODE_ENV !== "production",
-    devTools: true,
+    devTools: process.env.NODE_ENV !== "production",
   });
+};
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore["getState"]>;

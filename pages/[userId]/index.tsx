@@ -6,42 +6,42 @@ import { selectAuthUser } from "../../redux/modules/authSlice";
 import Link from "next/link";
 import GithubIcon from "../../public/logo/social/github-mark-white.svg";
 import ContributionGraph from "../../components/ContributionGraph/ContributionGraph";
-import { wrapper } from "../../redux/store/store";
-import { ContributionCalendar } from "../../utils/types";
+import { ContributionCalendar, WithRouterProps } from "../../utils/types";
 import UserAPI from "../../api/user/userAPI";
 import { errorHandler } from "../../api/error";
+import { withRouter } from "next/router";
+import { decodeByAES256 } from "../../utils/functions";
+import { NextPageContext } from "next/types";
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async () => {
-    console.log(store.getState());
-    const user = store.getState().auth.authUser;
+export async function getServerSideProps({ query }: NextPageContext) {
+  const { data, userId } = query;
+  const decodedData = decodeByAES256(
+    "githubAccessToken".padEnd(32, " "),
+    data as string
+  );
 
-    console.log("user.githubId : " + user.githubId);
-    console.log("user.githubAccessToken : " + user.githubAccessToken);
+  try {
+    const res = await UserAPI.getContributionData(
+      decodedData,
+      userId as string,
+      new Date().getFullYear()
+    );
 
-    try {
-      const res = await UserAPI.getContributionData(
-        user.githubAccessToken ?? "",
-        user.githubId ?? "",
-        new Date().getFullYear()
-      );
+    const contributionCalendar: ContributionCalendar =
+      res.data.data.user.contributionsCollection.contributionCalendar;
 
-      const contributionCalendar: ContributionCalendar =
-        res.data.data.user.contributionsCollection.contributionCalendar;
-
-      return { props: { contributionData: contributionCalendar } };
-    } catch (e) {
-      errorHandler(e);
-      return {
-        props: { contributionData: { totalContributions: -1, weeks: [] } },
-      };
-    }
+    return { props: { contributionData: contributionCalendar } };
+  } catch (e) {
+    errorHandler(e);
+    return {
+      props: { contributionData: { totalContributions: -1, weeks: [] } },
+    };
   }
-);
+}
 
-const Index: NextPage<{ contributionData: ContributionCalendar }> = ({
-  contributionData,
-}) => {
+const Index: NextPage<
+  { contributionData: ContributionCalendar } & WithRouterProps
+> = ({ contributionData, router }) => {
   const user = useSelector(selectAuthUser);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
@@ -132,4 +132,4 @@ const Index: NextPage<{ contributionData: ContributionCalendar }> = ({
   );
 };
 
-export default Index;
+export default withRouter(Index);

@@ -1,3 +1,5 @@
+import { NextRouter } from "next/router";
+
 export type User = {
   githubId: string;
   avatar: string | null;
@@ -73,4 +75,8 @@ export type ContributionTooltipData = {
   clientTop: number;
   weekIdx: number;
   weekday: number;
+};
+
+export type WithRouterProps = {
+  router: NextRouter;
 };

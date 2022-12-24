@@ -12,6 +12,7 @@ import {
   resetAuth,
   selectAuthState,
   selectAuthUser,
+  setAuthUser,
 } from "../redux/modules/authSlice";
 import { useTheme } from "next-themes";
 import DropdownMenu from "./DropdownMenu";
@@ -108,7 +109,11 @@ const Header: FC<HeaderPropType> = ({ className }) => {
           ) : (
             <>
               <a
-                href={`https://github.com/login/oauth/authorize?scope=repo&client_id=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI}`}
+                href={
+                  process.env.NODE_ENV === "production"
+                    ? `https://github.com/login/oauth/authorize?scope=repo&client_id=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI}`
+                    : "login/done"
+                }
               >
                 <LabelBtn label="로그인"></LabelBtn>
               </a>
@@ -124,7 +129,11 @@ const Header: FC<HeaderPropType> = ({ className }) => {
         >
           글쓰기
         </DropdownBtn>
-        <DropdownBtn key={"dropdown-btn-me"} link={`/${user.githubId}`}>
+        <DropdownBtn
+          key={"dropdown-btn-me"}
+          link={`/${user.githubId}`}
+          query={{ data: user.githubAccessToken }}
+        >
           마이 페이지
         </DropdownBtn>
         <DropdownBtn key={"dropdown-btn-temp"} link="/temp">

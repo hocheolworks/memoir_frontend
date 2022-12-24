@@ -1,5 +1,5 @@
 import { getRandomArbitrary, getWeekNumber } from "./functions";
-import { ContributionTile } from "./types";
+import { ContributionTile, User } from "./types";
 
 export const getDummyContributionData = (year: number) => {
   const dummyContributionData: (ContributionTile | null)[][] = Array.from(
@@ -29,4 +29,15 @@ export const getDummyContributionData = (year: number) => {
   //   );
 
   return dummyContributionData;
+};
+
+export const dummyUser: User = {
+  githubId: "lhjeong60",
+  avatar: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
+  name: "이호정",
+  isMember: true,
+  description: "내가 제일 짱",
+  location: "꼬레아",
+  githubAccessToken: process.env.NEXT_PUBLIC_GITHUB_PAT_FOR_TEST ?? "", //expire on Tue, Dec 27 2022.
+  memoirAccessToken: "tokenmemoirmemoir",
 };

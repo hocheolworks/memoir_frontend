@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Children } from "../utils/types";
+import { encodeByAES56 } from "../utils/functions";
 
 type DropdownBtnPropType = {
   className?: string;
   link: string;
   children: Children;
   onClick?: () => void;
+  query?: { data: any };
 };
 
 const DropdownBtn = ({
@@ -14,6 +16,7 @@ const DropdownBtn = ({
   link,
   children,
   onClick,
+  query,
 }: DropdownBtnPropType) => {
   const router = useRouter();
 
@@ -27,7 +30,16 @@ const DropdownBtn = ({
       <button
         className="h-10 w-full pl-3 text-left text-base"
         onMouseDown={() => {
-          router.push(link);
+          if (query) {
+            const encodedData = encodeByAES56(
+              "githubAccessToken".padEnd(32, " "), // key
+              query.data
+            );
+
+            router.push({ pathname: link, query: { data: encodedData } }, link);
+          } else {
+            router.push(link);
+          }
           if (onClick) {
             onClick();
           }

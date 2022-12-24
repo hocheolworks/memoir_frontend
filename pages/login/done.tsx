@@ -3,7 +3,8 @@ import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { errorHandler } from "../../api/error";
 import UserAPI from "../../api/user/userAPI";
-import { setAuthState, setAuthUser } from "../../redux/modules/authSlice";
+import { setAuthUser } from "../../redux/modules/authSlice";
+import { dummyUser } from "../../utils/dummy";
 import { User } from "../../utils/types";
 
 const LoginDone: FC = () => {
@@ -12,6 +13,12 @@ const LoginDone: FC = () => {
   const { code } = router.query;
 
   const asyncWrapper = async () => {
+    if (process.env.NODE_ENV === "development") {
+      dispatch(setAuthUser(dummyUser));
+      router.push("/");
+      return;
+    }
+
     if (!code) return;
 
     try {

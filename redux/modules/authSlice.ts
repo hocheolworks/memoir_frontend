@@ -1,7 +1,6 @@
-import { createSlice, EmptyObject } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "../store/store";
 import { User } from "../../utils/types";
-import { env } from "process";
 import { HYDRATE } from "next-redux-wrapper";
 
 // Type for our state
@@ -12,20 +11,8 @@ export interface AuthState {
 
 // Initial state
 const initialState: AuthState = {
-  authState: process.env.NODE_ENV !== "production",
-  authUser:
-    process.env.NODE_ENV !== "production"
-      ? {
-          githubId: "lhjeong60",
-          avatar: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
-          name: "이호정",
-          isMember: true,
-          description: "내가 제일 짱",
-          location: "꼬레아",
-          githubAccessToken: process.env.NEXT_PUBLIC_GITHUB_PAT_FOR_TEST, //expire on Tue, Dec 27 2022.
-          memoirAccessToken: "tokenmemoirmemoir",
-        }
-      : {},
+  authState: false,
+  authUser: {},
 };
 
 // Actual Slice
@@ -34,12 +21,12 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     // Action to set the authentication status
-    setAuthState(state, action) {
+    setAuthState(state, action: PayloadAction<boolean>) {
       state.authState = action.payload;
     },
 
-    setAuthUser(state, action) {
-      state.authState = action.payload.isMember;
+    setAuthUser(state, action: PayloadAction<Partial<User>>) {
+      state.authState = action.payload.isMember ?? false;
       state.authUser = action.payload;
     },
 
@@ -50,7 +37,11 @@ export const authSlice = createSlice({
   },
   // extraReducers: {
   //   [HYDRATE]: (state, action) => {
-  //     console.log("HYDRATE", state, action.payload);
+  //     console.log("HYDRATE  [state]");
+  //     console.log(state);
+
+  //     console.log("HYDRATE  [action]");
+  //     console.log(action);
   //     return {
   //       ...state,
   //     };

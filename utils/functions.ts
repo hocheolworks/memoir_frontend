@@ -1,5 +1,6 @@
 import { monthLabels } from "./constants";
 import { ContributionLevel, ContributionTile } from "./types";
+import CryptoJS from "crypto-js";
 
 export function ValidateEmail(mail: string): boolean {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -62,4 +63,25 @@ export const isSameMonth = (date1: string, date2: string): [number, string] => {
   const month2 = new Date(date2).getMonth();
 
   return month1 === month2 ? [month1, monthLabels[month1]] : [-1, "Not Same"];
+};
+
+const initialVector =
+  process.env.NEXT_PUBLIC_AES_INITIAL_VECTOR ?? "hocheolworks";
+
+export const encodeByAES56 = (key: string, data: string) => {
+  const cipher = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(key), {
+    iv: CryptoJS.enc.Utf8.parse(initialVector),
+    padding: CryptoJS.pad.Pkcs7,
+    mode: CryptoJS.mode.CBC,
+  });
+  return cipher.toString();
+};
+
+export const decodeByAES256 = (key: string, data: string) => {
+  const cipher = CryptoJS.AES.decrypt(data, CryptoJS.enc.Utf8.parse(key), {
+    iv: CryptoJS.enc.Utf8.parse(initialVector),
+    padding: CryptoJS.pad.Pkcs7,
+    mode: CryptoJS.mode.CBC,
+  });
+  return cipher.toString(CryptoJS.enc.Utf8);
 };
