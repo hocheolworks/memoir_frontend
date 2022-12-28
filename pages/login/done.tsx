@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { errorHandler } from "../../api/error";
 import UserAPI from "../../api/user/userAPI";
@@ -8,11 +8,15 @@ import { dummyUser } from "../../utils/dummy";
 import { User } from "../../utils/types";
 import { NextPageWithLayout } from "../_app";
 import { GridLoader } from "react-spinners";
+import BottomBtn from "../../components/BottomBtn";
+import Link from "next/link";
 
 const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { code } = router.query;
+  const [isHomeBtnVisible, setIsHomeBtnVisible] = useState<boolean>(false);
+  const homeBtnRef = useRef<HTMLButtonElement>(null);
 
   const asyncWrapper = async () => {
     try {
@@ -44,14 +48,32 @@ const LoginDone: NextPageWithLayout = () => {
       router.push("/");
       return;
     }
+    const timeout = setTimeout(() => {
+      if (homeBtnRef && homeBtnRef.current) {
+        homeBtnRef.current.style.display = "block";
+      }
+    }, 5000);
 
     asyncWrapper();
+
+    clearTimeout(timeout);
   }, []);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <GridLoader loading={code !== undefined} size={"35"} color="#904CF9" />
-      <div className="text-bold text-3xl"></div>
+      <GridLoader
+        loading={code !== undefined || process.env.NODE_ENV === "development"}
+        size={"30"}
+        color="#904CF9"
+      />
+      <Link href={"/"}>
+        <button
+          className="collapse mt-4 rounded-md bg-neutral-200 py-1 px-5 text-lg hover:brightness-90 dark:bg-neutral-700"
+          ref={homeBtnRef}
+        >
+          홈으로
+        </button>
+      </Link>
     </div>
   );
 };
