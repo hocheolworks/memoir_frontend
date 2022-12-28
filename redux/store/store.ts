@@ -5,35 +5,44 @@ import {
   AnyAction,
   CombinedState,
   EnhancedStore,
+  Store,
 } from "@reduxjs/toolkit";
-import reducer, { RootState } from "../modules";
-import { createWrapper } from "next-redux-wrapper";
-import { persistReducer } from "redux-persist";
-import storageSession from "redux-persist/lib/storage/session";
-import { ThunkMiddleware } from "redux-thunk";
-import { AuthState } from "../modules/authSlice";
+import persistedReducer from "../modules";
+import { createWrapper, MakeStore } from "next-redux-wrapper";
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  persistStore,
+} from "redux-persist";
 
-// const persistConfig = {
-//   key: "root",
-//   storage: storageSession,
-// };
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+  devTools: process.env.NODE_ENV !== "production",
+});
 
-// const persistedReducer = persistReducer(persistConfig, reducer);
+const setupStore = (context: any): EnhancedStore => store;
 
-const makeStore = () => {
-  return configureStore({
-    reducer: reducer,
-    devTools: process.env.NODE_ENV !== "production",
-  });
-};
+const makeStore: MakeStore<any> = (context: any) => setupStore(context);
 
-export type AppStore = ReturnType<typeof makeStore>;
-export type AppState = ReturnType<AppStore["getState"]>;
+export const persistor = persistStore(store);
+
+export const wrapper = createWrapper<Store>(makeStore);
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  AppState,
+  RootState,
   unknown,
-  Action
+  Action<string>
 >;
-
-export const wrapper = createWrapper<AppStore>(makeStore);

@@ -1,25 +1,25 @@
-import { AnyAction, CombinedState, combineReducers } from "@reduxjs/toolkit";
-import { HYDRATE } from "next-redux-wrapper";
-
+import { CombinedState, combineReducers } from "@reduxjs/toolkit";
+import storageSession from "redux-persist/lib/storage/session";
+import storage from "../storage";
 import auth, { AuthState } from "./authSlice";
+import { PersistConfig, persistReducer } from "redux-persist";
 
 export type RootState = CombinedState<{ auth: AuthState }> | undefined;
 
 const rootReducer = combineReducers({ auth });
 
-const reducer = (state: RootState, action: AnyAction) => {
-  switch (action.type) {
-    case HYDRATE:
-      const nextState = {
-        ...state,
-        ...action.payload,
-      };
-
-      return nextState;
-
-    default:
-      return rootReducer(state, action);
-  }
+const persistConfig: PersistConfig<
+  CombinedState<{ auth: AuthState }>,
+  any,
+  any,
+  any
+> = {
+  key: "root",
+  storage,
+  version: 1,
+  whitelist: ["auth"],
 };
 
-export default reducer;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export default persistedReducer;

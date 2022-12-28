@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppState } from "../store/store";
 import { User } from "../../utils/types";
 import { HYDRATE } from "next-redux-wrapper";
+import { RootState } from "../store/store";
 
 // Type for our state
 export interface AuthState {
@@ -35,23 +35,19 @@ export const authSlice = createSlice({
       state.authUser = {};
     },
   },
-  // extraReducers: {
-  //   [HYDRATE]: (state, action) => {
-  //     console.log("HYDRATE  [state]");
-  //     console.log(state);
-
-  //     console.log("HYDRATE  [action]");
-  //     console.log(action);
-  //     return {
-  //       ...state,
-  //     };
-  //   },
-  // },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+  },
 });
 
 export const { setAuthState, setAuthUser, resetAuth } = authSlice.actions;
 
-export const selectAuthState = (state: AppState) => state.auth.authState;
-export const selectAuthUser = (state: AppState) => state.auth.authUser;
+export const selectAuthState = (state: RootState) => state.auth.authState;
+export const selectAuthUser = (state: RootState) => state.auth.authUser;
 
 export default authSlice.reducer;
