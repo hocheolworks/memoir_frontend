@@ -12,7 +12,7 @@ const Tag = ({ className, children, onClick }: TagPropType) => {
   return (
     <div className={className ?? ""}>
       <button
-        className="m-1 inline-flex items-center justify-center rounded-xl bg-violet-500 px-2 py-0.5 text-center text-base text-white"
+        className="m-1 inline-flex items-center justify-center rounded-xl bg-violet-500 px-3 py-1 text-center text-base text-white hover:brightness-110"
         onClick={onClick}
       >
         {children}

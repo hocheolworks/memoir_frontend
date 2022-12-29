@@ -20,6 +20,7 @@ const NavigationBar: FC<NavigationBarProps> = ({
       <div className="flex w-full justify-center text-black dark:text-white">
         {labels.map((value, index) => (
           <NavigationBtn
+            key={`nav#${index}`}
             isSelected={selectedIndex === index}
             onClick={() => {
               setSelectedIndex(index);

@@ -80,3 +80,16 @@ export type ContributionTooltipData = {
 export type WithRouterProps = {
   router: NextRouter;
 };
+
+export type Preview = {
+  directUrl: string;
+  githubId?: string; // 특정 id로 조회시 생략
+  avatar?: string; // 특정 id로 조회시 생략
+  thumbnailUrl?: string;
+  title: string;
+  abstract: string;
+  createDate: Date;
+  commentCount: number;
+  likeCount: number;
+  tagList?: Array<string>; // 특정 id로 조회시 필수
+};

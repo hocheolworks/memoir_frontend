@@ -1,5 +1,5 @@
 import { getRandomArbitrary, getWeekNumber } from "./functions";
-import { ContributionTile, User } from "./types";
+import { ContributionTile, Preview, User } from "./types";
 
 export const getDummyContributionData = (year: number) => {
   const dummyContributionData: (ContributionTile | null)[][] = Array.from(
@@ -41,3 +41,37 @@ export const dummyUser: User = {
   githubAccessToken: process.env.NEXT_PUBLIC_GITHUB_PAT_FOR_TEST ?? "", //expire on Tue, Dec 27 2022.
   memoirAccessToken: "tokenmemoirmemoir",
 };
+
+export const dummyPreview: Preview[] = [
+  {
+    directUrl: "/lhjeong60/메모아-엑싯-썰",
+    thumbnailUrl:
+      "https://img.delicious.com.au/WqbvXLhs/del/2016/06/more-the-merrier-31380-2.jpg",
+    title: "메모아 엑싯 썰",
+    abstract: "힝~ 속았지?",
+    createDate: new Date(),
+    commentCount: 0,
+    likeCount: 999,
+    tagList: ["메모아", "개쩌는-블로그"],
+  },
+  {
+    directUrl: "/lhjeong60/썸네일-없는-놈",
+    title: "썸네일-없는-놈",
+    abstract: "썸네일이 없는 녀석",
+    createDate: new Date("2022-12-22"),
+    commentCount: 100,
+    likeCount: 6,
+    tagList: ["썸네일"],
+  },
+  {
+    directUrl: "/lhjeong60/백만장자-되는-방법",
+    thumbnailUrl:
+      "https://images.theconversation.com/files/38926/original/5cwx89t4-1389586191.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip",
+    title: "백만장자 되는 방법",
+    abstract: "그딴거 없음",
+    createDate: new Date("2022-12-26"),
+    commentCount: 10,
+    likeCount: 20,
+    tagList: ["백만장자"],
+  },
+];

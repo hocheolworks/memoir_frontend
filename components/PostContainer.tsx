@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "./Post";
+import PreviewVertical from "./PreviewVertical";
 
 type PostContainerPropType = {
   className?: string;
@@ -13,14 +13,14 @@ function PostContainer({ className }: PostContainerPropType) {
         (className ? ` ${className}` : "")
       }
     >
-      <Post></Post>
-      <Post></Post>
-      <Post></Post>
-      <Post></Post>
-      <Post></Post>
-      <Post></Post>
-      <Post></Post>
-      <Post></Post>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
+      <PreviewVertical></PreviewVertical>
     </div>
   );
 }

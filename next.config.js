@@ -28,7 +28,11 @@ const nextConfig = {
   images: {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: ["avatars.githubusercontent.com", "ghchart.rshah.org"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "img.delicious.com.au", // 테스트 용
+      "images.theconversation.com", // 테스트 용
+    ],
   },
   env: {
     BASE_URL: process.env.BASE_URL,
