@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export type ErrorResponse = {
   statusCode: number;
@@ -9,11 +10,15 @@ export type ErrorResponse = {
 export const errorHandler = (e: any) => {
   if (axios.isAxiosError(e) && e.response) {
     const { statusCode, message } = e.response.data as ErrorResponse; // as 안쓸 방법이 없을까..?
-    console.log(
-      `Error :${statusCode ? " " + statusCode + " " : ""} ${message}`
-    );
+    // console.log(
+    //   `Error :${statusCode ? " " + statusCode + " " : ""} ${message}`
+    // );
     if (typeof window !== "undefined") {
-      alert(message);
+      // alert(message);
+      toast(`Error :${statusCode ? " " + statusCode + " " : ""} ${message}`, {
+        type: "error",
+        theme: "colored",
+      });
     }
   } else {
     console.log(e);

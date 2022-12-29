@@ -2,11 +2,13 @@ import React, { useRef, useState } from "react";
 import Tag from "./Tag";
 
 type TagInputPropType = {
+  tagList: Array<string>;
+  setTagList: (tagList: Array<string>) => void;
   className?: string;
 };
 
-const TagInput = ({ className }: TagInputPropType) => {
-  const [tagList, setTagList] = useState<Array<string>>([]);
+const TagInput = ({ tagList, setTagList, className }: TagInputPropType) => {
+  // const [tagList, setTagList] = useState<Array<string>>([]);
   const [popup, setPopup] = useState<boolean>(false);
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const [currentTag, setCurrentTag] = useState<string>("");

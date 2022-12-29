@@ -18,6 +18,11 @@ import TagInput from "../components/TagInput";
 import { getCommands } from "../components/MDEditor/commands";
 import BottomBar from "../components/BottomBar";
 import PublishPopup from "../components/PublishPopup";
+import { toast, TypeOptions } from "react-toastify";
+import PostAPI from "../api/post/postAPI";
+import { useSelector } from "react-redux";
+import { selectAuthUser } from "../redux/modules/authSlice";
+import { errorHandler } from "../api/error";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
@@ -39,16 +44,6 @@ const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
   loading: () => <div className="flex-1"></div>,
 });
 
-// const MDEditorMarkdown = dynamic(
-//   () => import("@uiw/react-md-editor").then((mod) => mod.default.Markdown),
-//   {
-//     ssr: false,
-//     loading: () => (
-//       <div className="hidden h-full bg-neutral-50 dark:bg-neutral-900 lg:block lg:w-1/2"></div>
-//     ),
-//   }
-// );
-
 const Markdown = dynamic(
   () => import("../components/MDEditor/wrappers/WrappedMarkdown"),
   {
@@ -66,14 +61,20 @@ ForwardRefMarkdown.displayName = "ForwardRefMarkdown";
 
 const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
+  const user = useSelector(selectAuthUser);
   const [title, setTitle] = useState<string>("");
   const [editContent, setEditContent] = useState<string | undefined>("");
+  const [tagList, setTagList] = useState<Array<string>>([]);
+
   const [previewContent, setPreviewContent] = useState<string | undefined>("");
   const [selectionStart, setSelectionStart] = useState<number | undefined>(0);
   const [isPublishPopupOpen, setIsPublishPopupOpen] = useState<boolean>(false);
 
+  const isTypingRef = useRef<boolean>(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<MarkdownPreviewRef>(null);
+  const timeoutRef = useRef<number>(-1);
 
   useEffect(() => {
     if (title === "") {
@@ -84,6 +85,25 @@ const Write: NextPageWithLayout = () => {
       setPreviewContent(tempTitle + editContent);
     }
   }, [title, editContent]);
+
+  useEffect(() => {
+    // 디바운싱
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+    }
+    const newTimer = window.setTimeout(() => {
+      onClickSaveTemp();
+    }, 10000);
+    timeoutRef.current = newTimer;
+  }, [title, editContent, tagList]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current !== -1) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleResizeHeight = useCallback(() => {
     if (textareaRef && textareaRef.current) {
@@ -123,9 +143,46 @@ const Write: NextPageWithLayout = () => {
     []
   );
 
-  const onClickSaveTemp = useCallback(() => {
+  const onClickSaveTemp = useCallback(async () => {
     // TODO: 임시저장 api 요청
-  }, []);
+    let toastType: TypeOptions;
+    let toastMessage: string;
+    const isReady = title && editContent;
+
+    if (!isReady) {
+      toastType = "warning";
+      toastMessage = "제목 또는 내용이 비어있습니다.";
+    } else {
+      try {
+        const res = await PostAPI.saveTempPost({
+          githubId: user.githubId ?? "",
+          title: title,
+          content: editContent,
+          tagList: tagList,
+        });
+
+        if (res.status === 200 || res.status === 201) {
+          toastType = "success";
+          toastMessage = "임시저장이 완료되었습니다.";
+        } else {
+          toastType = "error";
+          toastMessage = `임시저장 실패 : ${res.status}`;
+        }
+      } catch (e) {
+        toastType = "error";
+        toastMessage = "임시저장에 실패했습니다.";
+        errorHandler(e);
+      }
+    }
+
+    toast(toastMessage, {
+      theme: theme === "dark" ? "dark" : "light",
+      // theme: "colored",
+      autoClose: 1500,
+      type: toastType,
+    });
+  }, [title, editContent, tagList]);
+
   const onClickPublishPopup = useCallback(() => {
     if (!isPublishPopupOpen) {
       setIsPublishPopupOpen(true);
@@ -152,7 +209,11 @@ const Write: NextPageWithLayout = () => {
               rows={1}
             />
             <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
-            <TagInput className="mb-4" />
+            <TagInput
+              tagList={tagList}
+              setTagList={setTagList}
+              className="mb-4"
+            />
           </div>
 
           {/* preview와 다르게 왜 padding을 여기서 지정하지 않고 css로 지정하였나? 
@@ -191,7 +252,7 @@ const Write: NextPageWithLayout = () => {
         </div>
         <ForwardRefMarkdown
           source={previewContent}
-          className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-900 lg:block lg:w-1/2"
+          className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-800 lg:block lg:w-1/2"
           style={{ whiteSpace: "pre-wrap" }}
           ref={previewRef}
         />

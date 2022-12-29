@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GithubCodeDto, GithubSignUpDto } from "../dto";
+import { jsonHeader } from "../common";
+import {
+  GithubCodeDto,
+  GithubGetContributionDto,
+  GithubSignUpDto,
+} from "./userDto";
 
 const UserAPI = {
   login: (githubCodeDto: GithubCodeDto) => {
@@ -8,11 +13,7 @@ const UserAPI = {
       JSON.stringify({
         code: githubCodeDto.code,
       }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      jsonHeader
     );
   },
   signUp: (githubSignUpDto: GithubSignUpDto) => {
@@ -24,15 +25,15 @@ const UserAPI = {
         email: githubSignUpDto.email,
         githubAccessToken: githubSignUpDto.githubAccessToken,
       }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      jsonHeader
     );
   },
 
-  getContributionData: (token: string, username: string, year: number) => {
+  getContributionData: ({
+    token,
+    username,
+    year,
+  }: GithubGetContributionDto) => {
     const query = `query {
       user(login: "${username}") {
         contributionsCollection(from: "${year}-01-01T00:00:00" , to:"${year}-12-31T23:59:59") {

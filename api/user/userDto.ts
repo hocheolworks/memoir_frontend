@@ -8,3 +8,9 @@ export type GithubSignUpDto = {
   email: string;
   githubAccessToken: string;
 };
+
+export type GithubGetContributionDto = {
+  token: string;
+  username: string;
+  year: number;
+};

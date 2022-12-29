@@ -21,11 +21,11 @@ export async function getServerSideProps({ query }: NextPageContext) {
   );
 
   try {
-    const res = await UserAPI.getContributionData(
-      decodedData,
-      userId as string,
-      new Date().getFullYear()
-    );
+    const res = await UserAPI.getContributionData({
+      token: decodedData,
+      username: userId as string,
+      year: new Date().getFullYear(),
+    });
 
     const contributionCalendar: ContributionCalendar =
       res.data.data.user.contributionsCollection.contributionCalendar;
@@ -56,11 +56,11 @@ const Index: NextPage<
     }
 
     try {
-      const res = await UserAPI.getContributionData(
-        user.githubAccessToken ?? "",
-        user.githubId ?? "",
-        new Date().getFullYear()
-      );
+      const res = await UserAPI.getContributionData({
+        token: user.githubAccessToken ?? "",
+        username: user.githubId ?? "",
+        year: new Date().getFullYear(),
+      });
 
       const contributionCalendar: ContributionCalendar =
         res.data.data.user.contributionsCollection.contributionCalendar;
