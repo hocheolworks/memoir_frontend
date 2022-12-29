@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
 import CircleAvatar from "../../components/CircleAvatar";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../../redux/modules/authSlice";
@@ -12,6 +12,7 @@ import { errorHandler } from "../../api/error";
 import { withRouter } from "next/router";
 import { decodeByAES256 } from "../../utils/functions";
 import { NextPageContext } from "next/types";
+import NavigationBar from "../../components/NavigationBar";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
@@ -41,8 +42,9 @@ export async function getServerSideProps({ query }: NextPageContext) {
 
 const Index: NextPage<
   { contributionData: ContributionCalendar } & WithRouterProps
-> = ({ contributionData, router }) => {
+> = ({ contributionData }) => {
   const user = useSelector(selectAuthUser);
+  const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
 
@@ -74,7 +76,7 @@ const Index: NextPage<
 
   return (
     <div className="flex h-full w-full items-start justify-center">
-      <div className="flex-1 bg-black text-center brightness-75"></div>
+      <div className="flex-1 bg-black text-center brightness-75">Left</div>
       <div className="flex w-[832px] flex-col items-center text-center">
         <div className="w-full px-1 pt-8">
           <div className="flex items-center justify-between">
@@ -123,11 +125,14 @@ const Index: NextPage<
             )}
           </div>
         </div>
-        <div className="my-4 h-0.5 w-full bg-neutral-500 opacity-50"></div>
-        {/* <div className="bg-neutral-500"></div>
-        <div className="bg-neutral-500"></div> */}
+        <NavigationBar
+          selectedIndex={selectedNavIndex}
+          setSelectedIndex={setSelectedNavIndex}
+          labels={["글", "시리즈", "소개"]}
+          className="mt-8"
+        />
       </div>
-      <div className="flex-1 bg-neutral-300 text-center"></div>
+      <div className="flex-1 bg-neutral-300 text-center">Right</div>
     </div>
   );
 };

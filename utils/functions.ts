@@ -85,3 +85,8 @@ export const decodeByAES256 = (key: string, data: string) => {
   });
   return cipher.toString(CryptoJS.enc.Utf8);
 };
+
+export const getPercentage = (length: number, value: number): string => {
+  const divided = (value / length) * 100;
+  return divided.toFixed(5) + "%";
+};
