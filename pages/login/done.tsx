@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { errorHandler } from "../../api/error";
 import UserAPI from "../../api/user/userAPI";
@@ -8,14 +8,12 @@ import { dummyUser } from "../../utils/dummy";
 import { User } from "../../utils/types";
 import { NextPageWithLayout } from "../_app";
 import { GridLoader } from "react-spinners";
-import BottomBtn from "../../components/BottomBtn";
 import Link from "next/link";
 
 const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { code } = router.query;
-  const [isHomeBtnVisible, setIsHomeBtnVisible] = useState<boolean>(false);
   const homeBtnRef = useRef<HTMLButtonElement>(null);
 
   const asyncWrapper = async () => {
@@ -44,7 +42,7 @@ const LoginDone: NextPageWithLayout = () => {
 
     if (!code) {
       dispatch(resetAuth());
-      alert("로그인에 실패했습니다. \n 다시 시도해주세요.");
+      alert("로그인에 실패했습니다. \n다시 시도해주세요.");
       router.push("/");
       return;
     }
