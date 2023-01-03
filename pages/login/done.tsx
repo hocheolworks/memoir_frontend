@@ -40,6 +40,8 @@ const LoginDone: NextPageWithLayout = () => {
       return;
     }
 
+    if (!router.isReady) return;
+
     if (!code) {
       dispatch(resetAuth());
       alert("로그인에 실패했습니다. \n다시 시도해주세요.");
@@ -52,16 +54,21 @@ const LoginDone: NextPageWithLayout = () => {
       }
     }, 5000);
 
-    asyncWrapper();
+    try {
+      asyncWrapper();
+    } catch (e) {
+      console.log("aa");
+      router.push("/");
+    }
 
     clearTimeout(timeout);
-  }, []);
+  }, [router.isReady]);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <GridLoader
         loading={code !== undefined || process.env.NODE_ENV === "development"}
-        size={"30"}
+        size={30}
         color="#904CF9"
       />
       <Link href={"/"}>
