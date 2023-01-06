@@ -4,6 +4,7 @@ import React, { FC, useEffect, useState } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon } from "@react-icons/all-files/fa/FaMoon";
+import { BsFillBrightnessHighFill } from "@react-icons/all-files/bs/BsFillBrightnessHighFill";
 import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
 import LabelBtn from "./LabelBtn";
@@ -70,7 +71,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
           <IconBtn
             className="mr-2"
             onClick={brightModeBtnClick}
-            Icon={FaMoon}
+            Icon={theme === "dark" ? BsFillBrightnessHighFill : FaMoon}
             size={22}
           />
           <IconBtn
