@@ -17,7 +17,9 @@ export const errorHandler = (e: any) => {
       // alert(message);
       console.log(e.response.data);
       toast(
-        `${statusCode ? " " + "[" + statusCode + "]" + " " : ""} ${error}`,
+        `${statusCode ? "" + "[" + statusCode + "]" + " " : ""} ${
+          error ?? message
+        }`,
         {
           type: "error",
           theme: "colored",

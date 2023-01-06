@@ -33,13 +33,13 @@ const PreviewHorizontal: FC<PreviewHorizontalProps> = ({
       }`}
     >
       {thumbnailUrl && (
-        <Link href={directUrl}>
-          <div className="relative h-[452px] w-full">
+        <Link href={directUrl} className="w-full">
+          <div className="relative aspect-video w-full">
             <Image
               src={thumbnailUrl}
               layout="fill"
-              alt="thumbnail"
               objectFit="cover"
+              alt="thumbnail"
               className="cursor-pointer"
             />
           </div>

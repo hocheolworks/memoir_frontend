@@ -49,71 +49,74 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
   );
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
         {contributionData?.totalContributions} contributions in{" "}
         {selectedYear ?? "the last year"}
       </p>
-      <svg width={width} height={height}>
-        <g transform="translate(15, 20)">
-          {contributionData?.weeks.map((week, weekIdx) => {
-            const days = week.contributionDays;
+      <div className="flex flex-col items-end 823px:items-center">
+        <svg width={width} height={height} className="overflow-x-hidden">
+          <g transform="translate(15, 20)">
+            {contributionData?.weeks.map((week, weekIdx) => {
+              const days = week.contributionDays;
 
-            const [monthNumber, monthName] = isSameMonth(
-              days[0].date,
-              days[days.length - 1].date
-            );
+              const [monthNumber, monthName] = isSameMonth(
+                days[0].date,
+                days[days.length - 1].date
+              );
 
-            const displayFlag =
-              monthNumber !== -1 && prevMonthNumber === monthNumber;
+              const displayFlag =
+                monthNumber !== -1 && prevMonthNumber === monthNumber;
 
-            if (prevMonthNumber === monthNumber) {
-              prevMonthNumber++;
-            }
-            return (
-              <Fragment key={`fragment${weekIdx}`}>
-                <g
-                  key={`weeks${weekIdx}`}
-                  transform={`translate(${weekIdx * 16}, 0)`}
-                >
-                  {days.map(
-                    (day) =>
-                      day && (
-                        <Rect
-                          size={11}
-                          x={16 - weekIdx}
-                          y={day.weekday * 15}
-                          count={day.contributionCount ?? 0}
-                          date={day.date}
-                          level={parseLevel(day.contributionLevel)}
-                          key={`date${day.date}`}
-                          setData={setData}
-                          setIsHover={setIsHover}
-                        ></Rect>
-                      )
+              if (prevMonthNumber === monthNumber) {
+                prevMonthNumber++;
+              }
+              return (
+                <Fragment key={`fragment${weekIdx}`}>
+                  <g
+                    key={`weeks${weekIdx}`}
+                    transform={`translate(${weekIdx * 16}, 0)`}
+                  >
+                    {days.map(
+                      (day) =>
+                        day && (
+                          <Rect
+                            size={11}
+                            x={16 - weekIdx}
+                            y={day.weekday * 15}
+                            count={day.contributionCount ?? 0}
+                            date={day.date}
+                            level={parseLevel(day.contributionLevel)}
+                            key={`date${day.date}`}
+                            setData={setData}
+                            setIsHover={setIsHover}
+                          ></Rect>
+                        )
+                    )}
+                  </g>
+                  {displayFlag && (
+                    <CalenderLabel x={15 * weekIdx + 16} y={-8}>
+                      {monthName}
+                    </CalenderLabel>
                   )}
-                </g>
-                {displayFlag && (
-                  <CalenderLabel x={15 * weekIdx + 16} y={-8}>
-                    {monthName}
-                  </CalenderLabel>
-                )}
-              </Fragment>
-            );
-          })}
-          {weekDayLabels.map((value, index) => (
-            <CalenderLabel
-              key={value[0]}
-              textAnchor="end"
-              dx={10}
-              dy={value[1]}
-              hidden={index % 2 === 0}
-            >
-              {value[0]}
-            </CalenderLabel>
-          ))}
-        </g>
-      </svg>
+                </Fragment>
+              );
+            })}
+            {weekDayLabels.map((value, index) => (
+              <CalenderLabel
+                key={value[0]}
+                textAnchor="end"
+                dx={10}
+                dy={value[1]}
+                hidden={index % 2 === 0}
+              >
+                {value[0]}
+              </CalenderLabel>
+            ))}
+          </g>
+        </svg>
+      </div>
+
       <div className="mt-1 flex w-full items-center justify-end px-0 text-xs text-neutral-500">
         Less
         <svg className="px-1" width={74} height={10}>

@@ -5,18 +5,20 @@ type NavigationBtnProps = {
   isSelected: boolean;
   onClick: () => void;
   children: Children;
+  className?: string;
 };
 
 const NavigationBtn: FC<NavigationBtnProps> = ({
   isSelected,
   children,
   onClick,
+  className,
 }) => {
   return (
     <button
-      className={`w-32 py-2.5 text-xl font-semibold ${
+      className={`py-2.5 text-xl font-semibold ${
         isSelected ? "text-point" : ""
-      }`}
+      } ${className ?? ""}`}
       onClick={onClick}
     >
       {children}

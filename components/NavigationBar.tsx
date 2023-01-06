@@ -25,6 +25,7 @@ const NavigationBar: FC<NavigationBarProps> = ({
             onClick={() => {
               setSelectedIndex(index);
             }}
+            className={`w-1/3`}
           >
             {value}
           </NavigationBtn>

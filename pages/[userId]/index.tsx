@@ -82,7 +82,7 @@ const Index: NextPage<
       <div className="flex-1 bg-black text-center brightness-75">
         {/*Left*/}
       </div>
-      <div className="flex w-[832px] flex-col items-center text-center">
+      <div className="flex w-full flex-col items-center text-center 823px:w-[832px]">
         <div className="w-full px-1 pt-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -134,11 +134,11 @@ const Index: NextPage<
           selectedIndex={selectedNavIndex}
           setSelectedIndex={setSelectedNavIndex}
           labels={["글", "시리즈", "소개"]}
-          className="mt-8"
+          className="my-8 w-full 823px:w-96"
         />
         {selectedNavIndex === 0 && (
           <>
-            <div className="mb-4 flex w-full justify-end">
+            <div className="mb-4 hidden w-full justify-end first:flex">
               <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-700">
                 <AiOutlineSearch />
                 <input className="ml-1 bg-inherit text-sm outline-none"></input>

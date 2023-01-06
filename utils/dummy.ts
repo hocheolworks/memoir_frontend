@@ -57,7 +57,8 @@ export const dummyPreview: Preview[] = [
   {
     directUrl: "/lhjeong60/썸네일-없는-놈",
     title: "썸네일-없는-놈",
-    abstract: "썸네일이 없는 녀석",
+    abstract:
+      "썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석",
     createDate: new Date("2022-12-22"),
     commentCount: 100,
     likeCount: 6,

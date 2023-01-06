@@ -19,6 +19,7 @@ module.exports = {
     extend: {
       screens: {
         // calc(100%-2rem)
+        "823px": "823px",
         zero: "767px",
         first: "1056px", // 1024px
         second: "1440px", // 1376px
