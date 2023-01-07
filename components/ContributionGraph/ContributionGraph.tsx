@@ -1,4 +1,4 @@
-import { FC, Fragment, useCallback, useState } from "react";
+import { FC, Fragment, useCallback, useRef, useState } from "react";
 import Rect from "./Rect";
 import CalenderLabel from "./CalenderLabel";
 import { weekDayLabels } from "../../utils/constants";
@@ -27,6 +27,8 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
     new Date().getFullYear()
   );
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const setData = useCallback(
     (
       x: number,
@@ -49,7 +51,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
   );
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden" ref={containerRef}>
       <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
         {contributionData?.totalContributions} contributions in{" "}
         {selectedYear ?? "the last year"}
@@ -134,7 +136,18 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
         </svg>
         More
       </div>
-      {isHover && tooltipData && <ContributionTooltip data={tooltipData} />}
+      {isHover && tooltipData && (
+        <ContributionTooltip
+          data={tooltipData}
+          containerLeft={
+            containerRef.current?.getBoundingClientRect().left ?? 0
+          }
+          containerRight={
+            (containerRef.current?.getBoundingClientRect().left ?? 0) +
+            (containerRef.current?.getBoundingClientRect().width ?? 0)
+          }
+        />
+      )}
     </div>
   );
 };
