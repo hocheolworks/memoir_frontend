@@ -1,5 +1,5 @@
 import { getRandomArbitrary, getWeekNumber } from "./functions";
-import { ContributionTile, Preview, User } from "./types";
+import { ContributionTile, Preview, Series, User } from "./types";
 
 export const getDummyContributionData = (year: number) => {
   const dummyContributionData: (ContributionTile | null)[][] = Array.from(
@@ -74,5 +74,44 @@ export const dummyPreview: Preview[] = [
     commentCount: 10,
     likeCount: 20,
     tagList: ["백만장자"],
+  },
+];
+
+export const dummySeriesList: Series[] = [
+  {
+    thumbnailUrl:
+      "https://velog.velcdn.com/images/lhjeong60/post/88e6560b-c7fc-4bdf-b0c4-426a932ecce3/image.png",
+    title: "삽질기",
+    lastUpdateDate: new Date("2022-12-27"),
+    postCount: 1,
+  },
+  {
+    thumbnailUrl:
+      "https://velog.velcdn.com/images/lhjeong60/post/c110eb22-2233-4823-9546-0eed4528b5b0/image.png",
+    title: "Project.LetUWin",
+    lastUpdateDate: new Date("2022-10-14"),
+    postCount: 7,
+  },
+  {
+    title: "MongoDB",
+    lastUpdateDate: new Date("2022-10-14"),
+    postCount: 2,
+  },
+  {
+    thumbnailUrl:
+      "https://velog.velcdn.com/images/lhjeong60/post/e5aabdf1-288f-40d0-a627-7277694c89ac/image.png",
+    title: "Express",
+    lastUpdateDate: new Date("2022-10-14"),
+    postCount: 2,
+  },
+  {
+    title: "React",
+    lastUpdateDate: new Date("2022-10-14"),
+    postCount: 5,
+  },
+  {
+    title: "swift",
+    lastUpdateDate: new Date("2022-02-09"),
+    postCount: 1,
   },
 ];

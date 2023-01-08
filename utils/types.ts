@@ -93,3 +93,10 @@ export type Preview = {
   likeCount: number;
   tagList?: Array<string>; // 특정 id로 조회시 필수
 };
+
+export type Series = {
+  thumbnailUrl?: string;
+  title: string;
+  postCount: number;
+  lastUpdateDate: Date;
+};

@@ -13,9 +13,10 @@ import { withRouter } from "next/router";
 import { decodeByAES256 } from "../../utils/functions";
 import { NextPageContext } from "next/types";
 import NavigationBar from "../../components/NavigationBar";
-import { dummyPreview } from "../../utils/dummy";
+import { dummyPreview, dummySeriesList } from "../../utils/dummy";
 import PreviewHorizontal from "../../components/PreviewHorizontal";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
+import Series from "../../components/Series";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
@@ -136,7 +137,7 @@ const Index: NextPage<
           labels={["글", "시리즈", "소개"]}
           className="my-8 w-full 823px:w-96"
         />
-        {selectedNavIndex === 0 && (
+        {selectedNavIndex === 0 && ( // 시리즈
           <>
             <div className="mb-4 hidden w-full justify-end first:flex">
               <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-700">
@@ -152,6 +153,18 @@ const Index: NextPage<
               />
             ))}
           </>
+        )}
+        {selectedNavIndex === 1 && ( // 시리즈
+          <div className="flex flex-wrap">
+            {dummySeriesList.map((value, index) => (
+              <Series
+                key={`myPreview#${index}`}
+                series={value}
+                index={index}
+                className="w-full px-4 py-6 823px:w-1/2"
+              />
+            ))}
+          </div>
         )}
       </div>
       <div className="flex-1 text-center">{/*Right*/}</div>

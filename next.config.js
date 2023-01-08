@@ -30,6 +30,8 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     domains: [
       "avatars.githubusercontent.com",
+      "static.velog.io",
+      "velog.velcdn.com", // 테스트 용
       "img.delicious.com.au", // 테스트 용
       "images.theconversation.com", // 테스트 용
     ],
