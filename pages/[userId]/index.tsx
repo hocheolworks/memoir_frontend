@@ -17,6 +17,8 @@ import { dummyPreview, dummySeriesList } from "../../utils/dummy";
 import PreviewHorizontal from "../../components/PreviewHorizontal";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import Series from "../../components/Series";
+import NoContents from "../../components/NoContents";
+import Introduction from "../../components/Introduction";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
@@ -137,34 +139,43 @@ const Index: NextPage<
           labels={["글", "시리즈", "소개"]}
           className="my-8 w-full 823px:w-96"
         />
-        {selectedNavIndex === 0 && ( // 시리즈
-          <>
-            <div className="mb-4 hidden w-full justify-end first:flex">
-              <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-700">
-                <AiOutlineSearch />
-                <input className="ml-1 bg-inherit text-sm outline-none"></input>
+        {selectedNavIndex === 0 &&
+          (dummyPreview.length !== 0 ? ( // 시리즈
+            <>
+              <div className="mb-4 hidden w-full justify-end first:flex">
+                <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-700">
+                  <AiOutlineSearch />
+                  <input className="ml-1 bg-inherit text-sm outline-none"></input>
+                </div>
               </div>
+              {dummyPreview.map((value, index) => (
+                <PreviewHorizontal
+                  key={`myPreview#${index}`}
+                  preview={value}
+                  index={index}
+                />
+              ))}
+            </>
+          ) : (
+            <NoContents type="post" />
+          ))}
+        {selectedNavIndex === 1 && // 시리즈
+          (dummySeriesList.length !== 0 ? (
+            <div className="flex flex-wrap">
+              {dummySeriesList.map((value, index) => (
+                <Series
+                  key={`myPreview#${index}`}
+                  series={value}
+                  index={index}
+                  className="w-full px-4 py-6 823px:w-1/2"
+                />
+              ))}
             </div>
-            {dummyPreview.map((value, index) => (
-              <PreviewHorizontal
-                key={`myPreview#${index}`}
-                preview={value}
-                index={index}
-              />
-            ))}
-          </>
-        )}
-        {selectedNavIndex === 1 && ( // 시리즈
-          <div className="flex flex-wrap">
-            {dummySeriesList.map((value, index) => (
-              <Series
-                key={`myPreview#${index}`}
-                series={value}
-                index={index}
-                className="w-full px-4 py-6 823px:w-1/2"
-              />
-            ))}
-          </div>
+          ) : (
+            <NoContents type="series" />
+          ))}
+        {selectedNavIndex === 2 && (
+          <Introduction userId={user.githubId ?? ""}></Introduction>
         )}
       </div>
       <div className="flex-1 text-center">{/*Right*/}</div>

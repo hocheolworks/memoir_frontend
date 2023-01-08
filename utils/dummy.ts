@@ -115,3 +115,6 @@ export const dummySeriesList: Series[] = [
     postCount: 1,
   },
 ];
+
+export const dummyIntroduction =
+  "안녕하세요 이호정 입니다.\n\n소개글 영역이 어떻게 생겨 먹었나 테스트하기위해 만들었습니다.\n\n잘부탁드립니다. 허허";
