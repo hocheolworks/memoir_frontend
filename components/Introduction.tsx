@@ -68,7 +68,7 @@ const Introduction: FC<IntroductionProps> = ({ className, userId }) => {
           작성된 소개가 없습니다.
         </p>
       ) : (
-        <div className="w-full text-left text-lg">
+        <div className="w-full pb-12 text-left text-lg">
           {isEditMode ? (
             <textarea
               ref={textareaRef}
@@ -79,12 +79,18 @@ const Introduction: FC<IntroductionProps> = ({ className, userId }) => {
                 setIntroduceText(e.target.value);
                 // handleResizeHeight();
               }}
-              rows={introduceText.split("\n").length}
+              rows={introduceText.split("\n").length + 1}
             ></textarea>
           ) : (
             introduceText
               .split("\n")
-              .map((value) => (value !== "" ? <p>{value}</p> : <br />))
+              .map((value, index) =>
+                value !== "" ? (
+                  <p key={`introLine#${index}`}>{value}</p>
+                ) : (
+                  <br key={`introLine${index}`} />
+                )
+              )
           )}
         </div>
       )}
