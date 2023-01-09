@@ -1,5 +1,5 @@
 import { getRandomArbitrary, getWeekNumber } from "./functions";
-import { ContributionTile, Preview, Series, User } from "./types";
+import { ContributionTile, Preview, Series, TagData, User } from "./types";
 
 export const getDummyContributionData = (year: number) => {
   const dummyContributionData: (ContributionTile | null)[][] = Array.from(
@@ -43,6 +43,16 @@ export const dummyUser: User = {
 };
 
 export const dummyPreview: Preview[] = [
+  // {
+  //   directUrl: "/lhjeong60/썸네일-없는-놈",
+  //   title: "썸네일-없는-놈",
+  //   abstract:
+  //     "썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석 썸네일 없는 녀석",
+  //   createDate: new Date("2022-12-22"),
+  //   commentCount: 100,
+  //   likeCount: 6,
+  //   tagList: ["썸네일"],
+  // },
   {
     directUrl: "/lhjeong60/메모아-엑싯-썰",
     thumbnailUrl:
@@ -118,3 +128,10 @@ export const dummySeriesList: Series[] = [
 
 export const dummyIntroduction =
   "안녕하세요 이호정 입니다.\n\n소개글 영역이 어떻게 생겨 먹었나 테스트하기위해 만들었습니다.\n\n잘부탁드립니다. 허허";
+
+export const dummyTagList: TagData[] = [
+  { name: "메모아", count: 1 },
+  { name: "개쩌는-블로그", count: 1 },
+  { name: "썸네일", count: 1 },
+  { name: "백만장자", count: 1 },
+];

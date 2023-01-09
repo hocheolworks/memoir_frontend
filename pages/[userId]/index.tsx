@@ -9,25 +9,26 @@ import ContributionGraph from "../../components/ContributionGraph/ContributionGr
 import { ContributionCalendar, WithRouterProps } from "../../utils/types";
 import UserAPI from "../../api/user/userAPI";
 import { errorHandler } from "../../api/error";
-import { withRouter } from "next/router";
+import { useRouter, withRouter } from "next/router";
 import { decodeByAES256 } from "../../utils/functions";
 import { NextPageContext } from "next/types";
 import NavigationBar from "../../components/NavigationBar";
-import { dummyPreview, dummySeriesList } from "../../utils/dummy";
+import { dummyPreview, dummySeriesList, dummyTagList } from "../../utils/dummy";
 import PreviewHorizontal from "../../components/PreviewHorizontal";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import Series from "../../components/Series";
 import NoContents from "../../components/NoContents";
 import Introduction from "../../components/Introduction";
+import TagList from "../../components/TagList";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
-  const decodedData = decodeByAES256(
-    "githubAccessToken".padEnd(32, " "),
-    data as string
-  );
 
   try {
+    const decodedData = decodeByAES256(
+      "githubAccessToken".padEnd(32, " "),
+      data as string
+    );
     const res = await UserAPI.getContributionData({
       token: decodedData,
       username: userId as string,
@@ -50,11 +51,14 @@ const Index: NextPage<
   { contributionData: ContributionCalendar } & WithRouterProps
 > = ({ contributionData }) => {
   const user = useSelector(selectAuthUser);
+  const router = useRouter();
+  const { userId } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
 
   useEffect(() => {
+    // 회원정보가 없어도 방문가능하지 않니?
     if (!user) alert("회원정보가 없습니다.");
   }, [user]);
 
@@ -66,7 +70,7 @@ const Index: NextPage<
     try {
       const res = await UserAPI.getContributionData({
         token: user.githubAccessToken ?? "",
-        username: user.githubId ?? "",
+        username: (userId as string) ?? "",
         year: new Date().getFullYear(),
       });
 
@@ -82,11 +86,17 @@ const Index: NextPage<
 
   return (
     <div className="flex h-full w-full items-start justify-center">
-      <div className="flex-1 bg-black text-center brightness-75">
-        {/*Left*/}
+      <div className="flex flex-1 flex-col items-end">
+        {selectedNavIndex === 0 && (
+          <TagList
+            className="mr-4 mt-[465px]"
+            userId={userId as string}
+            tagList={dummyTagList}
+          />
+        )}
       </div>
-      <div className="flex w-full flex-col items-center text-center 823px:w-[832px]">
-        <div className="w-full px-1 pt-8">
+      <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
+        <div className="w-full pt-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <CircleAvatar
@@ -96,13 +106,12 @@ const Index: NextPage<
                 width={50}
                 height={50}
               ></CircleAvatar>
-              <p className="ml-2 text-2xl">{user.githubId}</p>
+              <p className="ml-2 text-2xl">{userId}</p>
             </div>
             <div className="flex h-8 items-center">
-              {/* <p className="mr-2 text-xs text-neutral-500">{user.githubId}</p> */}
               <Link
                 href={`https://github.com/${encodeURIComponent(
-                  user.githubId ?? ""
+                  (userId as string) ?? ""
                 )}`}
               >
                 <a className="h-8 w-8 brightness-50 invert hover:brightness-75 dark:invert-0">
@@ -137,13 +146,13 @@ const Index: NextPage<
           selectedIndex={selectedNavIndex}
           setSelectedIndex={setSelectedNavIndex}
           labels={["글", "시리즈", "소개"]}
-          className="my-8 w-full 823px:w-96"
+          className="my-8 w-full contribution-width:w-96"
         />
         {selectedNavIndex === 0 &&
           (dummyPreview.length !== 0 ? ( // 시리즈
             <>
               <div className="mb-4 hidden w-full justify-end first:flex">
-                <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-700">
+                <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-800">
                   <AiOutlineSearch />
                   <input className="ml-1 bg-inherit text-sm outline-none"></input>
                 </div>
@@ -167,7 +176,7 @@ const Index: NextPage<
                   key={`myPreview#${index}`}
                   series={value}
                   index={index}
-                  className="w-full px-4 py-6 823px:w-1/2"
+                  className="w-full px-4 py-6 contribution-width:w-1/2"
                 />
               ))}
             </div>
@@ -175,7 +184,7 @@ const Index: NextPage<
             <NoContents type="series" />
           ))}
         {selectedNavIndex === 2 && (
-          <Introduction userId={user.githubId ?? ""}></Introduction>
+          <Introduction userId={userId as string}></Introduction>
         )}
       </div>
       <div className="flex-1 text-center">{/*Right*/}</div>

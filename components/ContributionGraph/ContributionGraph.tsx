@@ -56,7 +56,7 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
         {contributionData?.totalContributions} contributions in{" "}
         {selectedYear ?? "the last year"}
       </p>
-      <div className="flex flex-col items-end 823px:items-center">
+      <div className="flex flex-col items-end contribution-width:items-center">
         <svg width={width} height={height} className="overflow-x-hidden">
           <g transform="translate(15, 20)">
             {contributionData?.weeks.map((week, weekIdx) => {

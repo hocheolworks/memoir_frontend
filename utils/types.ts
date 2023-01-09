@@ -100,3 +100,8 @@ export type Series = {
   postCount: number;
   lastUpdateDate: Date;
 };
+
+export type TagData = {
+  name: string;
+  count: number;
+};
