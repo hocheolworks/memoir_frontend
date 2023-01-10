@@ -20,6 +20,7 @@ import Series from "../../components/Series";
 import NoContents from "../../components/NoContents";
 import Introduction from "../../components/Introduction";
 import TagList from "../../components/TagList";
+import PostList from "../../components/PostList";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
@@ -52,7 +53,7 @@ const Index: NextPage<
 > = ({ contributionData }) => {
   const user = useSelector(selectAuthUser);
   const router = useRouter();
-  const { userId } = router.query;
+  const { userId, tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
@@ -148,26 +149,32 @@ const Index: NextPage<
           labels={["글", "시리즈", "소개"]}
           className="my-8 w-full contribution-width:w-96"
         />
-        {selectedNavIndex === 0 &&
-          (dummyPreview.length !== 0 ? ( // 시리즈
-            <>
-              <div className="mb-4 hidden w-full justify-end first:flex">
-                <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-800">
-                  <AiOutlineSearch />
-                  <input className="ml-1 bg-inherit text-sm outline-none"></input>
-                </div>
-              </div>
-              {dummyPreview.map((value, index) => (
-                <PreviewHorizontal
-                  key={`myPreview#${index}`}
-                  preview={value}
-                  index={index}
-                />
-              ))}
-            </>
-          ) : (
-            <NoContents type="post" />
-          ))}
+        {selectedNavIndex === 0 && (
+          // (dummyPreview.length !== 0 ? ( // 글
+          //   <>
+          //     <div className="mb-4 hidden w-full justify-end first:flex">
+          //       <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-800">
+          //         <AiOutlineSearch />
+          //         <input className="ml-1 bg-inherit text-sm outline-none"></input>
+          //       </div>
+          //     </div>
+          //     {dummyPreview.map((value, index) => (
+          //       <PreviewHorizontal
+          //         key={`myPreview#${index}`}
+          //         preview={value}
+          //         index={index}
+          //       />
+          //     ))}
+          //   </>
+          // ) : (
+          //   <NoContents type="post" />
+          // ))
+          <PostList
+            className="w-full"
+            postList={dummyPreview}
+            filterTag={tag as string}
+          ></PostList>
+        )}
         {selectedNavIndex === 1 && // 시리즈
           (dummySeriesList.length !== 0 ? (
             <div className="flex flex-wrap">
