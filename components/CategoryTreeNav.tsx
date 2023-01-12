@@ -1,11 +1,9 @@
 import React from "react";
 import { FC, useState } from "react";
 import { DefaultProps, TreeNodeParent } from "../utils/types";
-import Image from "next/image";
 import CategoryIndentSvg from "./CategoryIndentSvg";
 import { useTheme } from "next-themes";
-import Link from "next/link";
-import CategoryTreeNavLink from "./CategoryTreeNavLink";
+import LinkHoverUnderline from "./LinkHoverUnderline";
 import { useRouter } from "next/router";
 
 type CategoryTreeNavProps = DefaultProps & {
@@ -25,12 +23,13 @@ const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
       <hr className="my-2 border-neutral-500" />
       <ul className="text-sm">
         <li className="mb-2">
-          <CategoryTreeNavLink
-            href={{ pathname: pageUrl }}
+          <LinkHoverUnderline
+            href={pageUrl}
+            as={pageUrl}
             isSelected={!depth1 && !depth2}
           >
             전체보기
-          </CategoryTreeNavLink>
+          </LinkHoverUnderline>
         </li>
         {tree.map((value, parentIndex) => {
           const { name, children } = value;
@@ -38,15 +37,16 @@ const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
           return (
             <React.Fragment key={`${name}_${parentIndex}`}>
               <li className="py-0.5">
-                <CategoryTreeNavLink
+                <LinkHoverUnderline
                   href={{
                     pathname: pageUrl,
                     query: { depth1: name },
                   }}
+                  as={pageUrl}
                   isSelected={depth1 === name && !depth2}
                 >
                   {name}
-                </CategoryTreeNavLink>
+                </LinkHoverUnderline>
               </li>
               {children?.map((value, childIndex) => {
                 const { parentName, name } = value;
@@ -60,15 +60,16 @@ const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
                       height="15"
                       strokeColor={theme !== "dark" ? "black" : "white"}
                     ></CategoryIndentSvg>
-                    <CategoryTreeNavLink
+                    <LinkHoverUnderline
                       href={{
                         pathname: pageUrl,
                         query: { depth1: parentName, depth2: name },
                       }}
+                      as={pageUrl}
                       isSelected={depth1 === parentName && depth2 === name}
                     >
                       {name}
-                    </CategoryTreeNavLink>
+                    </LinkHoverUnderline>
                   </li>
                 );
               })}

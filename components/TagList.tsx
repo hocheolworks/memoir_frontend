@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { DefaultProps, TagData } from "../utils/types";
+import LinkHoverUnderline from "./LinkHoverUnderline";
 
 type TagListProps = DefaultProps & {
   tagList: TagData[];
@@ -20,11 +21,9 @@ const TagList: FC<TagListProps> = ({ className, tagList }) => {
       <hr className="my-2 border-neutral-500" />
       <ul className="flex flex-col text-sm">
         <li className="py-1" key="tagAll">
-          <Link href={pageUrl} as={pageUrl}>
-            <a className={`hover:underline ${!tag && "font-bold text-point"}`}>
-              전체보기
-            </a>
-          </Link>
+          <LinkHoverUnderline href={pageUrl} as={pageUrl} isSelected={!tag}>
+            전체보기
+          </LinkHoverUnderline>
           <span className="ml-2 text-[13px] text-neutral-500">
             ({totalCount})
           </span>
@@ -32,18 +31,13 @@ const TagList: FC<TagListProps> = ({ className, tagList }) => {
         {tagList.map((value, index) => {
           return (
             <li className="py-1" key={`tag#${index}`}>
-              <Link
+              <LinkHoverUnderline
                 href={{ pathname: pageUrl, query: { tag: value.name } }}
                 as={pageUrl}
+                isSelected={tag === value.name}
               >
-                <a
-                  className={`hover:underline ${
-                    tag === value.name && "font-bold text-point"
-                  }`}
-                >
-                  {value.name}
-                </a>
-              </Link>
+                {value.name}
+              </LinkHoverUnderline>
               <span className="ml-2 text-[13px] text-neutral-500">
                 ({value.count})
               </span>

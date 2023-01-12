@@ -3,19 +3,21 @@ import React, { FC } from "react";
 import { UrlObject } from "url";
 import { DefaultProps } from "../utils/types";
 
-type CategoryTreeNavLinkProps = DefaultProps & {
-  href: UrlObject;
+type LinkHoverUnderlineProps = DefaultProps & {
+  href: string | UrlObject;
+  as?: string;
   isSelected?: boolean;
 };
 
-const CategoryTreeNavLink: FC<CategoryTreeNavLinkProps> = ({
+const LinkHoverUnderline: FC<LinkHoverUnderlineProps> = ({
   href,
+  as,
   className,
   isSelected = false,
   children,
 }) => {
   return (
-    <Link href={href} as={href.pathname ?? ""}>
+    <Link href={href} as={as}>
       <a
         className={`hover:underline ${
           isSelected ? "font-bold text-point" : ""
@@ -27,4 +29,4 @@ const CategoryTreeNavLink: FC<CategoryTreeNavLinkProps> = ({
   );
 };
 
-export default CategoryTreeNavLink;
+export default LinkHoverUnderline;
