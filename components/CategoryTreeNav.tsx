@@ -10,14 +10,9 @@ import { useRouter } from "next/router";
 
 type CategoryTreeNavProps = DefaultProps & {
   tree: TreeNodeParent[];
-  // userId: string;
 };
 
-const CategoryTreeNav: FC<CategoryTreeNavProps> = ({
-  className,
-  tree,
-  // userId,
-}) => {
+const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
   const { theme } = useTheme();
 
   const router = useRouter();

@@ -5,14 +5,14 @@ import { DefaultProps, TagData } from "../utils/types";
 
 type TagListProps = DefaultProps & {
   tagList: TagData[];
-  userId: string;
 };
 
-const TagList: FC<TagListProps> = ({ className, tagList, userId }) => {
+const TagList: FC<TagListProps> = ({ className, tagList }) => {
   const totalCount = tagList.reduce((acc, cur) => acc + cur.count, 0);
   const router = useRouter();
 
-  const { tag } = router.query;
+  const { tag, userId } = router.query;
+  const pageUrl = `/${userId}`;
 
   return (
     <div className={`flex w-[184px] flex-col ${className}`}>
@@ -20,7 +20,7 @@ const TagList: FC<TagListProps> = ({ className, tagList, userId }) => {
       <hr className="my-2 border-neutral-500" />
       <ul className="flex flex-col text-sm">
         <li className="py-1" key="tagAll">
-          <Link href={`/${userId}`}>
+          <Link href={pageUrl} as={pageUrl}>
             <a className={`hover:underline ${!tag && "font-bold text-point"}`}>
               전체보기
             </a>
@@ -33,7 +33,8 @@ const TagList: FC<TagListProps> = ({ className, tagList, userId }) => {
           return (
             <li className="py-1" key={`tag#${index}`}>
               <Link
-                href={{ pathname: `/${userId}`, query: { tag: value.name } }}
+                href={{ pathname: pageUrl, query: { tag: value.name } }}
+                as={pageUrl}
               >
                 <a
                   className={`hover:underline ${

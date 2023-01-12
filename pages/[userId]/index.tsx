@@ -94,15 +94,8 @@ const Index: NextPage<
       <div className="flex flex-1 flex-col items-end">
         {selectedNavIndex === 0 && (
           <div className="absolute mt-[465px] mr-4 hidden flex-col left-area-visible:flex">
-            <CategoryTreeNav
-              userId={userId as string}
-              tree={dummyTree}
-            ></CategoryTreeNav>
-            <TagList
-              className="mt-32"
-              userId={userId as string}
-              tagList={dummyTagList}
-            />
+            <CategoryTreeNav tree={dummyTree}></CategoryTreeNav>
+            <TagList className="mt-32" tagList={dummyTagList} />
           </div>
         )}
       </div>
