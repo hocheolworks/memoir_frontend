@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { IconType } from "react-icons";
+import { DefaultProps } from "../utils/types";
 
-type IconBtnProps = {
-  className?: string;
+type IconBtnProps = DefaultProps & {
   onClick: () => void;
   Icon: IconType;
   size?: number;

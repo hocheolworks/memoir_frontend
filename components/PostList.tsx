@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { Preview } from "../utils/types";
+import { DefaultProps, Preview } from "../utils/types";
 import PreviewHorizontal from "./PreviewHorizontal";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import NoContents from "./NoContents";
 
-type PostListProps = {
-  className?: string;
+type PostListProps = DefaultProps & {
   postList: Preview[];
   filterTag?: string;
 };

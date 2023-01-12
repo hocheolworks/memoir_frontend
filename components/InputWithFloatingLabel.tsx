@@ -1,12 +1,12 @@
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
+import { DefaultProps } from "../utils/types";
 
-export type InputWithFloatingLabelProps = {
+export type InputWithFloatingLabelProps = DefaultProps & {
   id: string;
   label?: string;
   type: string;
   placeholder?: string;
   setValue: Dispatch<SetStateAction<string | undefined>>;
-  className?: string;
 };
 
 const InputWithFloatingLabel: FC<InputWithFloatingLabelProps> = ({

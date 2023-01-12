@@ -20,7 +20,7 @@ module.exports = {
       screens: {
         // calc(100%-2rem)
         "contribution-width": "831px",
-        "tag-list-visible": "1250px",
+        "left-area-visible": "1250px",
         zero: "767px",
         first: "1056px", // 1024px
         second: "1440px", // 1376px

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
+import { DefaultProps } from "../utils/types";
 
-type NoContentsProps = {
-  className?: string;
+type NoContentsProps = DefaultProps & {
   type: "post" | "series";
 };
 

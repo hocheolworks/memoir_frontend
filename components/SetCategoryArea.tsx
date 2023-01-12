@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { dummyTree } from "../utils/dummy";
 import { DefaultProps, TreeNodeChild, TreeNodeParent } from "../utils/types";
 import BottomBtn from "./BottomBtn";
 import CategoryTree from "./CategoryTree";
@@ -49,35 +50,6 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
   selectedCategory,
   setSelectedCategory,
 }) => {
-  const dummyTree: TreeNodeParent[] = [
-    {
-      id: 1,
-      name: "Frontend",
-      children: [
-        { id: 1001, name: "React", parentName: "Frontend" },
-        { id: 1002, name: "Next", parentName: "Frontend" },
-        { id: 1003, name: "Redux", parentName: "Frontend" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Backend",
-      children: [
-        { id: 1004, name: "Nest", parentName: "Backend" },
-        { id: 1005, name: "Express", parentName: "Backend" },
-      ],
-    },
-    {
-      id: 3,
-      name: "DB",
-      children: [
-        { id: 1006, name: "MongoDB", parentName: "DB" },
-        { id: 1007, name: "MySQL", parentName: "DB" },
-      ],
-    },
-    { id: 4, name: "Network", children: [] },
-  ];
-
   const [clickedCategory, setClickedCategory] = useState<
     TreeNodeParent | TreeNodeChild | null
   >(selectedCategory);

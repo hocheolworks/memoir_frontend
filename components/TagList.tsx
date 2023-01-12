@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC } from "react";
-import { TagData } from "../utils/types";
+import { DefaultProps, TagData } from "../utils/types";
 
-type TagListProps = {
-  className?: string;
+type TagListProps = DefaultProps & {
   tagList: TagData[];
   userId: string;
 };
@@ -16,9 +15,7 @@ const TagList: FC<TagListProps> = ({ className, tagList, userId }) => {
   const { tag } = router.query;
 
   return (
-    <div
-      className={`absolute hidden flex-col tag-list-visible:flex tag-list-visible:w-[184px] ${className}`}
-    >
+    <div className={`flex w-[184px] flex-col ${className}`}>
       <div className="text-left font-semibold">태그 목록</div>
       <hr className="my-2 border-neutral-500" />
       <ul className="flex flex-col text-sm">

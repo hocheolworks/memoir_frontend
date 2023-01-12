@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { getPercentage } from "../utils/functions";
+import { DefaultProps } from "../utils/types";
 import NavigationBtn from "./NavigationBtn";
 
-type NavigationBarProps = {
+type NavigationBarProps = DefaultProps & {
   selectedIndex: number;
   setSelectedIndex: (selectedIndex: number) => void;
   labels: string[];
-  className?: string;
 };
 
 const NavigationBar: FC<NavigationBarProps> = ({

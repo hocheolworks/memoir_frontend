@@ -1,11 +1,9 @@
 import { FC } from "react";
-import { Children } from "../utils/types";
+import { Children, DefaultProps } from "../utils/types";
 
-type NavigationBtnProps = {
+type NavigationBtnProps = DefaultProps & {
   isSelected: boolean;
   onClick: () => void;
-  children: Children;
-  className?: string;
 };
 
 const NavigationBtn: FC<NavigationBtnProps> = ({

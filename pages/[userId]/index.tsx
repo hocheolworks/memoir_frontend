@@ -13,14 +13,18 @@ import { useRouter, withRouter } from "next/router";
 import { decodeByAES256 } from "../../utils/functions";
 import { NextPageContext } from "next/types";
 import NavigationBar from "../../components/NavigationBar";
-import { dummyPreview, dummySeriesList, dummyTagList } from "../../utils/dummy";
-import PreviewHorizontal from "../../components/PreviewHorizontal";
-import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
+import {
+  dummyPreview,
+  dummySeriesList,
+  dummyTagList,
+  dummyTree,
+} from "../../utils/dummy";
 import Series from "../../components/Series";
 import NoContents from "../../components/NoContents";
 import Introduction from "../../components/Introduction";
 import TagList from "../../components/TagList";
 import PostList from "../../components/PostList";
+import CategoryTreeNav from "../../components/CategoryTreeNav";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
@@ -89,11 +93,17 @@ const Index: NextPage<
     <div className="flex h-full w-full items-start justify-center">
       <div className="flex flex-1 flex-col items-end">
         {selectedNavIndex === 0 && (
-          <TagList
-            className="mr-4 mt-[465px]"
-            userId={userId as string}
-            tagList={dummyTagList}
-          />
+          <div className="absolute mt-[465px] mr-4 hidden flex-col left-area-visible:flex">
+            <CategoryTreeNav
+              userId={userId as string}
+              tree={dummyTree}
+            ></CategoryTreeNav>
+            <TagList
+              className="mt-32"
+              userId={userId as string}
+              tagList={dummyTagList}
+            />
+          </div>
         )}
       </div>
       <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
@@ -194,7 +204,16 @@ const Index: NextPage<
           <Introduction userId={userId as string}></Introduction>
         )}
       </div>
-      <div className="flex-1 text-center">{/*Right*/}</div>
+      <div className="flex-1 text-center">
+        {/*Right*/}
+        {/* <div className="">
+          <TagList
+            className="mt-[465px] ml-4 text-left"
+            userId={userId as string}
+            tagList={dummyTagList}
+          />
+        </div> */}
+      </div>
     </div>
   );
 };

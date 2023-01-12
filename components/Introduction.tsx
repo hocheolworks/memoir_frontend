@@ -3,9 +3,9 @@ import BottomBtn from "./BottomBtn";
 import { dummyIntroduction } from "../utils/dummy";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../redux/modules/authSlice";
+import { DefaultProps } from "../utils/types";
 
-type IntroductionProps = {
-  className?: string;
+type IntroductionProps = DefaultProps & {
   userId: string;
 };
 

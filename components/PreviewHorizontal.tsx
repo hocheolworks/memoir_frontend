@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
-import { Preview } from "../utils/types";
+import { DefaultProps, Preview } from "../utils/types";
 import Tag from "./Tag";
 
-type PreviewHorizontalProps = {
-  className?: string;
+type PreviewHorizontalProps = DefaultProps & {
   preview: Preview;
   index: number;
 };

@@ -1,11 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
-import { Series } from "../utils/types";
-import defaultImage from "../public/logo/FontLogo5.png";
+import { DefaultProps, Series } from "../utils/types";
 
-type SeriesProps = {
-  className?: string;
+type SeriesProps = DefaultProps & {
   series: Series;
   index: number;
 };

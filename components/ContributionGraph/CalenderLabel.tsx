@@ -1,8 +1,7 @@
 import { FC, memo } from "react";
-import { Children } from "../../utils/types";
+import { Children, DefaultProps } from "../../utils/types";
 
-type CalenderLabelProps = {
-  children: Children;
+type CalenderLabelProps = DefaultProps & {
   textAnchor?: string;
   hidden?: boolean;
   x?: number;

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { FC } from "react";
+import { DefaultProps } from "../utils/types";
 
-type CircleAvatarProps = {
+type CircleAvatarProps = DefaultProps & {
   src: string;
   alt: string;
   width: number | string;
   height: number | string;
-  className?: string;
 };
 
 const CircleAvatar: FC<CircleAvatarProps> = ({
