@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import type { NextPage } from "next";
+import React, { ReactElement, useEffect, useState } from "react";
 import CircleAvatar from "../../components/CircleAvatar";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "../../redux/modules/authSlice";
@@ -25,6 +24,8 @@ import Introduction from "../../components/Introduction";
 import TagList from "../../components/TagList";
 import PostList from "../../components/PostList";
 import CategoryTreeNav from "../../components/CategoryTreeNav";
+import { NextPageWithLayout } from "../_app";
+import Layout from "../../components/MainLayout";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { data, userId } = query;
@@ -52,7 +53,7 @@ export async function getServerSideProps({ query }: NextPageContext) {
   }
 }
 
-const Index: NextPage<
+const UserMemoir: NextPageWithLayout<
   { contributionData: ContributionCalendar } & WithRouterProps
 > = ({ contributionData }) => {
   const user = useSelector(selectAuthUser);
@@ -90,10 +91,10 @@ const Index: NextPage<
   };
 
   return (
-    <div className="flex h-full w-full items-start justify-center">
-      <div className="flex flex-1 flex-col items-end">
+    <div className="mb-14 flex h-full w-full items-start justify-center">
+      <div className="flex flex-1 flex-col items-end bg-red-100">
         {selectedNavIndex === 0 && (
-          <div className="absolute mt-[465px] mr-4 hidden flex-col left-area-visible:flex">
+          <div className="absolute mt-[465px] mr-4 hidden flex-col pb-24 left-area-visible:flex">
             <CategoryTreeNav tree={dummyTree}></CategoryTreeNav>
             <TagList className="mt-32" tagList={dummyTagList} />
           </div>
@@ -211,4 +212,8 @@ const Index: NextPage<
   );
 };
 
-export default withRouter(Index);
+UserMemoir.getLayout = function getLayout(page: ReactElement) {
+  return <Layout withFooter={false}>{page}</Layout>;
+};
+
+export default UserMemoir;

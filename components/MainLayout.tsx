@@ -3,15 +3,16 @@ import Footer from "./Footer";
 import Header from "./Header";
 
 type LayoutProps = {
+  withFooter?: boolean;
   children: ReactNode;
 };
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ withFooter = true, children }) => {
   return (
     <>
       <Header />
       <main className="flex-1">{children}</main>
-      <Footer />
+      {withFooter && <Footer />}
     </>
   );
 };
