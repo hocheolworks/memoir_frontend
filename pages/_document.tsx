@@ -25,7 +25,8 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <body
-          className="text-black bg-white dark:bg-black dark:text-white"
+          className="bg-white text-black dark:bg-black dark:text-white"
+          style={{ overflow: "overlay" }}
         >
           <Main />
           <NextScript />

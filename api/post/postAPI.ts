@@ -10,6 +10,10 @@ const PostAPI = {
       jsonHeader
     );
   },
+
+  getPostById: (postId: number | string) => {
+    return axios.get(`/api/post/${postId}`);
+  },
 };
 
 export default PostAPI;

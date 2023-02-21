@@ -1583,20 +1583,20 @@
   "version" "1.0.12"
 
 "@uiw/react-markdown-preview@^4.0.24":
-  "integrity" "sha512-DUqNWwkDPW1qMysDOE+/hGTU6oZNJC537A2oF344mVr8MQg4Kj2vR8wkOuvjVZP1GHktbeN/I6IProb2mHnSjw=="
-  "resolved" "https://registry.npmjs.org/@uiw/react-markdown-preview/-/react-markdown-preview-4.1.0.tgz"
-  "version" "4.1.0"
+  "integrity" "sha512-jiB87TlNao5OMuhqhDhsdGDvOYuOQ9P0snRKYe+x3TRbCE4KIQYvOUuuN/fnctoHEZ1MbyR5Mav1/cTqmXhz6A=="
+  "resolved" "https://registry.npmjs.org/@uiw/react-markdown-preview/-/react-markdown-preview-4.1.7.tgz"
+  "version" "4.1.7"
   dependencies:
     "@babel/runtime" "^7.17.2"
     "@uiw/copy-to-clipboard" "~1.0.12"
     "react-markdown" "~8.0.0"
-    "rehype-attr" "~2.0.7"
+    "rehype-attr" "~2.1.0"
     "rehype-autolink-headings" "~6.1.1"
     "rehype-ignore" "^1.0.1"
     "rehype-prism-plus" "~1.5.0"
-    "rehype-raw" "~6.1.1"
+    "rehype-raw" "^6.1.1"
     "rehype-rewrite" "~3.0.6"
-    "rehype-slug" "~5.0.1"
+    "rehype-slug" "~5.1.0"
     "remark-gfm" "~3.0.1"
     "unist-util-visit" "^4.1.0"
 
@@ -3358,10 +3358,10 @@
   "resolved" "https://registry.npmjs.org/github-from-package/-/github-from-package-0.0.0.tgz"
   "version" "0.0.0"
 
-"github-slugger@^1.1.1":
-  "integrity" "sha512-w0dzqw/nt51xMVmlaV1+JRzN+oCa1KfcgGEWhxUG16wbdA+Xnt/yoFO8Z8x/V82ZcZ0wy6ln9QDup5avbhiDhQ=="
-  "resolved" "https://registry.npmjs.org/github-slugger/-/github-slugger-1.4.0.tgz"
-  "version" "1.4.0"
+"github-slugger@^2.0.0":
+  "integrity" "sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw=="
+  "resolved" "https://registry.npmjs.org/github-slugger/-/github-slugger-2.0.0.tgz"
+  "version" "2.0.0"
 
 "glob-parent@^5.0.0":
   "integrity" "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow=="
@@ -4678,6 +4678,11 @@
   "resolved" "https://registry.npmjs.org/module-details-from-path/-/module-details-from-path-1.0.3.tgz"
   "version" "1.0.3"
 
+"moment@^2.29.4":
+  "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
+  "version" "2.29.4"
+
 "mri@^1.1.0":
   "integrity" "sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA=="
   "resolved" "https://registry.npmjs.org/mri/-/mri-1.2.0.tgz"
@@ -5653,10 +5658,10 @@
   dependencies:
     "jsesc" "~0.5.0"
 
-"rehype-attr@~2.0.7":
-  "integrity" "sha512-EISuHQNPUN2InK+R1tmiAp3IxvNw4utF3MY6+6QoltAXwSqgvC3RVhfaOVUxyakTb4KJmfii3s0b/a7DlQYZTg=="
-  "resolved" "https://registry.npmjs.org/rehype-attr/-/rehype-attr-2.0.8.tgz"
-  "version" "2.0.8"
+"rehype-attr@~2.1.0":
+  "integrity" "sha512-iAeaL5JyF4XxkcvWzpi/0SAF7iV7qOTaHS56tJuEsXziQc3+PEmMn65kV8OFgbO9mRVY7J1fRC/aLvot1PsNkg=="
+  "resolved" "https://registry.npmjs.org/rehype-attr/-/rehype-attr-2.1.4.tgz"
+  "version" "2.1.4"
   dependencies:
     "unified" "~10.1.1"
     "unist-util-visit" "~4.1.0"
@@ -5705,7 +5710,7 @@
     "unist-util-filter" "^4.0.0"
     "unist-util-visit" "^4.0.0"
 
-"rehype-raw@~6.1.1":
+"rehype-raw@^6.1.1":
   "integrity" "sha512-d6AKtisSRtDRX4aSPsJGTfnzrX2ZkHQLE5kiUuGOeEoLpbEulFF4hj0mLPbsa+7vmguDKOVVEQdHKDSwoaIDsQ=="
   "resolved" "https://registry.npmjs.org/rehype-raw/-/rehype-raw-6.1.1.tgz"
   "version" "6.1.1"
@@ -5723,13 +5728,13 @@
     "unified" "~10.1.1"
     "unist-util-visit" "~4.1.0"
 
-"rehype-slug@~5.0.1":
-  "integrity" "sha512-X5v3wV/meuOX9NFcGhJvUpEjIvQl2gDvjg3z40RVprYFt7q3th4qMmYLULiu3gXvbNX1ppx+oaa6JyY1W67pTA=="
-  "resolved" "https://registry.npmjs.org/rehype-slug/-/rehype-slug-5.0.1.tgz"
-  "version" "5.0.1"
+"rehype-slug@~5.1.0":
+  "integrity" "sha512-Gf91dJoXneiorNEnn+Phx97CO7oRMrpi+6r155tTxzGuLtm+QrI4cTwCa9e1rtePdL4i9tSO58PeSS6HWfgsiw=="
+  "resolved" "https://registry.npmjs.org/rehype-slug/-/rehype-slug-5.1.0.tgz"
+  "version" "5.1.0"
   dependencies:
     "@types/hast" "^2.0.0"
-    "github-slugger" "^1.1.1"
+    "github-slugger" "^2.0.0"
     "hast-util-has-property" "^2.0.0"
     "hast-util-heading-rank" "^2.0.0"
     "hast-util-to-string" "^2.0.0"

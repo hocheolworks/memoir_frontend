@@ -105,3 +105,26 @@ export type TagData = {
   name: string;
   count: number;
 };
+
+export type Post = {
+  title: string;
+  githubId: string;
+  createDate: string;
+  tagList?: Array<string>;
+  seriesName?: string;
+  seriesIndex?: number;
+  seriesList?: Array<SeriesPreview>;
+  content: string;
+  commentList?: Array<Comment>;
+};
+
+export type Comment = {
+  githubId: string;
+  comment: string;
+  createdAt: string;
+};
+
+export type SeriesPreview = {
+  directUrl: string;
+  title: string;
+};
