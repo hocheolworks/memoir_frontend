@@ -12,11 +12,12 @@ import { ToastContainer } from "react-toastify";
 import { wrapper } from "../redux/store/store";
 import { ThemeProvider, useTheme } from "next-themes";
 import Layout from "../components/MainLayout";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { NextPage } from "next";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { resetToken } from "../token";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,6 +31,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // getLayout 정의가 있으면 해당 레이아웃 사용, 아니라면 기본 레이아웃 함수
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
   const { theme } = useTheme();
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", () => resetToken());
+  // });
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

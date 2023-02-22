@@ -9,6 +9,7 @@ import { User } from "../../utils/types";
 import { NextPageWithLayout } from "../_app";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
+import { setGithubToken } from "../../token";
 
 const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
@@ -23,7 +24,8 @@ const LoginDone: NextPageWithLayout = () => {
       if (res.status === 201) {
         const currentUser: User = res.data;
         dispatch(setAuthUser({ ...currentUser }));
-        // dispatch(setAuthState(currentUser.isMember));
+        setGithubToken(currentUser.githubAccessToken);
+
         router.push(currentUser.isMember ? "/" : "/register");
       } else {
         console.log(`${res.status} Error with Success`);
@@ -36,6 +38,7 @@ const LoginDone: NextPageWithLayout = () => {
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
       dispatch(setAuthUser(dummyUser));
+      setGithubToken(dummyUser.githubAccessToken);
       router.push("/");
       return;
     }

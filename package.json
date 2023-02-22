@@ -17,6 +17,7 @@
     "@uiw/react-md-editor": "^3.18.1",
     "axios": "^0.27.2",
     "babel-loader": "^9.1.0",
+    "cookies-next": "^2.1.1",
     "crypto-js": "^4.1.1",
     "moment": "^2.29.4",
     "next": "12.2.5",

@@ -47,7 +47,8 @@ export const dummyUser: User = {
   isMember: true,
   description: "내가 제일 짱",
   location: "꼬레아",
-  githubAccessToken: process.env.NEXT_PUBLIC_GITHUB_PAT_FOR_TEST ?? "", //expire on Tue, Dec 27 2022.
+  githubAccessToken:
+    process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST ?? "메모아화이팅",
   memoirAccessToken: "tokenmemoirmemoir",
 };
 

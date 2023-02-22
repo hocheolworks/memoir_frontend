@@ -8,8 +8,7 @@ import ContributionGraph from "../../components/ContributionGraph/ContributionGr
 import { ContributionCalendar, WithRouterProps } from "../../utils/types";
 import UserAPI from "../../api/user/userAPI";
 import { errorHandler } from "../../api/error";
-import { useRouter, withRouter } from "next/router";
-import { decodeByAES256 } from "../../utils/functions";
+import { useRouter } from "next/router";
 import { NextPageContext } from "next/types";
 import NavigationBar from "../../components/NavigationBar";
 import {
@@ -26,39 +25,39 @@ import PostList from "../../components/PostList";
 import CategoryTreeNav from "../../components/CategoryTreeNav";
 import { NextPageWithLayout } from "../_app";
 import Layout from "../../components/MainLayout";
+import { getServerGithubToken } from "../../token";
 
-export async function getServerSideProps({ query }: NextPageContext) {
-  const { data, userId } = query;
+export async function getServerSideProps({ query, req, res }: NextPageContext) {
+  const { userId } = query;
 
   try {
-    const decodedData = decodeByAES256(
-      "githubAccessToken".padEnd(32, " "),
-      data as string
-    );
-    const res = await UserAPI.getContributionData({
-      token: decodedData,
+    const token = getServerGithubToken({ req, res }, true);
+    const contributionCalendar = await UserAPI.getContributionData({
+      token: token,
       username: userId as string,
       year: new Date().getFullYear(),
     });
 
-    const contributionCalendar: ContributionCalendar =
-      res.data.data.user.contributionsCollection.contributionCalendar;
-
-    return { props: { contributionData: contributionCalendar } };
+    return {
+      props: { userId: userId, contributionData: contributionCalendar },
+    };
   } catch (e) {
     errorHandler(e);
     return {
-      props: { contributionData: { totalContributions: -1, weeks: [] } },
+      props: {
+        userId: userId,
+        contributionData: { totalContributions: -1, weeks: [] },
+      },
     };
   }
 }
 
 const UserMemoir: NextPageWithLayout<
-  { contributionData: ContributionCalendar } & WithRouterProps
-> = ({ contributionData }) => {
+  { userId: string; contributionData: ContributionCalendar } & WithRouterProps
+> = ({ userId, contributionData }) => {
   const user = useSelector(selectAuthUser);
   const router = useRouter();
-  const { userId, tag } = router.query;
+  const { tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
@@ -74,14 +73,11 @@ const UserMemoir: NextPageWithLayout<
     }
 
     try {
-      const res = await UserAPI.getContributionData({
+      const contributionCalendar = await UserAPI.getContributionData({
         token: user.githubAccessToken ?? "",
         username: (userId as string) ?? "",
         year: new Date().getFullYear(),
       });
-
-      const contributionCalendar: ContributionCalendar =
-        res.data.data.user.contributionsCollection.contributionCalendar;
 
       setContribution(contributionCalendar);
     } catch (e) {

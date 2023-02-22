@@ -18,7 +18,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="ko">
         <Head>
           <meta name="title" content="MEMOIR." />
           <meta name="description" content="Log your memories to MEMOIR." />

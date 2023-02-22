@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ContributionCalendar } from "../../utils/types";
 import { jsonHeader } from "../common";
 import {
   GithubCodeDto,
@@ -29,7 +30,7 @@ const UserAPI = {
     );
   },
 
-  getContributionData: ({
+  getContributionData: async ({
     token,
     username,
     year,
@@ -52,7 +53,7 @@ const UserAPI = {
       }
     }`;
 
-    return axios.post(
+    const res = await axios.post(
       "https://api.github.com/graphql",
       JSON.stringify({
         query,
@@ -63,6 +64,13 @@ const UserAPI = {
         },
       }
     );
+
+    const { data } = res;
+
+    const calender: ContributionCalendar =
+      data.data.user.contributionsCollection.contributionCalendar;
+
+    return calender;
   },
 };
 

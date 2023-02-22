@@ -130,11 +130,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
         >
           글쓰기
         </DropdownBtn>
-        <DropdownBtn
-          key={"dropdown-btn-me"}
-          link={`/${user.githubId}`}
-          query={{ data: user.githubAccessToken }}
-        >
+        <DropdownBtn key={"dropdown-btn-me"} link={`/${user.githubId}`}>
           마이 페이지
         </DropdownBtn>
         <DropdownBtn key={"dropdown-btn-temp"} link="/temp">

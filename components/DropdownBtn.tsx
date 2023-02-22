@@ -8,7 +8,6 @@ type DropdownBtnPropType = {
   link: string;
   children: Children;
   onClick?: () => void;
-  query?: { data: any };
 };
 
 const DropdownBtn = ({
@@ -16,7 +15,6 @@ const DropdownBtn = ({
   link,
   children,
   onClick,
-  query,
 }: DropdownBtnPropType) => {
   const router = useRouter();
 
@@ -30,16 +28,7 @@ const DropdownBtn = ({
       <button
         className="h-10 w-full pl-3 text-left text-base"
         onMouseDown={() => {
-          if (query) {
-            const encodedData = encodeByAES56(
-              "githubAccessToken".padEnd(32, " "), // key
-              query.data
-            );
-
-            router.push({ pathname: link, query: { data: encodedData } }, link);
-          } else {
-            router.push(link);
-          }
+          router.push(link);
           if (onClick) {
             onClick();
           }
