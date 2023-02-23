@@ -36,10 +36,9 @@ const PreviewHorizontal: FC<PreviewHorizontalProps> = ({
           <div className="relative aspect-video w-full">
             <Image
               src={thumbnailUrl}
-              layout="fill"
-              objectFit="cover"
+              fill
               alt="thumbnail"
-              className="cursor-pointer"
+              className="cursor-pointer object-cover"
             />
           </div>
         </Link>

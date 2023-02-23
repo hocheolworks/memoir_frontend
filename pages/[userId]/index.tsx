@@ -114,10 +114,9 @@ const UserMemoir: NextPageWithLayout<
                 href={`https://github.com/${encodeURIComponent(
                   (userId as string) ?? ""
                 )}`}
+                className="h-8 w-8 brightness-50 invert hover:brightness-75 dark:invert-0"
               >
-                <a className="h-8 w-8 brightness-50 invert hover:brightness-75 dark:invert-0">
-                  <GithubIcon />
-                </a>
+                <GithubIcon />
               </Link>
             </div>
           </div>

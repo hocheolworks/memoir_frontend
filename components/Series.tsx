@@ -18,13 +18,12 @@ const Series: FC<SeriesProps> = ({ className, series, index }) => {
   return (
     <div className={`${className}`}>
       <Link href={seriesUrl}>
-        <div className="relative aspect-video">
+        <div className="relative aspect-video overflow-hidden">
           <Image
             src={thumbnailUrl ?? defaultThumbnailUrl}
-            layout="fill"
-            objectFit="cover"
             alt="thumbnail"
-            className="cursor-pointer hover:scale-105"
+            fill
+            className="cursor-pointer object-cover hover:scale-105"
           ></Image>
         </div>
       </Link>

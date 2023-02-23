@@ -17,14 +17,14 @@ const LinkHoverUnderline: FC<LinkHoverUnderlineProps> = ({
   children,
 }) => {
   return (
-    <Link href={href} as={as}>
-      <a
-        className={`hover:underline ${
-          isSelected ? "font-bold text-point" : ""
-        } ${className}}`}
-      >
-        {children}
-      </a>
+    <Link
+      href={href}
+      as={as}
+      className={`hover:underline ${
+        isSelected ? "font-bold text-point" : ""
+      } ${className}}`}
+    >
+      {children}
     </Link>
   );
 };

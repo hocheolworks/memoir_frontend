@@ -5,8 +5,9 @@ import { DefaultProps } from "../utils/types";
 type CircleAvatarProps = DefaultProps & {
   src: string;
   alt: string;
-  width: number | string;
-  height: number | string;
+  width?: number;
+  height?: number;
+  fill?: boolean;
 };
 
 const CircleAvatar: FC<CircleAvatarProps> = ({
@@ -15,16 +16,18 @@ const CircleAvatar: FC<CircleAvatarProps> = ({
   width,
   height,
   className,
+  fill = false,
 }) => {
   return (
     <div className={className}>
-      <div className="h-full w-full rounded-full">
+      <div className="relative h-full w-full rounded-full">
         <Image
           src={src}
           alt={alt}
           width={width}
           height={height}
           className="rounded-full"
+          fill={fill}
         ></Image>
       </div>
     </div>

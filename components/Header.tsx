@@ -56,15 +56,13 @@ const Header: FC<HeaderPropType> = ({ className }) => {
       <div className="flex h-16 justify-between">
         <div id="header-left" className="flex flex-none items-center">
           <Link href={"/"}>
-            <a>
-              <Image
-                src="/logo/FontLogo5.png"
-                alt="FontLogo"
-                className="dark:invert"
-                width={150}
-                height={32}
-              ></Image>
-            </a>
+            <Image
+              src="/logo/FontLogo5.png"
+              alt="FontLogo"
+              className="dark:invert"
+              width={150}
+              height={32}
+            ></Image>
           </Link>
         </div>
         <div id="header-right" className="flex flex-none items-center">
@@ -83,19 +81,13 @@ const Header: FC<HeaderPropType> = ({ className }) => {
           {isLoggedIn ? (
             <>
               <Link href="/write">
-                <a>
-                  <LabelBtn
-                    className="mr-2 hidden first:block"
-                    label="글쓰기"
-                  />
-                </a>
+                <LabelBtn className="mr-2 hidden first:block" label="글쓰기" />
               </Link>
               <CircleAvatar
                 src={user.avatar ?? ""}
                 alt={user.githubId ?? ""}
-                width={"100%"}
-                height={"100%"}
                 className="mr-2 h-10 w-10"
+                fill
               />
               <IconBtn
                 Icon={GoTriangleDown}
