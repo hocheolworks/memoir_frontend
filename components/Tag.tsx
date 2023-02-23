@@ -1,5 +1,5 @@
 import React from "react";
-import { Children } from "../utils/types";
+import { Children } from "@utils/types";
 
 type TagPropType = {
   className?: string;

@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 export type InputWithFloatingLabelProps = DefaultProps & {
   id: string;

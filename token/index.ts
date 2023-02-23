@@ -1,6 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { OptionsType } from "cookies-next/lib/types";
-import { decodeByAES256, encodeByAES56 } from "../utils/functions";
+import { decodeByAES256, encodeByAES56 } from "@utils/functions";
 
 export const getGithubToken = () => {
   const token = getCookie("githubAccessToken");

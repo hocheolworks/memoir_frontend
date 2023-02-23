@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { errorHandler } from "../../api/error";
-import UserAPI from "../../api/user/userAPI";
-import { resetAuth, setAuthUser } from "../../redux/modules/authSlice";
-import { dummyUser } from "../../utils/dummy";
-import { User } from "../../utils/types";
-import { NextPageWithLayout } from "../_app";
+import { errorHandler } from "@api/error";
+import UserAPI from "@api/user/userAPI";
+import { resetAuth, setAuthUser } from "@redux/modules/authSlice";
+import { dummyUser } from "@utils/dummy";
+import { User } from "@utils/types";
+import { NextPageWithLayout } from "@pages/_app";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
-import { setGithubToken } from "../../token";
+import { setGithubToken } from "@token/index";
 
 const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
@@ -17,25 +17,29 @@ const LoginDone: NextPageWithLayout = () => {
   const { code } = router.query;
   const homeBtnRef = useRef<HTMLButtonElement>(null);
 
-  const asyncWrapper = async () => {
-    try {
-      const res = await UserAPI.login({ code: code as string });
-
-      if (res.status === 201) {
-        const currentUser: User = res.data;
-        dispatch(setAuthUser({ ...currentUser }));
-        setGithubToken(currentUser.githubAccessToken);
-
-        router.push(currentUser.isMember ? "/" : "/register");
-      } else {
-        console.log(`${res.status} Error with Success`);
-      }
-    } catch (e) {
-      errorHandler(e);
-    }
-  };
-
   useEffect(() => {
+    const asyncWrapper = async () => {
+      try {
+        const res = await UserAPI.login({ code: code as string });
+
+        if (res.status === 201) {
+          const currentUser: User = res.data;
+          dispatch(setAuthUser({ ...currentUser }));
+          setGithubToken(currentUser.githubAccessToken);
+
+          router.push(currentUser.isMember ? "/" : "/register");
+        } else {
+          console.log(`${res.status} Error with Success`);
+        }
+      } catch (e) {
+        errorHandler(e);
+      }
+    };
+
+    if (!router.isReady) {
+      return;
+    }
+
     if (process.env.NODE_ENV === "development") {
       dispatch(setAuthUser(dummyUser));
       setGithubToken(dummyUser.githubAccessToken);
@@ -65,7 +69,7 @@ const LoginDone: NextPageWithLayout = () => {
     }
 
     clearTimeout(timeout);
-  }, [router.isReady]);
+  }, [router.isReady, code, dispatch, router]);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">

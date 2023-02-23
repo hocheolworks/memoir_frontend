@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type LabelBtnProps = DefaultProps & {
   label: string;

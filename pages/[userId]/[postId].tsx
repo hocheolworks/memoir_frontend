@@ -1,10 +1,10 @@
 import React from "react";
 import { NextPage } from "next";
 import { NextPageContext } from "next/types";
-import PostAPI from "../../api/post/postAPI";
-import { dummyPost } from "../../utils/dummy";
-import { Post } from "../../utils/types";
-import Tag from "../../components/Tag";
+import PostAPI from "@api/post/postAPI";
+import { dummyPost } from "@utils/dummy";
+import { Post } from "@utils/types";
+import Tag from "@components/Tag";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 
 export async function getServerSideProps({ query }: NextPageContext) {

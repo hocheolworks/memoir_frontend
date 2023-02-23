@@ -1,5 +1,5 @@
 import axios from "axios";
-import { jsonHeader } from "../common";
+import { jsonHeader } from "@api/common";
 import { SaveTempPostDto } from "./postDto";
 
 const PostAPI = {

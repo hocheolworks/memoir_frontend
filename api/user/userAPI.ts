@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ContributionCalendar } from "../../utils/types";
-import { jsonHeader } from "../common";
+import { ContributionCalendar } from "@utils/types";
+import { jsonHeader } from "@api/common";
 import {
   GithubCodeDto,
   GithubGetContributionDto,

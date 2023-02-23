@@ -1,6 +1,6 @@
 import React from "react";
 import { FC, useState } from "react";
-import { DefaultProps, TreeNodeParent } from "../utils/types";
+import { DefaultProps, TreeNodeParent } from "@utils/types";
 import CategoryIndentSvg from "./CategoryIndentSvg";
 import { useTheme } from "next-themes";
 import LinkHoverUnderline from "./LinkHoverUnderline";

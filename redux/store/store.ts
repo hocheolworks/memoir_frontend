@@ -5,7 +5,7 @@ import {
   EnhancedStore,
   Store,
 } from "@reduxjs/toolkit";
-import persistedReducer from "../modules";
+import persistedReducer from "@redux/modules";
 import { createWrapper, MakeStore } from "next-redux-wrapper";
 import {
   FLUSH,

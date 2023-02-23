@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { selectAuthState, selectAuthUser } from "../redux/modules/authSlice";
+import { selectAuthState, selectAuthUser } from "@redux/modules/authSlice";
 
 const Home: NextPage = () => {
   const isLoggedIn = useSelector(selectAuthState);

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC } from "react";
-import { DefaultProps, TagData } from "../utils/types";
+import { DefaultProps, TagData } from "@utils/types";
 import LinkHoverUnderline from "./LinkHoverUnderline";
 
 type TagListProps = DefaultProps & {

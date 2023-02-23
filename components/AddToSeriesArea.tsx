@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAuthUser } from "../redux/modules/authSlice";
-import { DefaultProps } from "../utils/types";
+import { selectAuthUser } from "@redux/modules/authSlice";
+import { DefaultProps } from "@utils/types";
 import BottomBtn from "./BottomBtn";
 import ContainerWithTitle from "./ContainerWithTitle";
 

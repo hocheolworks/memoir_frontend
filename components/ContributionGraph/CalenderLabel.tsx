@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { Children, DefaultProps } from "../../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type CalenderLabelProps = DefaultProps & {
   textAnchor?: string;
@@ -17,5 +17,6 @@ const CalenderLabel: FC<CalenderLabelProps> = memo(({ children, ...props }) => {
     </text>
   );
 });
+CalenderLabel.displayName = "CalenderLabel";
 
 export default CalenderLabel;

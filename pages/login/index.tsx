@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FC, useEffect } from "react";
-import LabelBtn from "../../components/LabelBtn";
+import LabelBtn from "@components/LabelBtn";
 
 const Login: FC = () => {
   return (

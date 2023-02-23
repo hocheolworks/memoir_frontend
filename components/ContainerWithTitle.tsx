@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Children, DefaultProps } from "../utils/types";
+import { Children, DefaultProps } from "@utils/types";
 
 type ContainerWithTitleProps = DefaultProps & {
   title: string;

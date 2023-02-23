@@ -1,5 +1,5 @@
 import { NextPageContext } from "next";
-import { getErrorMessage } from "../utils/functions";
+import { getErrorMessage } from "@utils/functions";
 
 const Error404 = () => {
   const errorMessage = getErrorMessage(404);

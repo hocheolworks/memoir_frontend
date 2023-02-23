@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
-import { DefaultProps, Preview } from "../utils/types";
+import { DefaultProps, Preview } from "@utils/types";
 import Tag from "./Tag";
 
 type PreviewHorizontalProps = DefaultProps & {

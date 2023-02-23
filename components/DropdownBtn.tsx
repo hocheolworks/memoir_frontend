@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Children } from "../utils/types";
-import { encodeByAES56 } from "../utils/functions";
+import { Children } from "@utils/types";
+import { encodeByAES56 } from "@utils/functions";
 
 type DropdownBtnPropType = {
   className?: string;

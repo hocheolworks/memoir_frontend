@@ -1,6 +1,6 @@
 import { ErrorProps } from "next/error";
 import { NextPageContext } from "next";
-import { getErrorMessage } from "../utils/functions";
+import { getErrorMessage } from "@utils/functions";
 
 const Error = ({ statusCode }: ErrorProps) => {
   const errorMessage = getErrorMessage(statusCode);

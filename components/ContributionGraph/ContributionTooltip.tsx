@@ -1,5 +1,5 @@
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
-import { ContributionTooltipData } from "../../utils/types";
+import { ContributionTooltipData } from "@utils/types";
 
 type ContributionTooltipProps = {
   data: ContributionTooltipData;
@@ -45,7 +45,7 @@ const ContributionTooltip: FC<ContributionTooltipProps> = ({
         triangleLeft: newTriangleLeft,
       });
     }
-  }, [data]);
+  }, [data, clientLeft, containerLeft, containerRight]);
 
   return (
     <div

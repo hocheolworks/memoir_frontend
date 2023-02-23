@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { FC } from "react";
 import { UrlObject } from "url";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type LinkHoverUnderlineProps = DefaultProps & {
   href: string | UrlObject;

@@ -9,12 +9,12 @@ import { MdPlaylistAdd } from "@react-icons/all-files/md/MdPlaylistAdd";
 import { VscListTree } from "@react-icons/all-files/vsc/VscListTree";
 import { IoImageOutline } from "@react-icons/all-files/io5/IoImageOutline";
 import { useSelector } from "react-redux";
-import { selectAuthUser } from "../redux/modules/authSlice";
+import { selectAuthUser } from "@redux/modules/authSlice";
 import BottomBtn from "./BottomBtn";
 import ContainerWithTitle from "./ContainerWithTitle";
 import AddToSeriesArea from "./AddToSeriesArea";
 import SetCategoryArea from "./SetCategoryArea";
-import { TreeNodeChild, TreeNodeParent } from "../utils/types";
+import { TreeNodeChild, TreeNodeParent } from "@utils/types";
 
 // TODO: (적용완료) 라이트모드 적용
 // TODO: (적용완료) refactoring

@@ -4,7 +4,7 @@ import {
   IsAllExpandedWrapper,
   TreeNodeChild,
   TreeNodeParent,
-} from "../utils/types";
+} from "@utils/types";
 import { MdExpandMore } from "@react-icons/all-files/md/MdExpandMore";
 import { FaStarOfLife } from "@react-icons/all-files/fa/FaStarOfLife";
 

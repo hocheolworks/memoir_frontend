@@ -1,4 +1,4 @@
-import { Children } from "../utils/types";
+import { Children } from "@utils/types";
 
 type BottomBarPropType = {
   className?: string;

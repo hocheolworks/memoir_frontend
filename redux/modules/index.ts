@@ -1,5 +1,5 @@
 import { CombinedState, combineReducers } from "@reduxjs/toolkit";
-import storage from "../storage";
+import storage from "@redux/storage";
 import auth, { AuthState } from "./authSlice";
 import { PersistConfig, persistReducer } from "redux-persist";
 

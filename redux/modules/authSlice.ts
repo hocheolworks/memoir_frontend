@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../utils/types";
+import { User } from "@utils/types";
 import { HYDRATE } from "next-redux-wrapper";
-import { RootState } from "../store/store";
+import { RootState } from "@redux/store/store";
 
 // Type for our state
 export interface AuthState {

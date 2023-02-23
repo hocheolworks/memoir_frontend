@@ -1,12 +1,9 @@
 import { FC, Fragment, useCallback, useRef, useState } from "react";
 import Rect from "./Rect";
 import CalenderLabel from "./CalenderLabel";
-import { weekDayLabels } from "../../utils/constants";
-import {
-  ContributionCalendar,
-  ContributionTooltipData,
-} from "../../utils/types";
-import { isSameMonth, parseLevel } from "../../utils/functions";
+import { weekDayLabels } from "@utils/constants";
+import { ContributionCalendar, ContributionTooltipData } from "@utils/types";
+import { isSameMonth, parseLevel } from "@utils/functions";
 import ContributionTooltip from "./ContributionTooltip";
 
 type ContributionGraphProps = {

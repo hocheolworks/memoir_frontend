@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IconType } from "react-icons";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type IconBtnProps = DefaultProps & {
   onClick: () => void;

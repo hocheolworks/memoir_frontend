@@ -14,15 +14,15 @@ import {
 } from "react";
 import { useTheme } from "next-themes";
 import type { NextPageWithLayout } from "./_app";
-import TagInput from "../components/TagInput";
-import { getCommands } from "../components/MDEditor/commands";
-import BottomBar from "../components/BottomBar";
-import PublishPopup from "../components/PublishPopup";
+import TagInput from "@components/TagInput";
+import { getCommands } from "@components/MDEditor/commands";
+import BottomBar from "@components/BottomBar";
+import PublishPopup from "@components/PublishPopup";
 import { toast, TypeOptions } from "react-toastify";
-import PostAPI from "../api/post/postAPI";
+import PostAPI from "@api/post/postAPI";
 import { useSelector } from "react-redux";
-import { selectAuthUser } from "../redux/modules/authSlice";
-import { errorHandler } from "../api/error";
+import { selectAuthUser } from "@redux/modules/authSlice";
+import { errorHandler } from "@api/error";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
@@ -45,7 +45,7 @@ const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
 });
 
 const Markdown = dynamic(
-  () => import("../components/MDEditor/wrappers/WrappedMarkdown"),
+  () => import("@components/MDEditor/wrappers/WrappedMarkdown"),
   {
     ssr: false,
     loading: () => (
@@ -75,35 +75,6 @@ const Write: NextPageWithLayout = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<MarkdownPreviewRef>(null);
   const timeoutRef = useRef<number>(-1);
-
-  useEffect(() => {
-    if (title === "") {
-      setPreviewContent(editContent);
-    } else {
-      // 제목에서 마크다운 문법을 무시하기 위함
-      const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
-      setPreviewContent(tempTitle + editContent);
-    }
-  }, [title, editContent]);
-
-  useEffect(() => {
-    // 디바운싱
-    if (timeoutRef.current) {
-      window.clearTimeout(timeoutRef.current);
-    }
-    const newTimer = window.setTimeout(() => {
-      onClickSaveTemp();
-    }, 10000);
-    timeoutRef.current = newTimer;
-  }, [title, editContent, tagList]);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current !== -1) {
-        window.clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   const handleResizeHeight = useCallback(() => {
     if (textareaRef && textareaRef.current) {
@@ -181,12 +152,41 @@ const Write: NextPageWithLayout = () => {
       autoClose: 1500,
       type: toastType,
     });
-  }, [title, editContent, tagList]);
+  }, [title, editContent, tagList, theme, user.githubId]);
 
   const onClickPublishPopup = useCallback(() => {
     if (!isPublishPopupOpen) {
       setIsPublishPopupOpen(true);
     }
+  }, [isPublishPopupOpen]);
+
+  useEffect(() => {
+    if (title === "") {
+      setPreviewContent(editContent);
+    } else {
+      // 제목에서 마크다운 문법을 무시하기 위함
+      const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
+      setPreviewContent(tempTitle + editContent);
+    }
+  }, [title, editContent]);
+
+  useEffect(() => {
+    // 디바운싱
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+    }
+    const newTimer = window.setTimeout(() => {
+      onClickSaveTemp();
+    }, 10000);
+    timeoutRef.current = newTimer;
+  }, [title, editContent, tagList, onClickSaveTemp]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current !== -1) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   return (

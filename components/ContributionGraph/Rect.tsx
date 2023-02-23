@@ -76,4 +76,6 @@ const Rect: FC<RectProps> = memo(
   }
 );
 
+Rect.displayName = "Rect";
+
 export default Rect;

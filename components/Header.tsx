@@ -14,7 +14,7 @@ import {
   selectAuthState,
   selectAuthUser,
   setAuthUser,
-} from "../redux/modules/authSlice";
+} from "@redux/modules/authSlice";
 import { useTheme } from "next-themes";
 import DropdownMenu from "./DropdownMenu";
 import DropdownBtn from "./DropdownBtn";

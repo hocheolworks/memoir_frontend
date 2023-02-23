@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { resetAuth, setAuthUser } from "../redux/modules/authSlice";
-import { resetToken, setGithubToken } from "../token";
-import { User } from "../utils/types";
+import { resetAuth, setAuthUser } from "@redux/modules/authSlice";
+import { resetToken, setGithubToken } from "@token/index";
+import { User } from "@utils/types";
 
 export function useAuth() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { getPercentage } from "../utils/functions";
-import { DefaultProps } from "../utils/types";
+import { getPercentage } from "@utils/functions";
+import { DefaultProps } from "@utils/types";
 import NavigationBtn from "./NavigationBtn";
 
 type NavigationBarProps = DefaultProps & {

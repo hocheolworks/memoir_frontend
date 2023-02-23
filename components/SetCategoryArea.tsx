@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
-import { dummyTree } from "../utils/dummy";
-import { DefaultProps, TreeNodeChild, TreeNodeParent } from "../utils/types";
+import { dummyTree } from "@utils/dummy";
+import { DefaultProps, TreeNodeChild, TreeNodeParent } from "@utils/types";
 import BottomBtn from "./BottomBtn";
 import CategoryTree from "./CategoryTree";
 import ContainerWithTitle from "./ContainerWithTitle";

@@ -1,9 +1,9 @@
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import BottomBtn from "./BottomBtn";
-import { dummyIntroduction } from "../utils/dummy";
+import { dummyIntroduction } from "@utils/dummy";
 import { useSelector } from "react-redux";
-import { selectAuthUser } from "../redux/modules/authSlice";
-import { DefaultProps } from "../utils/types";
+import { selectAuthUser } from "@redux/modules/authSlice";
+import { DefaultProps } from "@utils/types";
 
 type IntroductionProps = DefaultProps & {
   userId: string;

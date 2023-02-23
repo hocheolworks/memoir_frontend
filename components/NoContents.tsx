@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type NoContentsProps = DefaultProps & {
   type: "post" | "series";

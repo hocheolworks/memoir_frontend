@@ -1,31 +1,31 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import CircleAvatar from "../../components/CircleAvatar";
+import CircleAvatar from "@components/CircleAvatar";
 import { useSelector } from "react-redux";
-import { selectAuthUser } from "../../redux/modules/authSlice";
+import { selectAuthUser } from "@redux/modules/authSlice";
 import Link from "next/link";
-import GithubIcon from "../../public/logo/social/github-mark-white.svg";
-import ContributionGraph from "../../components/ContributionGraph/ContributionGraph";
-import { ContributionCalendar, WithRouterProps } from "../../utils/types";
-import UserAPI from "../../api/user/userAPI";
-import { errorHandler } from "../../api/error";
+import GithubIcon from "@public/logo/social/github-mark-white.svg";
+import ContributionGraph from "@components/ContributionGraph/ContributionGraph";
+import { ContributionCalendar, WithRouterProps } from "@utils/types";
+import UserAPI from "@api/user/userAPI";
+import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next/types";
-import NavigationBar from "../../components/NavigationBar";
+import NavigationBar from "@components/NavigationBar";
 import {
   dummyPreview,
   dummySeriesList,
   dummyTagList,
   dummyTree,
-} from "../../utils/dummy";
-import Series from "../../components/Series";
-import NoContents from "../../components/NoContents";
-import Introduction from "../../components/Introduction";
-import TagList from "../../components/TagList";
-import PostList from "../../components/PostList";
-import CategoryTreeNav from "../../components/CategoryTreeNav";
-import { NextPageWithLayout } from "../_app";
-import Layout from "../../components/MainLayout";
-import { getServerGithubToken } from "../../token";
+} from "@utils/dummy";
+import Series from "@components/Series";
+import NoContents from "@components/NoContents";
+import Introduction from "@components/Introduction";
+import TagList from "@components/TagList";
+import PostList from "@components/PostList";
+import CategoryTreeNav from "@components/CategoryTreeNav";
+import { NextPageWithLayout } from "@pages/_app";
+import Layout from "@components/MainLayout";
+import { getServerGithubToken } from "@token/index";
 
 export async function getServerSideProps({ query, req, res }: NextPageContext) {
   const { userId } = query;

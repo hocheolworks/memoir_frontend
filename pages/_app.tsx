@@ -1,23 +1,23 @@
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-import "../styles/globals.css";
-import "../styles/editor.css";
-import "../styles/contribution.css";
+import "@styles/globals.css";
+import "@styles/editor.css";
+import "@styles/contribution.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
 import { ToastContainer } from "react-toastify";
-import { wrapper } from "../redux/store/store";
+import { wrapper } from "@redux/store/store";
 import { ThemeProvider, useTheme } from "next-themes";
-import Layout from "../components/MainLayout";
+import Layout from "@components/MainLayout";
 import { ReactElement, ReactNode, useEffect } from "react";
 import { NextPage } from "next";
 import { Provider } from "react-redux";
-import { store, persistor } from "../redux/store/store";
+import { store, persistor } from "@redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { resetToken } from "../token";
+import { resetToken } from "@token/index";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

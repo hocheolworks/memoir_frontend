@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import React, { FC } from "react";
 import { IconType } from "react-icons";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type ToggleBtnProps = DefaultProps & {
   isSelected: boolean;

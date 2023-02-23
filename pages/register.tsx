@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { errorHandler } from "../api/error";
-import UserAPI from "../api/user/userAPI";
-import InputWithFloatingLabel from "../components/InputWithFloatingLabel";
-import LabelBtn from "../components/LabelBtn";
-import { selectAuthUser, resetAuth } from "../redux/modules/authSlice";
-import { ValidateEmail } from "../utils/functions";
+import { errorHandler } from "@api/error";
+import UserAPI from "@api/user/userAPI";
+import InputWithFloatingLabel from "@components/InputWithFloatingLabel";
+import LabelBtn from "@components/LabelBtn";
+import { selectAuthUser, resetAuth } from "@redux/modules/authSlice";
+import { ValidateEmail } from "@utils/functions";
 
 const Register: FC = () => {
   const router = useRouter();
@@ -67,21 +67,24 @@ const Register: FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full mt-16">
+    <div className="mt-16 flex h-full w-full items-center justify-center">
       <div className="w-[650px] pb-64">
         <h1 className="mb-8 text-6xl font-bold tracking-wider">
-          Welcome to MEMOIR.
+          {/* Welcome to MEMOIR. */}
+          ME, MORE.
         </h1>
-        <p className="mb-24 text-xl leading-8 text-gray-400">
-          Almost done! We need more information about you.
+        <p className="mb-8 text-xl leading-8 text-gray-400">
+          {/* Almost done! We need more information about you. */}
+          거의 완료되었습니다! 몇가지 정보가 더 필요합니다.
           <br />
-          Complete the form and Log your memories to MEMOIR.
+          {/* Complete the form and Log your memories to MEMOIR. */}
+          입력을 완료하고 나만의 회고록을 작성하세요!
         </p>
         <form onSubmit={onSubmit}>
           <InputWithFloatingLabel
             id="register_email"
             className="mb-10"
-            label="Email"
+            label="이메일"
             type="email"
             placeholder="example@mail.com"
             setValue={setEmail}
@@ -89,7 +92,7 @@ const Register: FC = () => {
           <InputWithFloatingLabel
             id="register_blogName"
             className="mb-32"
-            label="Blog Name"
+            label="블로그 이름"
             type="text"
             placeholder="Me, More!"
             setValue={setBlogName}

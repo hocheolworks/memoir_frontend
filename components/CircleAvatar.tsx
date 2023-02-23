@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import { DefaultProps } from "../utils/types";
+import { DefaultProps } from "@utils/types";
 
 type CircleAvatarProps = DefaultProps & {
   src: string;

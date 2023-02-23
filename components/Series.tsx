@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
-import { DefaultProps, Series } from "../utils/types";
+import { DefaultProps, Series } from "@utils/types";
 
 type SeriesProps = DefaultProps & {
   series: Series;

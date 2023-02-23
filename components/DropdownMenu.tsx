@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Children } from "../utils/types";
+import { Children } from "@utils/types";
 
 type DropDownMenuPropType = {
   className?: string;
