@@ -15,18 +15,19 @@ const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { code } = router.query;
-  const homeBtnRef = useRef<HTMLButtonElement>(null);
+  const homeLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    const asyncWrapper = async () => {
+    const asyncWrapper = async (timeout: NodeJS.Timeout) => {
       try {
-        const res = await UserAPI.login({ code: code as string });
+        const res = await UserAPI.login({ code: "asdsad" });
 
         if (res.status === 201) {
           const currentUser: User = res.data;
           dispatch(setAuthUser({ ...currentUser }));
           setGithubToken(currentUser.githubAccessToken);
 
+          clearTimeout(timeout);
           router.push(currentUser.isMember ? "/" : "/register");
         } else {
           console.log(`${res.status} Error with Success`);
@@ -47,28 +48,24 @@ const LoginDone: NextPageWithLayout = () => {
       return;
     }
 
-    if (!router.isReady) return;
-
     if (!code) {
       dispatch(resetAuth());
       alert("로그인에 실패했습니다. \n다시 시도해주세요.");
       router.push("/");
       return;
     }
+
     const timeout = setTimeout(() => {
-      if (homeBtnRef && homeBtnRef.current) {
-        homeBtnRef.current.style.display = "block";
+      if (homeLinkRef && homeLinkRef.current) {
+        homeLinkRef.current.style.opacity = "1";
       }
     }, 5000);
 
     try {
-      asyncWrapper();
+      asyncWrapper(timeout);
     } catch (e) {
-      console.log("aa");
       router.push("/");
     }
-
-    clearTimeout(timeout);
   }, [router.isReady, code, dispatch, router]);
 
   return (
@@ -78,13 +75,12 @@ const LoginDone: NextPageWithLayout = () => {
         size={30}
         color="#904CF9"
       />
-      <Link href={"/"}>
-        <button
-          className="collapse mt-4 rounded-md bg-neutral-200 py-1 px-5 text-lg hover:brightness-90 dark:bg-neutral-700"
-          ref={homeBtnRef}
-        >
-          홈으로
-        </button>
+      <Link
+        href={"/"}
+        className="mt-4 rounded-md bg-neutral-200 py-1 px-5 text-lg opacity-0 transition-opacity duration-700 hover:brightness-90 dark:bg-neutral-700"
+        ref={homeLinkRef}
+      >
+        홈으로
       </Link>
     </div>
   );
