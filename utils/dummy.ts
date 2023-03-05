@@ -188,10 +188,10 @@ export const dummyPost: Post = {
   ],
   content: `현재 진행하고 있는 사이드 프로젝트에서 next와 redux를 함께 사용하는 과정 중, next-redux-wrapper에 대해 큰 오해를 하고있었고, 나와 같은 실수를 하는 사람이 없길 바라며 몇자 적어본다.
 
-  ![](https://velog.velcdn.com/images/lhjeong60/post/88e6560b-c7fc-4bdf-b0c4-426a932ecce3/image.png)
+![](https://velog.velcdn.com/images/lhjeong60/post/88e6560b-c7fc-4bdf-b0c4-426a932ecce3/image.png)
   
   
-  ## 상황
+## 상황
   nextjs, redux-toolkit을 사용하며 개발 중, 클라이언트의 redux store(이하 store)를 nextjs의 getServerSideProps에서 조회해야하는 일이 생겼다.
   next-redux-wrapper에 대해 검색하면 한글로 된 자료가 꽤나 나오는데, 
   대부분 "서버에서 store에 접근할 수 있고, 클라이언트와 서버의 store를 합쳐준다"는 설명에 나는 군침을 흘릴 수 밖에 없었다.
@@ -219,16 +219,16 @@ export const dummyPost: Post = {
   (정확히 이해하진 못했다.)
   
   >#### phase 1 : getServerSideProps
-  서버 측의 store를 새로 생성하여 getServerSideProps에 전달하고, getServerSideProps의 반환값을 해당 페이지 컴포넌트에 props로 전달한다.
+    서버 측의 store를 새로 생성하여 getServerSideProps에 전달하고, getServerSideProps의 반환값을 해당 페이지 컴포넌트에 props로 전달한다.
   
   
   >#### phase 2 : SSR
-  store를 새로 생성하고, store의 이전 상태를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다. 
-  여기서 컴포넌트 내부에서 발생한 store의 상태 변경은 클라이언트에 전달되지 않는다.
+    store를 새로 생성하고, store의 이전 상태를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
+    여기서 컴포넌트 내부에서 발생한 store의 상태 변경은 클라이언트에 전달되지 않는다.
   
   
   >#### phase 3 : Client
-  store를 새로 생성하고, phase 1의 store를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
+    store를 새로 생성하고, phase 1의 store를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
   
   어라라..? 클라이언트의 store를 이용하는 내용은 단 한군데도 찾을 수 없고, 죄다 store를 새로 생성한다고 한다. 그래서 내가 확인한 store는 모두 초기화된 상태였나보다.
   

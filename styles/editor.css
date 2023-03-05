@@ -1,8 +1,8 @@
 /* write page */
 .w-md-editor-text-pre > code,
 .w-md-editor-text-input {
-  font-size: 22px !important;
-  line-height: 24px !important;
+  font-size: 18px !important;
+  line-height: 20px !important;
 }
 
 .w-md-editor-toolbar li > button {
@@ -34,7 +34,7 @@
 
 .wmde-edit textarea::placeholder {
   font-style: italic;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .wmde-preview ul {
@@ -57,37 +57,27 @@
   padding-inline-start: 40px;
 }
 
-/* .wmde-preview li::marker {
-  unicode-bidi: isolate;
-  font-variant-numeric: tabular-nums;
-  text-transform: none;
-  text-indent: 0px !important;
-  text-align: start !important;
-  text-align-last: start !important;
-} */
-
 .w-md-editor-content {
   margin-left: -3rem;
   margin-right: -3rem;
 }
-/* .w-md-editor-preview {
-  padding-top: 3rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
-} */
 
 .wmde-markdown {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .wmde-markdown hr {
   height: 1px;
 }
 
-/* .w-md-editor-fullscreen {
-  height: calc(100% - 190px) !important;
-  top: 190px;
-} */
+.wmde-markdown ol {
+  list-style-type: decimal;
+}
+
+.wmde-markdown > p > img {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
 
 [data-color-mode*="dark"] .wmde-markdown-var,
 [data-color-mode*="dark"] .wmde-markdown {

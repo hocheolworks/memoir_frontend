@@ -5493,9 +5493,9 @@
   "version" "18.2.0"
 
 "react-markdown@~8.0.0":
-  "integrity" "sha512-We36SfqaKoVNpN1QqsZwWSv/OZt5J15LNgTLWynwAN5b265hrQrsjMtlRNwUvS+YyR3yDM8HpTNc4pK9H/Gc0A=="
-  "resolved" "https://registry.npmjs.org/react-markdown/-/react-markdown-8.0.3.tgz"
-  "version" "8.0.3"
+  "integrity" "sha512-jGJolWWmOWAvzf+xMdB9zwStViODyyFQhNB/bwCerbBKmrTmgmA599CGiOlP58OId1IMoIRsA8UdI1Lod4zb5A=="
+  "resolved" "https://registry.npmjs.org/react-markdown/-/react-markdown-8.0.5.tgz"
+  "version" "8.0.5"
   dependencies:
     "@types/hast" "^2.0.0"
     "@types/prop-types" "^15.0.0"
@@ -5508,7 +5508,7 @@
     "remark-parse" "^10.0.0"
     "remark-rehype" "^10.0.0"
     "space-separated-tokens" "^2.0.0"
-    "style-to-object" "^0.3.0"
+    "style-to-object" "^0.4.0"
     "unified" "^10.0.0"
     "unist-util-visit" "^4.0.0"
     "vfile" "^5.0.0"
@@ -6287,6 +6287,13 @@
   "integrity" "sha512-CzFnRRXhzWIdItT3OmF8SQfWyahHhjq3HwcMNCNLn+N7klOOqPjMeG/4JSu77D7ypZdGvSzvkrbyeTMizz2VrA=="
   "resolved" "https://registry.npmjs.org/style-to-object/-/style-to-object-0.3.0.tgz"
   "version" "0.3.0"
+  dependencies:
+    "inline-style-parser" "0.1.1"
+
+"style-to-object@^0.4.0":
+  "integrity" "sha512-HFpbb5gr2ypci7Qw+IOhnP2zOU7e77b+rzM+wTzXzfi1PrtBCX0E7Pk4wL4iTLnhzZ+JgEGAhX81ebTg/aYjQw=="
+  "resolved" "https://registry.npmjs.org/style-to-object/-/style-to-object-0.4.1.tgz"
+  "version" "0.4.1"
   dependencies:
     "inline-style-parser" "0.1.1"
 
