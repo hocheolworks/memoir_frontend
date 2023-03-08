@@ -44,3 +44,25 @@ a {
     background: black;
   }
 } */
+
+/* markdown-------------------------------------------------------------------- */
+
+/* .wmde-markdown pre > code {
+  white-space: normal;
+} */
+
+.wmde-markdown blockquote {
+  @apply my-10 rounded-md border-l-point bg-neutral-200 py-6 text-black dark:bg-grey1 dark:text-white;
+}
+
+.wmde-markdown p {
+  @apply whitespace-pre-line;
+}
+
+.wmde-markdown h2 {
+  @apply mt-12 mb-6 border-b-neutral-500 border-opacity-30 dark:border-b-neutral-700;
+}
+
+.wmde-markdown a {
+  @apply text-point;
+}

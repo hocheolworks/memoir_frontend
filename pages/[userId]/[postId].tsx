@@ -54,7 +54,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           </Tag>
         ))}
       </div>
-      <div className="mt-8 w-full rounded-lg bg-neutral-700 py-8 px-6">
+      <div className="mt-8 w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
         <h3 className="text-[24px] font-bold">{seriesName}</h3>
       </div>
       <Markdown

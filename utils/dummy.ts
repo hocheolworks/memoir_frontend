@@ -219,16 +219,16 @@ export const dummyPost: Post = {
   (정확히 이해하진 못했다.)
   
   >#### phase 1 : getServerSideProps
-    서버 측의 store를 새로 생성하여 getServerSideProps에 전달하고, getServerSideProps의 반환값을 해당 페이지 컴포넌트에 props로 전달한다.
+  >서버 측의 store를 새로 생성하여 getServerSideProps에 전달하고, getServerSideProps의 반환값을 해당 페이지 컴포넌트에 props로 전달한다.
   
   
   >#### phase 2 : SSR
-    store를 새로 생성하고, store의 이전 상태를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
+  >store를 새로 생성하고, store의 이전 상태를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
     여기서 컴포넌트 내부에서 발생한 store의 상태 변경은 클라이언트에 전달되지 않는다.
   
   
   >#### phase 3 : Client
-    store를 새로 생성하고, phase 1의 store를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
+  >store를 새로 생성하고, phase 1의 store를 payload에 저장한채 HYDRATE action이 발행된다. 이후 store는 페이지 컴포넌트에 props에 전달된다.
   
   어라라..? 클라이언트의 store를 이용하는 내용은 단 한군데도 찾을 수 없고, 죄다 store를 새로 생성한다고 한다. 그래서 내가 확인한 store는 모두 초기화된 상태였나보다.
   

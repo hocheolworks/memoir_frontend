@@ -116,6 +116,7 @@ module.exports = {
         defaultGraphLev2: "#006D32",
         defaultGraphLev3: "#26a641",
         defaultGraphLev4: "#39d353",
+        grey1: "#2E2E2E",
       },
     },
   },
