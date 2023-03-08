@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lhjeong60/react-markdown-preview": "^4.1.91",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@types/react-icons": "^3.0.0",

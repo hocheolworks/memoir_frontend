@@ -1089,6 +1089,24 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@lhjeong60/react-markdown-preview@^4.1.91":
+  "integrity" "sha512-UmYoOlYpnpafUuYpfLd0RNG7i4REqRBNZQ8eEbZu0MmD/ZpoVeTtKLh8G7FYvh5fD6a7H7do7NVJ+qKWp5qaUw=="
+  "resolved" "https://registry.npmjs.org/@lhjeong60/react-markdown-preview/-/react-markdown-preview-4.1.91.tgz"
+  "version" "4.1.91"
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@uiw/copy-to-clipboard" "~1.0.12"
+    "react-markdown" "~8.0.0"
+    "rehype-attr" "~2.1.0"
+    "rehype-autolink-headings" "~6.1.1"
+    "rehype-ignore" "^1.0.1"
+    "rehype-prism-plus" "~1.5.0"
+    "rehype-raw" "^6.1.1"
+    "rehype-rewrite" "~3.0.6"
+    "rehype-slug" "~5.1.0"
+    "remark-gfm" "~3.0.1"
+    "unist-util-visit" "^4.1.0"
+
 "@next/bundle-analyzer@^13.0.6":
   "integrity" "sha512-DRubgAxddPYog5GlmS3RkNOaRsSNQNNo+icc/i+grzPmJtYvPFsKuy7qCwyt0zSuW9aZfVOZGek1KQJ3c+5R4w=="
   "resolved" "https://registry.npmjs.org/@next/bundle-analyzer/-/bundle-analyzer-13.0.6.tgz"

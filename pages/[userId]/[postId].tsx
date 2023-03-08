@@ -5,7 +5,7 @@ import PostAPI from "@api/post/postAPI";
 import { dummyPost } from "@utils/dummy";
 import { Post } from "@utils/types";
 import Tag from "@components/Tag";
-import Markdown from "@uiw/react-markdown-preview";
+import Markdown from "@lhjeong60/react-markdown-preview";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
