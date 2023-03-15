@@ -36,6 +36,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
+            echo "test"
             docker rm -f ${{ secrets.DOCKER_USERNAME }}/memoir_frontend
             docker rmi ${{ secrets.DOCKER_USERNAME }}/memoir_frontend
             docker pull ${{ secrets.DOCKER_USERNAME }}/memoir_frontend
