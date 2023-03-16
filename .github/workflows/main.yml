@@ -34,6 +34,8 @@ jobs:
       - name: Get Github Actions IP
         id: ip
         uses: haythem/public-ip@v1.3
+
+      - name: Set Github Actions IP into env
         run: echo "RUNNER_IP=${{ steps.ip.outputs.ipv4 }}" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
