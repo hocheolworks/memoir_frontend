@@ -68,6 +68,7 @@ jobs:
             docker run -d -p 3001:3001 --name ${{ env.NAME }} --restart=unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }} --env-file=.env.production
 
   ec2-revoke-security-group-ingress:
+    needs: deploy
     runs-on: ubuntu-latest
     if: ${{ always() }}
     steps:
