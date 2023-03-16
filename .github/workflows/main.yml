@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  NAME: memoir_frontend
+  SERVICE_NAME: memoir_frontend
 
 permissions:
   contents: read
@@ -18,14 +18,14 @@ jobs:
     steps:
       # 기본 체크아웃
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Docker Image 빌드
       - name: Build Docker Image
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE_NAME }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE_NAME }}
 
   deploy:
     needs: build
@@ -36,7 +36,7 @@ jobs:
         uses: haythem/public-ip@v1.3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -51,17 +51,17 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
+          username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.EC2_SSH_PORT }}
           script: |
             echo NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID }} >> .env.production
             echo NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI }} >> .env.production
-            docker stop ${{ env.NAME }}
-            docker rm -f ${{ env.NAME }}
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }}
-            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }}
-            docker run -d -p 3001:3001 --name ${{ env.NAME }} --restart=unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }} --env-file=.env.production
+            docker stop ${{ env.SERVICE_NAME }}
+            docker rm -f ${{ env.SERVICE_NAME }}
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE_NAME }}
+            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE_NAME }}
+            docker run -d -p 3001:3001 --name ${{ env.SERVICE_NAME }} --restart=unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE_NAME }} --env-file=.env.production
 
       - name: Remove Github Actions IP From Security Group
         if: ${{ always() }}
