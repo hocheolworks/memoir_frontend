@@ -54,12 +54,13 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            echo "test"
+            echo NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID }} >> .env.production
+            echo NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI }} >> .env.production
             docker stop ${{ env.NAME }}
             docker rm -f ${{ env.NAME }}
             docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }}
-            docker run -d -p 3001:3001 --name ${{ env.NAME }} --restart=unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }}
+            docker run -d -p 3001:3001 --name ${{ env.NAME }} --restart=unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{ env.NAME }} --env-file=.env.production
 
       - name: Remove Github Actions IP From Security Group
         run: |
