@@ -35,11 +35,6 @@ jobs:
         id: ip
         uses: haythem/public-ip@v1.3
 
-      - name: Set Github Actions IP into env
-        env:
-          RUNNER_IP: ${{ steps.ip.outputs.ipv4 }}
-        # run: echo "RUNNER_IP=${{ steps.ip.outputs.ipv4 }}" >> $GITHUB_ENV
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -49,7 +44,7 @@ jobs:
 
       - name: Add Github Actions IP to Security group
         run: |
-          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ env.RUNNER_IP }}/32
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
   deploy:
     # 서버에서 Docker 이미지 실행
@@ -79,4 +74,4 @@ jobs:
     steps:
       - name: Remove Github Actions IP From Security Group
         run: |
-          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ env.RUNNER_IP }}/32
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ jobs.ec2-authorize-security-group-ingress.steps.ip.outputs.ipv4 }}/32
