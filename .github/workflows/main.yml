@@ -48,6 +48,7 @@ jobs:
 
       # 서버에서 Docker 이미지 실행
       - name: EC2 Docker Run
+        if: ${{ success() }}
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
