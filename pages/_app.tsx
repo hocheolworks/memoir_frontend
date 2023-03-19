@@ -12,12 +12,11 @@ import { ToastContainer } from "react-toastify";
 import { wrapper } from "@redux/store/store";
 import { ThemeProvider, useTheme } from "next-themes";
 import Layout from "@components/MainLayout";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
 import { Provider } from "react-redux";
 import { store, persistor } from "@redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { resetToken } from "@token/index";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

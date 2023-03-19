@@ -2,17 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "@utils/types";
 import { HYDRATE } from "next-redux-wrapper";
 import { RootState } from "@redux/store/store";
+import { resetToken } from "@token/index";
 
 // Type for our state
 export interface AuthState {
-  authState: boolean;
-  authUser: Partial<User>;
+  authUser: User | null;
 }
 
 // Initial state
 const initialState: AuthState = {
-  authState: false,
-  authUser: {},
+  authUser: null,
 };
 
 // Actual Slice
@@ -20,19 +19,13 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // Action to set the authentication status
-    setAuthState(state, action: PayloadAction<boolean>) {
-      state.authState = action.payload;
-    },
-
-    setAuthUser(state, action: PayloadAction<Partial<User>>) {
-      state.authState = action.payload.isMember ?? false;
+    setAuthUser(state, action: PayloadAction<User>) {
       state.authUser = action.payload;
     },
 
     resetAuth(state) {
-      state.authState = false;
-      state.authUser = {};
+      state.authUser = null;
+      resetToken();
     },
   },
   extraReducers: {
@@ -45,9 +38,8 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState, setAuthUser, resetAuth } = authSlice.actions;
+export const { setAuthUser, resetAuth } = authSlice.actions;
 
-export const selectAuthState = (state: RootState) => state.auth.authState;
 export const selectAuthUser = (state: RootState) => state.auth.authUser;
 
 export default authSlice.reducer;

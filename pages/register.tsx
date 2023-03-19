@@ -1,22 +1,26 @@
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useCallback, useEffect, useState } from "react";
 import { errorHandler } from "@api/error";
 import UserAPI from "@api/user/userAPI";
 import InputWithFloatingLabel from "@components/InputWithFloatingLabel";
 import LabelBtn from "@components/LabelBtn";
-import { selectAuthUser, resetAuth } from "@redux/modules/authSlice";
 import { ValidateEmail } from "@utils/functions";
+import { resetToken } from "@token/index";
 
 const Register: FC = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const user = useSelector(selectAuthUser);
+  const { push, query } = useRouter();
+  const { githubUserId } = query;
 
   const [email, setEmail] = useState<string>();
   const [blogName, setBlogName] = useState<string>();
 
   const [disableBtn, setDisableBtn] = useState<boolean>();
+
+  useEffect(() => {
+    if (!githubUserId) {
+      push("/404");
+    }
+  }, [githubUserId, push]);
 
   useEffect(() => {
     if (
@@ -32,39 +36,30 @@ const Register: FC = () => {
     }
   }, [email, blogName]);
 
-  const onSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const onSubmit = useCallback(
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
 
-    if (
-      !blogName ||
-      !email ||
-      !user ||
-      !user.githubId ||
-      !user.githubAccessToken
-    ) {
-      return;
-    }
-
-    try {
-      const res = await UserAPI.signUp({
-        githubId: user.githubId,
-        blogName: blogName,
-        email: email,
-        githubAccessToken: user.githubAccessToken,
-      });
-
-      if (res.status === 201) {
-        alert("회원가입 완료!, 다시 로그인 해주세요.");
-        dispatch(resetAuth());
-
-        router.push("/");
-      } else {
-        console.log(`${res.status} Error with Success`);
+      if (!blogName || !email) {
+        return;
       }
-    } catch (e) {
-      errorHandler(e);
-    }
-  };
+
+      try {
+        await UserAPI.signUp({
+          githubUserId: githubUserId as string,
+          blogName: blogName,
+          email: email,
+        });
+
+        alert("회원가입 완료!, 다시 로그인 해주세요.");
+        resetToken();
+        push("/");
+      } catch (e) {
+        errorHandler(e);
+      }
+    },
+    [githubUserId, blogName, email, push]
+  );
 
   return (
     <div className="mt-16 flex h-full w-full items-center justify-center">

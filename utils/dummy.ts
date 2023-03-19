@@ -41,15 +41,15 @@ export const getDummyContributionData = (year: number) => {
 };
 
 export const dummyUser: User = {
-  githubId: "lhjeong60",
-  avatar: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
-  name: "이호정",
-  isMember: true,
+  id: -1,
+  blogName: "개발새발",
+  createdAt: moment("2023-03-18").format("YYYYMMDD"),
+  updatedAt: moment("2023-03-19").format("YYYYMMDD"),
+  deletedAt: "",
+  email: "lheong60@naver.com",
+  githubUserId: "lhjeong60",
+  profileImage: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
   description: "내가 제일 짱",
-  location: "꼬레아",
-  githubAccessToken:
-    process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST ?? "메모아화이팅",
-  memoirAccessToken: "tokenmemoirmemoir",
 };
 
 export const dummyTree: TreeNodeParent[] = [

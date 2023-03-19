@@ -11,7 +11,6 @@ import LabelBtn from "./LabelBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
   resetAuth,
-  selectAuthState,
   selectAuthUser,
   setAuthUser,
 } from "@redux/modules/authSlice";
@@ -25,7 +24,6 @@ type HeaderPropType = {
 
 const Header: FC<HeaderPropType> = ({ className }) => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectAuthState);
   const user = useSelector(selectAuthUser);
 
   const [isDropdownMenuVisible, setIsDropdownMenuVisible] =
@@ -78,14 +76,14 @@ const Header: FC<HeaderPropType> = ({ className }) => {
             Icon={FaSearch}
             size={22}
           />
-          {isLoggedIn ? (
+          {user ? (
             <>
               <Link href="/write">
                 <LabelBtn className="mr-2 hidden first:block" label="글쓰기" />
               </Link>
               <CircleAvatar
-                src={user.avatar ?? ""}
-                alt={user.githubId ?? ""}
+                src={user.profileImage ?? ""}
+                alt={user.githubUserId ?? ""}
                 className="mr-2 h-10 w-10"
                 fill
               />
@@ -98,6 +96,34 @@ const Header: FC<HeaderPropType> = ({ className }) => {
                   setIsDropdownMenuVisible(false);
                 }}
               />
+              <DropdownMenu isVisible={isDropdownMenuVisible}>
+                <DropdownBtn
+                  key={"dropdown-btn-write"}
+                  className="block first:hidden"
+                  link={`/write`}
+                >
+                  글쓰기
+                </DropdownBtn>
+                <DropdownBtn
+                  key={"dropdown-btn-me"}
+                  link={`/${user.githubUserId}`}
+                >
+                  마이 페이지
+                </DropdownBtn>
+                <DropdownBtn key={"dropdown-btn-temp"} link="/temp">
+                  임시 저장 목록
+                </DropdownBtn>
+                <DropdownBtn key={"dropdown-btn-setting"} link="/setting">
+                  설정
+                </DropdownBtn>
+                <DropdownBtn
+                  key={"dropdown-btn-logout"}
+                  link="/"
+                  onClick={logoutBtnOnClick}
+                >
+                  로그아웃
+                </DropdownBtn>
+              </DropdownMenu>
             </>
           ) : (
             <>
@@ -114,31 +140,6 @@ const Header: FC<HeaderPropType> = ({ className }) => {
           )}
         </div>
       </div>
-      <DropdownMenu isVisible={isDropdownMenuVisible}>
-        <DropdownBtn
-          key={"dropdown-btn-write"}
-          className="block first:hidden"
-          link={`/write`}
-        >
-          글쓰기
-        </DropdownBtn>
-        <DropdownBtn key={"dropdown-btn-me"} link={`/${user.githubId}`}>
-          마이 페이지
-        </DropdownBtn>
-        <DropdownBtn key={"dropdown-btn-temp"} link="/temp">
-          임시 저장 목록
-        </DropdownBtn>
-        <DropdownBtn key={"dropdown-btn-setting"} link="/setting">
-          설정
-        </DropdownBtn>
-        <DropdownBtn
-          key={"dropdown-btn-logout"}
-          link="/"
-          onClick={logoutBtnOnClick}
-        >
-          로그아웃
-        </DropdownBtn>
-      </DropdownMenu>
     </div>
   );
 };

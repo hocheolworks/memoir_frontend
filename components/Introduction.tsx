@@ -43,7 +43,7 @@ const Introduction: FC<IntroductionProps> = ({ className, userId }) => {
 
   return (
     <div className={`w-full ${className}`}>
-      {userId === user.githubId && (
+      {userId === user?.githubUserId && (
         <BottomBtn
           className="text-right text-lg font-semibold"
           isPoint

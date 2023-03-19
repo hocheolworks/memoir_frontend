@@ -24,6 +24,8 @@ jobs:
         run: |
           echo NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID }} >> .env.production
           echo NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URI }} >> .env.production
+          echo NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }} >> .env.production
+          echo NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST=${{ secrets.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST }} >> .env.production
 
       # Docker Image 빌드
       - name: Build Docker Image

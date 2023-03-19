@@ -1,5 +1,5 @@
 export type SaveTempPostDto = {
-  githubId: string;
+  githubUserName: string;
   title: string;
   content: string;
   tagList: Array<string>;

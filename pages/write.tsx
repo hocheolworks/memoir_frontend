@@ -126,7 +126,7 @@ const Write: NextPageWithLayout = () => {
     } else {
       try {
         const res = await PostAPI.saveTempPost({
-          githubId: user.githubId ?? "",
+          githubUserName: (user?.githubUserId as string) ?? "",
           title: title,
           content: editContent,
           tagList: tagList,
@@ -152,7 +152,7 @@ const Write: NextPageWithLayout = () => {
       autoClose: 1500,
       type: toastType,
     });
-  }, [title, editContent, tagList, theme, user.githubId]);
+  }, [title, editContent, tagList, theme, user]);
 
   const onClickPublishPopup = useCallback(() => {
     if (!isPublishPopupOpen) {

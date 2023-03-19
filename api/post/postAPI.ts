@@ -1,18 +1,13 @@
-import axios from "axios";
-import { jsonHeader } from "@api/common";
+import req from "@api/core";
 import { SaveTempPostDto } from "./postDto";
 
 const PostAPI = {
   saveTempPost: (saveTempPostDto: SaveTempPostDto) => {
-    return axios.post(
-      "/api/temp/post",
-      JSON.stringify(saveTempPostDto),
-      jsonHeader
-    );
+    return req.post("/api/temp/post", saveTempPostDto);
   },
 
   getPostById: (postId: number | string) => {
-    return axios.get(`/api/post/${postId}`);
+    return req.get(`/api/post/${postId}`);
   },
 };
 

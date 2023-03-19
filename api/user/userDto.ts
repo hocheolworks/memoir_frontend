@@ -3,10 +3,9 @@ export type GithubCodeDto = {
 };
 
 export type GithubSignUpDto = {
-  githubId: string;
+  githubUserId: string;
   blogName: string;
   email: string;
-  githubAccessToken: string;
 };
 
 export type GithubGetContributionDto = {

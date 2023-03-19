@@ -5,11 +5,9 @@ import { errorHandler } from "@api/error";
 import UserAPI from "@api/user/userAPI";
 import { resetAuth, setAuthUser } from "@redux/modules/authSlice";
 import { dummyUser } from "@utils/dummy";
-import { User } from "@utils/types";
 import { NextPageWithLayout } from "@pages/_app";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
-import { setGithubToken } from "@token/index";
 
 const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
@@ -18,22 +16,22 @@ const LoginDone: NextPageWithLayout = () => {
   const homeLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    const asyncWrapper = async (timeout: NodeJS.Timeout) => {
+    const asyncWrapper = async (timeout: number) => {
       try {
-        const res = await UserAPI.login({ code: "asdsad" });
+        const res = await UserAPI.signIn({ code: code as string });
 
-        if (res.status === 201) {
-          const currentUser: User = res.data;
-          dispatch(setAuthUser({ ...currentUser }));
-          setGithubToken(currentUser.githubAccessToken);
+        if (res.isMemoirUser) {
+          const user = await UserAPI.me();
 
-          clearTimeout(timeout);
-          router.push(currentUser.isMember ? "/" : "/register");
+          dispatch(setAuthUser(user));
+          router.push("/");
         } else {
-          console.log(`${res.status} Error with Success`);
+          router.push(`/register?githubUserId=${res.githubUserName}`);
         }
       } catch (e) {
         errorHandler(e);
+      } finally {
+        clearTimeout(timeout);
       }
     };
 
@@ -43,19 +41,18 @@ const LoginDone: NextPageWithLayout = () => {
 
     if (process.env.NODE_ENV === "development") {
       dispatch(setAuthUser(dummyUser));
-      setGithubToken(dummyUser.githubAccessToken);
       router.push("/");
       return;
     }
 
     if (!code) {
       dispatch(resetAuth());
-      alert("로그인에 실패했습니다. \n다시 시도해주세요.");
+      alert("Github 로그인에 실패했습니다. \n다시 시도해주세요.");
       router.push("/");
       return;
     }
 
-    const timeout = setTimeout(() => {
+    const timeout = window.setTimeout(() => {
       if (homeLinkRef && homeLinkRef.current) {
         homeLinkRef.current.style.opacity = "1";
       }

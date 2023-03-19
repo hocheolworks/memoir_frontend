@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "@redux/modules/authSlice";
 import { DefaultProps } from "@utils/types";
@@ -75,7 +75,7 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
             >
               <div className={`mt-2.5 flex`}>
                 <div className="self-center bg-neutral-100 py-1 pl-2 text-neutral-500 dark:bg-neutral-800">
-                  /@{user.githubId}/series/
+                  /{user?.githubUserId}/series/
                 </div>
                 <input
                   className="w-full flex-1 appearance-none bg-neutral-100 py-1 focus:outline-none dark:bg-neutral-800"

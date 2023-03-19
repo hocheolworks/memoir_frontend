@@ -25,13 +25,12 @@ import PostList from "@components/PostList";
 import CategoryTreeNav from "@components/CategoryTreeNav";
 import { NextPageWithLayout } from "@pages/_app";
 import Layout from "@components/MainLayout";
-import { getServerGithubToken } from "@token/index";
 
 export async function getServerSideProps({ query, req, res }: NextPageContext) {
   const { userId } = query;
 
   try {
-    const token = getServerGithubToken({ req, res }, true);
+    const token = process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST ?? ""; // test
     const contributionCalendar = await UserAPI.getContributionData({
       token: token,
       username: userId as string,
@@ -74,7 +73,7 @@ const UserMemoir: NextPageWithLayout<
 
     try {
       const contributionCalendar = await UserAPI.getContributionData({
-        token: user.githubAccessToken ?? "",
+        token: process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST ?? "",
         username: (userId as string) ?? "",
         year: new Date().getFullYear(),
       });
@@ -102,7 +101,7 @@ const UserMemoir: NextPageWithLayout<
             <div className="flex items-center">
               <CircleAvatar
                 className="h-[50px]"
-                src={user.avatar ?? ""}
+                src={user?.profileImage ?? ""}
                 alt="circleAvartar"
                 width={50}
                 height={50}

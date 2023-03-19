@@ -1,33 +1,43 @@
 import axios from "axios";
 import { ContributionCalendar } from "@utils/types";
-import { jsonHeader } from "@api/common";
 import {
   GithubCodeDto,
   GithubGetContributionDto,
   GithubSignUpDto,
 } from "./userDto";
+import { setToken } from "@token/index";
+import req from "@api/core";
+import { plainToInstance } from "class-transformer";
+import {
+  MeResponseBody,
+  SignInResponseBody,
+  SignUpResponseBody,
+} from "./responses";
 
 const UserAPI = {
-  login: (githubCodeDto: GithubCodeDto) => {
-    return axios.post(
-      "/api/users/login",
-      JSON.stringify({
-        code: githubCodeDto.code,
-      }),
-      jsonHeader
+  signIn: async (githubCodeDto: GithubCodeDto) => {
+    const { headers, data } = await req.post(
+      "/api/users/signin",
+      githubCodeDto
     );
+    const auth = headers["Authorization"];
+
+    if (auth) {
+      const token = auth.slice(7);
+      setToken(token);
+    }
+
+    return plainToInstance(SignInResponseBody, data);
   },
-  signUp: (githubSignUpDto: GithubSignUpDto) => {
-    return axios.post(
-      "/api/users",
-      JSON.stringify({
-        githubId: githubSignUpDto.githubId,
-        blogName: githubSignUpDto.blogName,
-        email: githubSignUpDto.email,
-        githubAccessToken: githubSignUpDto.githubAccessToken,
-      }),
-      jsonHeader
-    );
+
+  signUp: async (githubSignUpDto: GithubSignUpDto) => {
+    const { data } = await req.post("/api/users/signup", githubSignUpDto);
+    return plainToInstance(SignUpResponseBody, data);
+  },
+
+  me: async () => {
+    const { data } = await req.get("/api/users/me");
+    return plainToInstance(MeResponseBody, data);
   },
 
   getContributionData: async ({

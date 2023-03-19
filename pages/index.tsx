@@ -1,11 +1,6 @@
 import type { NextPage } from "next";
-import { useSelector } from "react-redux";
-import { selectAuthState, selectAuthUser } from "@redux/modules/authSlice";
 
 const Home: NextPage = () => {
-  const isLoggedIn = useSelector(selectAuthState);
-  const user = useSelector(selectAuthUser);
-
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       {/* <PostContainer className="mt-28"></PostContainer> */}

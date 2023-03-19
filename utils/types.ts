@@ -1,14 +1,15 @@
 import { NextRouter } from "next/router";
 
 export type User = {
-  githubId: string;
-  avatar: string | null;
-  name: string | null;
-  description: string | null;
-  location: string | null;
-  isMember: boolean;
-  memoirAccessToken: string;
-  githubAccessToken: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  githubUserId: string;
+  blogName: string;
+  email: string;
+  profileImage: string;
+  description: string;
 };
 
 export type Children = JSX.Element | JSX.Element[] | string | string[];
