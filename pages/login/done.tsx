@@ -23,6 +23,8 @@ const LoginDone: NextPageWithLayout = () => {
         if (res.isMemoirUser) {
           const user = await UserAPI.me();
 
+          console.log(user);
+
           dispatch(setAuthUser(user));
           router.push("/");
         } else {

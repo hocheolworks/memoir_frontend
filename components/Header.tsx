@@ -82,8 +82,8 @@ const Header: FC<HeaderPropType> = ({ className }) => {
                 <LabelBtn className="mr-2 hidden first:block" label="글쓰기" />
               </Link>
               <CircleAvatar
-                src={user.profileImage ?? ""}
-                alt={user.githubUserId ?? ""}
+                src={user.profileImage}
+                alt={user.githubUserId}
                 className="mr-2 h-10 w-10"
                 fill
               />
