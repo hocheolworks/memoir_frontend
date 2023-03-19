@@ -21,8 +21,7 @@ const UserAPI = {
       githubCodeDto
     );
 
-    const auth = headers["Authorization"];
-    console.log(headers);
+    const auth = headers["authorization"];
     if (auth) {
       const token = auth.slice(7);
       setToken(token);
