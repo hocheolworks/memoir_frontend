@@ -20,8 +20,9 @@ const UserAPI = {
       "/api/users/signin",
       githubCodeDto
     );
-    const auth = headers["Authorization"];
 
+    const auth = headers["Authorization"];
+    console.log(headers);
     if (auth) {
       const token = auth.slice(7);
       setToken(token);

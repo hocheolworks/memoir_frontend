@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
-import { errorHandler } from "@api/error";
+import { errorHandler, ErrorResponse } from "@api/error";
 import UserAPI from "@api/user/userAPI";
 import InputWithFloatingLabel from "@components/InputWithFloatingLabel";
 import LabelBtn from "@components/LabelBtn";
 import { ValidateEmail } from "@utils/functions";
 import { resetToken } from "@token/index";
+import axios from "axios";
 
 const Register: FC = () => {
   const { push, query } = useRouter();
@@ -56,6 +57,13 @@ const Register: FC = () => {
         push("/");
       } catch (e) {
         errorHandler(e);
+
+        if (axios.isAxiosError(e) && e.response) {
+          const { statusCode } = e.response.data as ErrorResponse; // as 안쓸 방법이 없을까..?
+          if (statusCode === 401) {
+            push("/");
+          }
+        }
       }
     },
     [githubUserId, blogName, email, push]
