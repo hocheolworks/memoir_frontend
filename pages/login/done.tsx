@@ -26,7 +26,7 @@ const LoginDone: NextPageWithLayout = () => {
           dispatch(setAuthUser(user));
           router.push("/");
         } else {
-          router.push(`/register?githubUserId=${res.githubUserName}`);
+          router.push(`/register?githubUserName=${res.githubUserName}`);
         }
       } catch (e) {
         errorHandler(e);

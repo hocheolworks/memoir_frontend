@@ -75,7 +75,7 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
             >
               <div className={`mt-2.5 flex`}>
                 <div className="self-center bg-neutral-100 py-1 pl-2 text-neutral-500 dark:bg-neutral-800">
-                  /{user?.githubUserId}/series/
+                  /{user?.githubUserName}/series/
                 </div>
                 <input
                   className="w-full flex-1 appearance-none bg-neutral-100 py-1 focus:outline-none dark:bg-neutral-800"

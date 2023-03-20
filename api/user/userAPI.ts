@@ -27,17 +27,17 @@ const UserAPI = {
       setToken(token);
     }
 
-    return plainToInstance(SignInResponseBody, data);
+    return plainToInstance(SignInResponseBody, data.data);
   },
 
   signUp: async (githubSignUpDto: GithubSignUpDto) => {
     const { data } = await req.post("/api/users/signup", githubSignUpDto);
-    return plainToInstance(SignUpResponseBody, data);
+    return plainToInstance(SignUpResponseBody, data.data);
   },
 
   me: async () => {
     const { data } = await req.get("/api/users/me");
-    return plainToInstance(MeResponseBody, data);
+    return plainToInstance(MeResponseBody, data.data);
   },
 
   getContributionData: async ({

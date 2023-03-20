@@ -83,7 +83,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
               </Link>
               <CircleAvatar
                 src={user.profileImage}
-                alt={user.githubUserId}
+                alt={user.githubUserName}
                 className="mr-2 h-10 w-10"
                 fill
               />
@@ -106,7 +106,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
                 </DropdownBtn>
                 <DropdownBtn
                   key={"dropdown-btn-me"}
-                  link={`/${user.githubUserId}`}
+                  link={`/${user.githubUserName}`}
                 >
                   마이 페이지
                 </DropdownBtn>

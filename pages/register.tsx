@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Register: FC = () => {
   const { push, query } = useRouter();
-  const { githubUserId } = query;
+  const { githubUserName } = query;
 
   const [email, setEmail] = useState<string>();
   const [blogName, setBlogName] = useState<string>();
@@ -18,10 +18,10 @@ const Register: FC = () => {
   const [disableBtn, setDisableBtn] = useState<boolean>();
 
   useEffect(() => {
-    if (!githubUserId) {
+    if (!githubUserName) {
       push("/404");
     }
-  }, [githubUserId, push]);
+  }, [githubUserName, push]);
 
   useEffect(() => {
     if (
@@ -47,7 +47,7 @@ const Register: FC = () => {
 
       try {
         await UserAPI.signUp({
-          githubUserId: githubUserId as string,
+          githubUserName: githubUserName as string,
           blogName: blogName,
           email: email,
         });
@@ -66,7 +66,7 @@ const Register: FC = () => {
         }
       }
     },
-    [githubUserId, blogName, email, push]
+    [githubUserName, blogName, email, push]
   );
 
   return (

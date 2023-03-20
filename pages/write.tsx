@@ -126,7 +126,7 @@ const Write: NextPageWithLayout = () => {
     } else {
       try {
         const res = await PostAPI.saveTempPost({
-          githubUserName: (user?.githubUserId as string) ?? "",
+          githubUserName: (user?.githubUserName as string) ?? "",
           title: title,
           content: editContent,
           tagList: tagList,

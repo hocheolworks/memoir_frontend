@@ -5,7 +5,7 @@ export type User = {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
-  githubUserId: string;
+  githubUserName: string;
   blogName: string;
   email: string;
   profileImage: string;

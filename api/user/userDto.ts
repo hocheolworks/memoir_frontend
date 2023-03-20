@@ -3,7 +3,7 @@ export type GithubCodeDto = {
 };
 
 export type GithubSignUpDto = {
-  githubUserId: string;
+  githubUserName: string;
   blogName: string;
   email: string;
 };

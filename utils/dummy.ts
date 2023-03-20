@@ -47,7 +47,7 @@ export const dummyUser: User = {
   updatedAt: moment("2023-03-19").format("YYYYMMDD"),
   deletedAt: "",
   email: "lheong60@naver.com",
-  githubUserId: "lhjeong60",
+  githubUserName: "lhjeong60",
   profileImage: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
   description: "내가 제일 짱",
 };

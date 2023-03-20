@@ -146,7 +146,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
               <ContainerWithTitle className="mt-6 w-full" title="URL 설정">
                 <div className="flex">
                   <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-neutral-700">
-                    /{user?.githubUserId}/
+                    /{user?.githubUserName}/
                   </div>
                   <input
                     className="w-full flex-1 appearance-none bg-neutral-200 py-1 text-lg focus:outline-none dark:bg-neutral-700"

@@ -26,7 +26,7 @@ export class SignUpResponseBody {
   deletedAt: string;
 
   // 깃허브 유저 ID
-  githubUserId: string;
+  githubUserName: string;
 
   // 요청 URL
   blogName: string;
@@ -49,7 +49,7 @@ export class MeResponseBody {
   deletedAt: string;
 
   //깃허브 유저 ID
-  githubUserId: string;
+  githubUserName: string;
 
   //요청 URL
   blogName: string;
