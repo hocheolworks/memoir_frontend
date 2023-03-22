@@ -15,6 +15,11 @@ import ContainerWithTitle from "./ContainerWithTitle";
 import AddToSeriesArea from "./AddToSeriesArea";
 import SetCategoryArea from "./SetCategoryArea";
 import { TreeNodeChild, TreeNodeParent } from "@utils/types";
+import PostAPI from "@api/post/postAPI";
+import { PublishPostDto } from "@api/post/postDto";
+import { errorHandler } from "@api/error";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 // TODO: (적용완료) 라이트모드 적용
 // TODO: (적용완료) refactoring
@@ -32,6 +37,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   editContent,
   Popdown,
 }) => {
+  const { push } = useRouter();
   const iconSize = 22;
 
   const user = useSelector(selectAuthUser);
@@ -47,10 +53,32 @@ const PublishPopup: FC<PublishPopupProps> = ({
 
   const [selectedSeries, setSelectedSeries] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<
-    TreeNodeParent | TreeNodeChild | null
+    TreeNodeParent | TreeNodeChild
   >({ id: -1, name: "전체" });
 
-  const onClickPublish = () => {};
+  const onClickPublish = async () => {
+    const body: PublishPostDto = {
+      postTitle: title,
+      postBody: editContent,
+      firstDepth: selectedCategory?.parentName ?? "TEST",
+      secondDepth: selectedCategory?.name,
+    };
+
+    try {
+      const { statusCode, data } = await PostAPI.publishPost(body);
+
+      if (statusCode === 201) {
+        toast("발행 완료", {
+          type: "success",
+          theme: "colored",
+        });
+
+        push(`/${user?.githubUserName}/${data.postTitle}`);
+      }
+    } catch (e: any) {
+      errorHandler(e);
+    }
+  };
 
   const getOut = useCallback(() => {
     setIsClickedAddToSeries(false);

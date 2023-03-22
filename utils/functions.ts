@@ -90,3 +90,7 @@ export const getPercentage = (length: number, value: number): string => {
   const divided = (value / length) * 100;
   return divided.toFixed(5) + "%";
 };
+
+export const isDevEnv = () => {
+  return process.env.NODE_ENV === "development";
+};

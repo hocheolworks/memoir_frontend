@@ -1,32 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BaseApiError } from "./core/types";
 
-export type ErrorResponse = {
-  statusCode: number;
-  message: string;
-  error: string;
-};
-
-export const errorHandler = (e: any) => {
-  if (axios.isAxiosError(e) && e.response) {
-    const { statusCode, message, error } = e.response.data as ErrorResponse; // as 안쓸 방법이 없을까..?
-    // console.log(
-    //   `Error :${statusCode ? " " + statusCode + " " : ""} ${message}`
-    // );
-    if (typeof window !== "undefined") {
-      // alert(message);
-      console.log(e.response.data);
-      toast(
-        `${statusCode ? "" + "[" + statusCode + "]" + " " : ""} ${
-          error ?? message
-        }`,
-        {
-          type: "error",
-          theme: "colored",
-        }
-      );
-    }
-  } else {
+export const errorHandler = (e: BaseApiError) => {
+  const { statusCode, message, error } = e;
+  if (typeof window !== "undefined") {
     console.log(e);
+    toast(`${statusCode ? "" + "[" + statusCode + "]" + " " : ""} ${message}`, {
+      type: "error",
+      theme: "colored",
+    });
   }
 };

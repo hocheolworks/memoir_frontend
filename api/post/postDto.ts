@@ -4,3 +4,17 @@ export type SaveTempPostDto = {
   content: string;
   tagList: Array<string>;
 };
+
+export type PublishPostDto = {
+  //게시글 제목
+  postTitle: string;
+
+  //게시글 본문
+  postBody: string;
+
+  //글의 대분류
+  firstDepth: string;
+
+  //글의 소분류
+  secondDepth: string;
+};

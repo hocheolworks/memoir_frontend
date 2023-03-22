@@ -142,7 +142,6 @@ const Write: NextPageWithLayout = () => {
       } catch (e) {
         toastType = "error";
         toastMessage = "임시저장에 실패했습니다.";
-        errorHandler(e);
       }
     }
 
