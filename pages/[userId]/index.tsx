@@ -40,7 +40,7 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
     return {
       props: { userId: userId, contributionData: contributionCalendar },
     };
-  } catch (e) {
+  } catch (e: any) {
     errorHandler(e);
     return {
       props: {
@@ -79,7 +79,7 @@ const UserMemoir: NextPageWithLayout<
       });
 
       setContribution(contributionCalendar);
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e);
       setContribution({ totalContributions: -1, weeks: [] });
     }
