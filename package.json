@@ -15,7 +15,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/redux": "^3.6.0",
     "@types/redux-persist": "^4.3.1",
-    "@uiw/react-md-editor": "^3.18.1",
+    "@uiw/react-md-editor": "^3.20.5",
     "axios": "^0.27.2",
     "babel-loader": "^9.1.0",
     "class-transformer": "^0.5.1",
