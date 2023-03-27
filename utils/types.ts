@@ -110,6 +110,7 @@ export type TagData = {
 export type Post = {
   title: string;
   githubId: string;
+  profileImage: string;
   createDate: string;
   tagList?: Array<string>;
   seriesName?: string;

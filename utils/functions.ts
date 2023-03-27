@@ -129,3 +129,7 @@ export function formatAbsolute(
 
   return replaced.slice(0, maxLength);
 }
+
+export function cls(...classes: string[]) {
+  return classes.filter((c) => c !== "").join(" ");
+}

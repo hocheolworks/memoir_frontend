@@ -6,6 +6,7 @@ import { dummyPost } from "@utils/dummy";
 import { Post } from "@utils/types";
 import Tag from "@components/Tag";
 import Markdown from "@lhjeong60/react-markdown-preview";
+import ProfileCard from "@components/ProfileCard";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -61,7 +62,11 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         className="mt-[80px] w-full bg-white text-black dark:bg-black dark:text-white"
         source={content}
       ></Markdown>
-      <div>authorInfo</div>
+      <ProfileCard
+        className="mt-48 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
+        userName={post.githubId}
+        profileImage={post.profileImage}
+      />
       <div>prev & next Navigation</div>
       <div>comment</div>
     </div>

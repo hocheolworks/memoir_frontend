@@ -25,6 +25,7 @@ import PostList from "@components/PostList";
 import CategoryTreeNav from "@components/CategoryTreeNav";
 import { NextPageWithLayout } from "@pages/_app";
 import Layout from "@components/MainLayout";
+import ProfileCard from "@components/ProfileCard";
 
 export async function getServerSideProps({ query, req, res }: NextPageContext) {
   const { userId } = query;
@@ -61,11 +62,6 @@ const UserMemoir: NextPageWithLayout<
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
 
-  useEffect(() => {
-    // 회원정보가 없어도 방문가능하지 않니?
-    if (!user) alert("회원정보가 없습니다.");
-  }, [user]);
-
   const retryBtnClick = async () => {
     if (!user) {
       return;
@@ -97,28 +93,10 @@ const UserMemoir: NextPageWithLayout<
       </div>
       <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
         <div className="w-full pt-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <CircleAvatar
-                className="h-[50px]"
-                src={user?.profileImage ?? ""}
-                alt="circleAvartar"
-                width={50}
-                height={50}
-              ></CircleAvatar>
-              <p className="ml-2 text-2xl">{userId}</p>
-            </div>
-            <div className="flex h-8 items-center">
-              <Link
-                href={`https://github.com/${encodeURIComponent(
-                  (userId as string) ?? ""
-                )}`}
-                className="h-8 w-8 brightness-50 invert hover:brightness-75 dark:invert-0"
-              >
-                <GithubIcon />
-              </Link>
-            </div>
-          </div>
+          <ProfileCard
+            userName={userId as string}
+            profileImage={user?.profileImage ?? ""}
+          />
           <div id="contribution" className="mt-4 h-[200px] text-black">
             {contribution.totalContributions !== -1 ? (
               <ContributionGraph
