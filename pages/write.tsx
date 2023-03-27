@@ -23,6 +23,7 @@ import PostAPI from "@api/post/postAPI";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "@redux/modules/authSlice";
 import { errorHandler } from "@api/error";
+import rehypeSanitize from "rehype-sanitize";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
@@ -188,6 +189,10 @@ const Write: NextPageWithLayout = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(previewContent);
+  }, [previewContent]);
+
   return (
     <>
       <div
@@ -224,6 +229,7 @@ const Write: NextPageWithLayout = () => {
             hideToolbar={false}
             extraCommands={[]}
             preview={"edit"}
+            previewOptions={{ rehypePlugins: [[rehypeSanitize]] }}
             onChange={(value, e) => {
               setSelectionStart(e?.currentTarget.selectionStart);
               setEditContent(value);
@@ -252,7 +258,8 @@ const Write: NextPageWithLayout = () => {
         <ForwardRefMarkdown
           source={previewContent}
           className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-800 lg:block lg:w-1/2"
-          style={{ whiteSpace: "pre-wrap" }}
+          linkTarget="_blank"
+          rehypePlugins={[[rehypeSanitize]]}
           ref={previewRef}
         />
       </div>
