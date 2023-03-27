@@ -94,3 +94,38 @@ export const getPercentage = (length: number, value: number): string => {
 export const isDevEnv = () => {
   return process.env.NODE_ENV === "development";
 };
+
+export const titleToUrl = (text: string): string => {
+  return text
+    .replace(/[^0-9a-zA-Zㄱ-힣. -]/g, "")
+    .replace(/ /g, "-")
+    .replace(/--+/g, "-");
+};
+
+export const removeMarkdown = (markdownText: string): string => {
+  return markdownText.replace(/0-/g, "");
+};
+
+export function formatAbsolute(
+  markdown: string,
+  maxLength: number = 150
+): string {
+  const replaced = markdown
+    .replace(/  +/g, "")
+    .replace(/--/g, "")
+    .replace(/\|/g, "")
+    .replace(/!?\[.*\]\(.*\)/g, "") // 링크, 이미지 제거
+    .replace(/\[(x|X| )\]/g, "") // 체크 박스 제거
+    .replace(/\n- /g, "\n") // ul 제거
+    .replace(/\^- /g, "") // ul 제거
+    .replace(/\n+/g, " ") // 줄바꿈 제거
+    .replace(/```(.*)```/g, "") // 코드 블록 제거
+    .replace(/[<>]/g, "")
+    .replace(/#{1,6} /g, "") // 헤딩 제거
+    .replace(/\*\*/g, "") // 볼드 제거
+    .replace(/~~/g, "") //  쉬소선 제거
+    .replace(/_/g, "") // 이탤릭 제거
+    .replace(/_/g, ""); // 이탤릭 제거
+
+  return replaced.slice(0, maxLength);
+}
