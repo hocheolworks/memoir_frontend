@@ -178,6 +178,7 @@ export const dummyTagList: TagData[] = [
 export const dummyPost: Post = {
   title: "[삽질기#1] next-redux-wrapper에 대한 오해..",
   githubId: "lhjeong60",
+  profileImage: "https://avatars.githubusercontent.com/u/66653704?s=40&v=4",
   createDate: "2022년 12월 27일",
   tagList: ["SSR", "next", "next-redux-wrapper", "nextjs", "redux"],
   seriesName: "삽질기",

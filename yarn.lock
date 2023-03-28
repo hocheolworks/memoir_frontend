@@ -1562,7 +1562,7 @@
   "resolved" "https://registry.npmjs.org/@uiw/copy-to-clipboard/-/copy-to-clipboard-1.0.12.tgz"
   "version" "1.0.12"
 
-"@uiw/react-markdown-preview@^4.0.24":
+"@uiw/react-markdown-preview@^4.1.5":
   "integrity" "sha512-jiB87TlNao5OMuhqhDhsdGDvOYuOQ9P0snRKYe+x3TRbCE4KIQYvOUuuN/fnctoHEZ1MbyR5Mav1/cTqmXhz6A=="
   "resolved" "https://registry.npmjs.org/@uiw/react-markdown-preview/-/react-markdown-preview-4.1.7.tgz"
   "version" "4.1.7"
@@ -1580,13 +1580,13 @@
     "remark-gfm" "~3.0.1"
     "unist-util-visit" "^4.1.0"
 
-"@uiw/react-md-editor@^3.18.1":
-  "integrity" "sha512-F5yg0JVPEodz1oaUpYdrmZYRVQRz54Hhe0a7NdS5ttxJNHCu8n7n5EjBODTdaVu9F9tgcHuvi/HcN9h8iYwY6Q=="
-  "resolved" "https://registry.npmjs.org/@uiw/react-md-editor/-/react-md-editor-3.18.1.tgz"
-  "version" "3.18.1"
+"@uiw/react-md-editor@^3.20.5":
+  "integrity" "sha512-aJ5TFy6vIZ9XNW6hQugCGXg8xVR0YagOAHt5fCXh2OoAQ6agxZwWBERCiHnFRNfcgBMBKatTnSQV8Pe0XcpOGw=="
+  "resolved" "https://registry.npmjs.org/@uiw/react-md-editor/-/react-md-editor-3.20.5.tgz"
+  "version" "3.20.5"
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@uiw/react-markdown-preview" "^4.0.24"
+    "@uiw/react-markdown-preview" "^4.1.5"
     "rehype" "~12.0.1"
 
 "@webassemblyjs/ast@1.11.1":

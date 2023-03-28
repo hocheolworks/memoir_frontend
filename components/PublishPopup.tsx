@@ -20,6 +20,7 @@ import { PublishPostDto } from "@api/post/postDto";
 import { errorHandler } from "@api/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { formatAbsolute, titleToUrl } from "@utils/functions";
 
 // TODO: (적용완료) 라이트모드 적용
 // TODO: (적용완료) refactoring
@@ -43,8 +44,8 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const user = useSelector(selectAuthUser);
 
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>(title);
-  const [abstract, setAbstract] = useState<string>();
+  const [url, setUrl] = useState<string>(titleToUrl(title));
+  const [abstract, setAbstract] = useState<string>(formatAbsolute(editContent));
   const [isCancel, setIsCancel] = useState<boolean>(false);
   const [isClickedAddToSeries, setIsClickedAddToSeries] =
     useState<boolean>(false);
@@ -60,7 +61,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
     const body: PublishPostDto = {
       postTitle: title,
       postBody: editContent,
-      firstDepth: selectedCategory?.parentName ?? "TEST",
+      firstDepth: selectedCategory?.parentName ?? "",
       secondDepth: selectedCategory?.name,
     };
 
