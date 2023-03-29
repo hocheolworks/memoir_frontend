@@ -5,6 +5,12 @@ export type SaveTempPostDto = {
   tagList: Array<string>;
 };
 
+export type PublishCommentDto = {
+  postTitle: string;
+  postAuthor: string;
+  comment: string;
+};
+
 export type PublishPostDto = {
   //게시글 제목
   postTitle: string;

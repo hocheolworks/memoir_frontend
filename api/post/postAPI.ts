@@ -1,6 +1,6 @@
 import req from "@api/core";
 import { plainToInstance } from "class-transformer";
-import { PublishPostDto, SaveTempPostDto } from "./postDto";
+import { PublishCommentDto, PublishPostDto, SaveTempPostDto } from "./requests";
 import { PublishPostResponseBody } from "./responses";
 
 const PostAPI = {
@@ -14,6 +14,11 @@ const PostAPI = {
       statusCode: data.statusCode,
       data: plainToInstance(PublishPostResponseBody, data.data),
     };
+  },
+
+  publishComment: async (publishCommentDto: PublishCommentDto) => {
+    const { data } = await req.post("api/comments", publishCommentDto);
+    return data;
   },
 
   getPostById: (postId: number | string) => {

@@ -4,7 +4,7 @@ import {
   GithubCodeDto,
   GithubGetContributionDto,
   GithubSignUpDto,
-} from "./userDto";
+} from "./requests";
 import { setToken } from "@token/index";
 import req from "@api/core";
 import { plainToInstance } from "class-transformer";

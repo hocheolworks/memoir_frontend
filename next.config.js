@@ -31,6 +31,7 @@ const nextConfig = {
     domains: [
       "avatars.githubusercontent.com",
       "static.velog.io",
+      "github.com",
       "velog.velcdn.com", // 테스트 용
       "img.delicious.com.au", // 테스트 용
       "images.theconversation.com", // 테스트 용

@@ -8,6 +8,9 @@ import Tag from "@components/Tag";
 import Markdown from "@lhjeong60/react-markdown-preview";
 import ProfileCard from "@components/ProfileCard";
 import CommentInputArea from "@components/CommentInputArea";
+import useUser from "../../hooks/useUser";
+import CommentList from "@components/CommentList";
+import { getGithubProfileIcon } from "@utils/functions";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -37,6 +40,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     content,
     commentList,
   } = post;
+
+  const user = useUser();
 
   return (
     <div className="mx-auto flex w-[768px] flex-col items-center pt-[88px]">
@@ -68,10 +73,23 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
       <ProfileCard
         className="mt-48 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
         userName={post.githubId}
-        profileImage={post.profileImage}
+        profileImage={getGithubProfileIcon(post.githubId)}
       />
       {seriesName && <div className="mt-24">prev & next Navigation</div>}
-      <CommentInputArea />
+      {user && (
+        <CommentInputArea
+          className="mt-16"
+          postAuthor={githubId}
+          postTitle={title}
+          commentCount={commentList?.length ?? 0}
+        />
+      )}
+      {commentList && (
+        <CommentList
+          className="mt-4 w-full text-center"
+          commentList={commentList}
+        />
+      )}
     </div>
   );
 };

@@ -17,7 +17,7 @@ const ProfileCard = ({
   profileImage,
 }: ProfileCardProps) => {
   return (
-    <div className={cls("flex items-center justify-between", className ?? "")}>
+    <div className={cls("flex items-center justify-between", className)}>
       <div className="flex items-center">
         <CircleAvatar
           className="h-[50px]"

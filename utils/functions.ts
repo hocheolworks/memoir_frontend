@@ -95,6 +95,15 @@ export const isDevEnv = () => {
   return process.env.NODE_ENV === "development";
 };
 
+export const handleResizeTextArea = (
+  textAreaRef: React.RefObject<HTMLTextAreaElement> | null
+) => {
+  if (textAreaRef && textAreaRef.current) {
+    textAreaRef.current.style.height = "auto";
+    textAreaRef.current.style.height = textAreaRef.current?.scrollHeight + "px";
+  }
+};
+
 export const titleToUrl = (text: string): string => {
   return text
     .replace(/[^0-9a-zA-Zㄱ-힣. -]/g, "")
@@ -130,6 +139,10 @@ export function formatAbsolute(
   return replaced.slice(0, maxLength);
 }
 
-export function cls(...classes: string[]) {
-  return classes.filter((c) => c !== "").join(" ");
+export function cls(...classes: (string | undefined)[]) {
+  return classes.filter((c) => c !== undefined && c !== "").join(" ");
+}
+
+export function getGithubProfileIcon(githubUserName: string) {
+  return `https://github.com/${githubUserName}.png`;
 }

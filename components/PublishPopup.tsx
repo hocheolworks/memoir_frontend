@@ -16,7 +16,7 @@ import AddToSeriesArea from "./AddToSeriesArea";
 import SetCategoryArea from "./SetCategoryArea";
 import { TreeNodeChild, TreeNodeParent } from "@utils/types";
 import PostAPI from "@api/post/postAPI";
-import { PublishPostDto } from "@api/post/postDto";
+import { PublishPostDto } from "@api/post/requests";
 import { errorHandler } from "@api/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";

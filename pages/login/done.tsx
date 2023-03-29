@@ -28,7 +28,7 @@ const LoginDone: NextPageWithLayout = () => {
         } else {
           router.push(`/register?githubUserName=${res.githubUserName}`);
         }
-      } catch (e) {
+      } catch (e: any) {
         errorHandler(e);
       } finally {
         clearTimeout(timeout);
