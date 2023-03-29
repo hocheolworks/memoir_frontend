@@ -7,6 +7,7 @@ import { Post } from "@utils/types";
 import Tag from "@components/Tag";
 import Markdown from "@lhjeong60/react-markdown-preview";
 import ProfileCard from "@components/ProfileCard";
+import CommentInputArea from "@components/CommentInputArea";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -49,15 +50,17 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         </p>
       </div>
       <div className="-ml-1 flex justify-start self-start pt-4">
-        {post.tagList?.map((value, index) => (
+        {tagList?.map((value, index) => (
           <Tag onClick={() => {}} key={`tag#${index}`}>
             {value}
           </Tag>
         ))}
       </div>
-      <div className="mt-8 w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
-        <h3 className="text-[24px] font-bold">{seriesName}</h3>
-      </div>
+      {seriesName && (
+        <div className="mt-8 w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
+          <h3 className="text-[24px] font-bold">{seriesName}</h3>
+        </div>
+      )}
       <Markdown
         className="mt-[80px] w-full bg-white text-black dark:bg-black dark:text-white"
         source={content}
@@ -67,8 +70,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         userName={post.githubId}
         profileImage={post.profileImage}
       />
-      <div>prev & next Navigation</div>
-      <div>comment</div>
+      {seriesName && <div className="mt-24">prev & next Navigation</div>}
+      <CommentInputArea />
     </div>
   );
 };
