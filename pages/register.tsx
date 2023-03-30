@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
-import { errorHandler, ErrorResponse } from "@api/error";
+import { errorHandler } from "@api/error";
 import UserAPI from "@api/user/userAPI";
 import InputWithFloatingLabel from "@components/InputWithFloatingLabel";
 import LabelBtn from "@components/LabelBtn";
 import { ValidateEmail } from "@utils/functions";
 import { resetToken } from "@token/index";
 import axios from "axios";
+import { BaseApiError } from "@api/core/types";
 
 const Register: FC = () => {
   const { push, query } = useRouter();
@@ -55,11 +56,11 @@ const Register: FC = () => {
         alert("회원가입 완료!, 다시 로그인 해주세요.");
         resetToken();
         push("/");
-      } catch (e) {
+      } catch (e: any) {
         errorHandler(e);
 
         if (axios.isAxiosError(e) && e.response) {
-          const { statusCode } = e.response.data as ErrorResponse; // as 안쓸 방법이 없을까..?
+          const { statusCode } = e.response.data as BaseApiError; // as 안쓸 방법이 없을까..?
           if (statusCode === 401) {
             push("/");
           }

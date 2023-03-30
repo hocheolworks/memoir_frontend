@@ -24,10 +24,7 @@ class MyDocument extends Document {
           <meta name="description" content="Log your memories to MEMOIR." />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <body
-          className="bg-white text-black dark:bg-black dark:text-white"
-          style={{ overflow: "overlay" }}
-        >
+        <body className="bg-white text-black dark:bg-black dark:text-white">
           <Main />
           <NextScript />
         </body>

@@ -13,7 +13,6 @@ import {
   useState,
 } from "react";
 import { useTheme } from "next-themes";
-import type { NextPageWithLayout } from "./_app";
 import TagInput from "@components/TagInput";
 import { getCommands } from "@components/MDEditor/commands";
 import BottomBar from "@components/BottomBar";
@@ -22,8 +21,8 @@ import { toast, TypeOptions } from "react-toastify";
 import PostAPI from "@api/post/postAPI";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "@redux/modules/authSlice";
-import { errorHandler } from "@api/error";
 import rehypeSanitize from "rehype-sanitize";
+import { NextPage } from "next/types";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
@@ -60,7 +59,7 @@ const ForwardRefMarkdown = forwardRef<MarkdownPreviewRef, MarkdownPreviewProps>(
 );
 ForwardRefMarkdown.displayName = "ForwardRefMarkdown";
 
-const Write: NextPageWithLayout = () => {
+const Write: NextPage = () => {
   const { theme } = useTheme();
   const user = useSelector(selectAuthUser);
   const [title, setTitle] = useState<string>("");
@@ -196,7 +195,7 @@ const Write: NextPageWithLayout = () => {
   return (
     <>
       <div
-        className="fixed top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden"
+        className="absolute top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden bg-white dark:bg-black"
         data-color-mode={theme ?? "dark"}
       >
         <div className="flex w-full flex-col px-12 pt-8 lg:w-1/2">
@@ -277,7 +276,4 @@ const Write: NextPageWithLayout = () => {
   );
 };
 
-Write.getLayout = function getLayout(page: ReactElement) {
-  return page;
-};
 export default Write;

@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
-import { ReactElement, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { errorHandler } from "@api/error";
 import UserAPI from "@api/user/userAPI";
 import { resetAuth, setAuthUser } from "@redux/modules/authSlice";
 import { dummyUser } from "@utils/dummy";
-import { NextPageWithLayout } from "@pages/_app";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
+import { NextPage } from "next/types";
 
-const LoginDone: NextPageWithLayout = () => {
+const LoginDone: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { code } = router.query;
@@ -28,10 +28,9 @@ const LoginDone: NextPageWithLayout = () => {
         } else {
           router.push(`/register?githubUserName=${res.githubUserName}`);
         }
+        clearTimeout(timeout);
       } catch (e: any) {
         errorHandler(e);
-      } finally {
-        clearTimeout(timeout);
       }
     };
 
@@ -66,7 +65,7 @@ const LoginDone: NextPageWithLayout = () => {
   }, [router.isReady, code, dispatch, router]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <div className="right- fixed top-0 bottom-0 left-0 z-20 flex h-full w-full flex-col items-center justify-center bg-black bg-opacity-70">
       <GridLoader
         loading={code !== undefined || process.env.NODE_ENV === "development"}
         size={30}
@@ -81,10 +80,6 @@ const LoginDone: NextPageWithLayout = () => {
       </Link>
     </div>
   );
-};
-
-LoginDone.getLayout = function getLayout(page: ReactElement) {
-  return page;
 };
 
 export default LoginDone;

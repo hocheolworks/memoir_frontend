@@ -11,8 +11,11 @@ type CommentListProps = {
 const CommentList = ({ className, commentList }: CommentListProps) => {
   return (
     <div className={cls("pb-24", className)}>
-      {commentList.map((comment) => (
-        <CommentCard comment={comment} />
+      {commentList.map((comment, idx) => (
+        <CommentCard
+          key={`comment-${idx + 1}-${comment.githubId}`}
+          comment={comment}
+        />
       ))}
     </div>
   );

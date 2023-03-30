@@ -17,6 +17,7 @@ import {
 import { useTheme } from "next-themes";
 import DropdownMenu from "./DropdownMenu";
 import DropdownBtn from "./DropdownBtn";
+import { cls } from "@utils/functions";
 
 type HeaderPropType = {
   className?: string;
@@ -50,8 +51,13 @@ const Header: FC<HeaderPropType> = ({ className }) => {
   };
 
   return (
-    <div className={"relative" + (className ? ` ${className}` : "")}>
-      <div className="flex h-16 justify-between">
+    <div
+      className={cls(
+        "sticky top-0 z-20 w-full border-b-[1px] border-b-neutral-200 bg-white dark:border-b-neutral-700 dark:bg-black",
+        className
+      )}
+    >
+      <div className="mx-auto flex h-16 w-full justify-between px-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0">
         <div id="header-left" className="flex flex-none items-center">
           <Link href={"/"}>
             <Image
