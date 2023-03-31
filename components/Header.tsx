@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon } from "@react-icons/all-files/fa/FaMoon";
@@ -22,11 +22,36 @@ type HeaderPropType = {
 const Header: FC<HeaderPropType> = ({ className }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectAuthUser);
+  const [show, setShow] = useState(true);
 
   const [isDropdownMenuVisible, setIsDropdownMenuVisible] =
     useState<boolean>(false);
 
   const { theme, setTheme } = useTheme();
+  const prevScrollY = useRef(0);
+
+  useEffect(() => {
+    const scrollEventHandler = () => {
+      const current = window.scrollY;
+      const { current: prev } = prevScrollY;
+
+      if (current - prev < 0) {
+        // 위로 스크롤
+        setShow(true);
+      } else {
+        // 정지 또는 아래로 스크롤
+        setShow(false);
+      }
+
+      prevScrollY.current = current;
+    };
+    document.addEventListener("scroll", scrollEventHandler, {
+      passive: true,
+    });
+    return () => {
+      document.removeEventListener("scroll", scrollEventHandler);
+    };
+  });
 
   const brightModeBtnClick = () => {
     if (theme) {
@@ -50,6 +75,8 @@ const Header: FC<HeaderPropType> = ({ className }) => {
     <div
       className={cls(
         "fixed top-0 z-20 w-full border-b-[1px] border-b-neutral-200 bg-white dark:border-b-neutral-700 dark:bg-black",
+        "transition-transform duration-200",
+        show ? "translate-y-0" : "-translate-y-16",
         className
       )}
     >
