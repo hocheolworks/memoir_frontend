@@ -10,7 +10,7 @@ import axios from "axios";
 import { BaseApiError } from "@api/core/types";
 
 const Register: FC = () => {
-  const { push, query } = useRouter();
+  const { push, query, isReady } = useRouter();
   const { githubUserName } = query;
 
   const [email, setEmail] = useState<string>();
@@ -19,10 +19,13 @@ const Register: FC = () => {
   const [disableBtn, setDisableBtn] = useState<boolean>();
 
   useEffect(() => {
+    if (!isReady) return;
+
+    console.log(githubUserName);
     if (!githubUserName) {
       push("/404");
     }
-  }, [githubUserName, push]);
+  }, [isReady, githubUserName, push]);
 
   useEffect(() => {
     if (
@@ -103,7 +106,7 @@ const Register: FC = () => {
           ></InputWithFloatingLabel>
 
           <LabelBtn
-            label="Join Us!"
+            label="시작하기!"
             rounded="lg"
             className="h-12 text-xl"
             disabled={disableBtn}

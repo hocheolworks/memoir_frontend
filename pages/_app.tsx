@@ -14,11 +14,23 @@ import { ThemeProvider, useTheme } from "next-themes";
 import { Provider } from "react-redux";
 import { store, persistor } from "@redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import Header from "@components/Header";
-import Footer from "@components/Footer";
+import GlobalLayout from "@components/GlobalLayout";
+import { NextPage } from "next/types";
+import { ReactElement, ReactNode } from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const { theme } = useTheme();
+
+  const getLayout =
+    Component.getLayout || ((page) => <GlobalLayout>{page}</GlobalLayout>);
 
   return (
     <Provider store={store}>
@@ -27,20 +39,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Head>
             <title>MEMOIR.</title>
           </Head>
-          <Header />
-          <div
-            id="contents"
-            className="mx-auto w-full flex-1 px-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0"
-          >
-            <div className="flex h-full flex-col">
-              <Component {...pageProps} />
-              <ToastContainer
-                autoClose={1500}
-                theme={theme === "dark" ? "dark" : "light"}
-              />
-            </div>
+          <div id="wrapper" className="flex h-full w-full flex-col">
+            {getLayout(<Component {...pageProps} />)}
+            <ToastContainer
+              autoClose={1500}
+              theme={theme === "dark" ? "dark" : "light"}
+            />
           </div>
-          <Footer />
         </ThemeProvider>
       </PersistGate>
     </Provider>

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { errorHandler } from "@api/error";
 import UserAPI from "@api/user/userAPI";
@@ -7,9 +7,9 @@ import { resetAuth, setAuthUser } from "@redux/modules/authSlice";
 import { dummyUser } from "@utils/dummy";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
-import { NextPage } from "next/types";
+import { NextPageWithLayout } from "@pages/_app";
 
-const LoginDone: NextPage = () => {
+const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { code } = router.query;
@@ -81,5 +81,7 @@ const LoginDone: NextPage = () => {
     </div>
   );
 };
+
+LoginDone.getLayout = (page: ReactElement) => page;
 
 export default LoginDone;

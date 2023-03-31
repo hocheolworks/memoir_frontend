@@ -22,7 +22,7 @@ import PostAPI from "@api/post/postAPI";
 import { useSelector } from "react-redux";
 import { selectAuthUser } from "@redux/modules/authSlice";
 import rehypeSanitize from "rehype-sanitize";
-import { NextPage } from "next/types";
+import { NextPageWithLayout } from "./_app";
 
 // FIXME: 발견된 버그 및 개선필요사항 정리
 // 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
@@ -59,7 +59,7 @@ const ForwardRefMarkdown = forwardRef<MarkdownPreviewRef, MarkdownPreviewProps>(
 );
 ForwardRefMarkdown.displayName = "ForwardRefMarkdown";
 
-const Write: NextPage = () => {
+const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
   const user = useSelector(selectAuthUser);
   const [title, setTitle] = useState<string>("");
@@ -275,5 +275,7 @@ const Write: NextPage = () => {
     </>
   );
 };
+
+Write.getLayout = (page: ReactElement) => page;
 
 export default Write;

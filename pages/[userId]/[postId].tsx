@@ -1,6 +1,5 @@
-import React from "react";
-import { NextPage } from "next";
-import { NextPageContext } from "next/types";
+import React, { ReactElement, ReactNode } from "react";
+import { NextPage, NextPageContext } from "next/types";
 import PostAPI from "@api/post/postAPI";
 import { dummyPost } from "@utils/dummy";
 import { Post } from "@utils/types";

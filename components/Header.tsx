@@ -9,11 +9,7 @@ import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
 import LabelBtn from "./LabelBtn";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  resetAuth,
-  selectAuthUser,
-  setAuthUser,
-} from "@redux/modules/authSlice";
+import { resetAuth, selectAuthUser } from "@redux/modules/authSlice";
 import { useTheme } from "next-themes";
 import DropdownMenu from "./DropdownMenu";
 import DropdownBtn from "./DropdownBtn";
@@ -53,11 +49,11 @@ const Header: FC<HeaderPropType> = ({ className }) => {
   return (
     <div
       className={cls(
-        "sticky top-0 z-20 w-full border-b-[1px] border-b-neutral-200 bg-white dark:border-b-neutral-700 dark:bg-black",
+        "fixed top-0 z-20 w-full border-b-[1px] border-b-neutral-200 bg-white dark:border-b-neutral-700 dark:bg-black",
         className
       )}
     >
-      <div className="mx-auto flex h-16 w-full justify-between px-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0">
+      <div className="default-width flex h-16 justify-between">
         <div id="header-left" className="flex flex-none items-center">
           <Link href={"/"}>
             <Image
@@ -69,7 +65,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
             ></Image>
           </Link>
         </div>
-        <div id="header-right" className="flex flex-none items-center">
+        <div id="header-right" className="relative flex flex-none items-center">
           <IconBtn
             className="mr-2"
             onClick={brightModeBtnClick}

@@ -21,6 +21,10 @@ div#__next {
   flex-direction: column;
 }
 
+.default-width {
+  @apply mx-auto w-full px-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0;
+}
+
 a {
   color: inherit;
   text-decoration: none;

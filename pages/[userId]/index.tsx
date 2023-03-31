@@ -9,7 +9,7 @@ import { ContributionCalendar, WithRouterProps } from "@utils/types";
 import UserAPI from "@api/user/userAPI";
 import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
-import { NextPage, NextPageContext } from "next/types";
+import { NextPageContext } from "next/types";
 import NavigationBar from "@components/NavigationBar";
 import {
   dummyPreview,
@@ -24,6 +24,8 @@ import TagList from "@components/TagList";
 import PostList from "@components/PostList";
 import CategoryTreeNav from "@components/CategoryTreeNav";
 import ProfileCard from "@components/ProfileCard";
+import { NextPageWithLayout } from "@pages/_app";
+import GlobalLayout from "@components/GlobalLayout";
 
 export async function getServerSideProps({ query, req, res }: NextPageContext) {
   const { userId } = query;
@@ -50,7 +52,7 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
   }
 }
 
-const UserMemoir: NextPage<
+const UserMemoir: NextPageWithLayout<
   { userId: string; contributionData: ContributionCalendar } & WithRouterProps
 > = ({ userId, contributionData }) => {
   const user = useSelector(selectAuthUser);
@@ -181,5 +183,9 @@ const UserMemoir: NextPage<
     </div>
   );
 };
+
+UserMemoir.getLayout = (page: ReactElement) => (
+  <GlobalLayout withoutFooter>{page}</GlobalLayout>
+);
 
 export default UserMemoir;
