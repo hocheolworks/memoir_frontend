@@ -181,8 +181,9 @@ export const dummyPost: Post = {
   createDate: "2022년 12월 27일",
   tagList: ["SSR", "next", "next-redux-wrapper", "nextjs", "redux"],
   seriesName: "삽질기",
-  seriesIndex: 0,
+  seriesIndex: 1,
   seriesList: [
+    { title: "[삽질기#0] 삽질기 프롤로그", directUrl: "-1" },
     { title: "[삽질기#1] next-redux-wrapper에 대한 오해..", directUrl: "1" },
     { title: "[삽질기#2] 잃어버린 getLayout을 찾아서..", directUrl: "2" },
   ],

@@ -146,3 +146,24 @@ export function cls(...classes: (string | undefined)[]) {
 export function getGithubProfileIcon(githubUserName: string) {
   return `https://github.com/${githubUserName}.png`;
 }
+
+export function isBetween(
+  start: number,
+  end: number,
+  target: number,
+  startInclude: boolean = true,
+  endInclude: boolean = true
+) {
+  let startNumber = start;
+  let endNumber = end;
+
+  if (!startInclude) {
+    startNumber += 1;
+  }
+
+  if (!endInclude) {
+    endNumber -= 1;
+  }
+
+  return startNumber <= target && target <= endNumber;
+}

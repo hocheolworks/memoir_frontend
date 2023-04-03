@@ -9,7 +9,9 @@ import ProfileCard from "@components/ProfileCard";
 import CommentInputArea from "@components/CommentInputArea";
 import useUser from "../../hooks/useUser";
 import CommentList from "@components/CommentList";
-import { getGithubProfileIcon } from "@utils/functions";
+import { getGithubProfileIcon, isBetween } from "@utils/functions";
+import Link from "next/link";
+import SeriesNav from "@components/SeriesNav";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -39,6 +41,25 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     content,
     commentList,
   } = post;
+
+  const seriesLength = seriesList?.length ?? -1;
+
+  const firstSeriesIndex = 0;
+  const lastSeriesIndex = seriesLength - 1;
+
+  const prevSeriesIndex = seriesIndex !== undefined ? seriesIndex - 1 : -1;
+  const nextSeriesIndex = seriesIndex !== undefined ? seriesIndex + 1 : -1;
+
+  const prevSeriesExist = isBetween(
+    firstSeriesIndex,
+    lastSeriesIndex,
+    prevSeriesIndex
+  );
+  const nextSeriesExist = isBetween(
+    firstSeriesIndex,
+    lastSeriesIndex,
+    nextSeriesIndex
+  );
 
   const user = useUser();
 
@@ -74,7 +95,17 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         userName={post.githubId}
         profileImage={getGithubProfileIcon(post.githubId)}
       />
-      {seriesName && <div className="mt-24">prev & next Navigation</div>}
+
+      {seriesList && seriesLength > 1 && (
+        <SeriesNav
+          prevSeriesPreview={
+            prevSeriesExist ? seriesList[prevSeriesIndex] : undefined
+          }
+          nextSeriesPreview={
+            nextSeriesExist ? seriesList[nextSeriesIndex] : undefined
+          }
+        />
+      )}
       {user && (
         <CommentInputArea
           className="mt-16"
