@@ -20,11 +20,13 @@ const SeriesNavLink = ({
     <Link
       href={href}
       className={cls(
-        "flex w-[47%] items-center gap-4 rounded-sm bg-neutral-200 px-2 pt-1 pb-2 dark:bg-neutral-700",
+        "flex w-full items-center gap-4 rounded-sm bg-neutral-200 px-2 pt-1 pb-2 dark:bg-neutral-700 zero:w-[47%]",
         isLeft ? "justify-start" : "justify-end"
       )}
     >
-      {isLeft && <FiArrowLeftCircle size={35} color="#904CF9" />}
+      {isLeft && (
+        <FiArrowLeftCircle className="mt-1" size={35} color="#904CF9" />
+      )}
       <p
         className={cls(
           "overflow-hidden text-ellipsis whitespace-nowrap",
@@ -37,7 +39,9 @@ const SeriesNavLink = ({
         <br />
         <strong>{title}</strong>
       </p>
-      {!isLeft && <FiArrowRightCircle size={35} color="#904CF9" />}
+      {!isLeft && (
+        <FiArrowRightCircle className="mt-1" size={35} color="#904CF9" />
+      )}
     </Link>
   );
 };
@@ -51,11 +55,8 @@ const SeriesNav = ({
   prevSeriesPreview,
   nextSeriesPreview,
 }: SeriesNavProps) => {
-  const commonClassName =
-    "flex w-[45%] items-center justify-start gap-4 rounded-sm bg-neutral-200 px-2 pt-1 pb-2 dark:bg-neutral-700";
-
   return (
-    <div className="mt-24 flex w-full items-center justify-between">
+    <div className="mt-24 flex w-full flex-col items-center justify-between gap-4 zero:flex-row zero:gap-0">
       {prevSeriesPreview && (
         <SeriesNavLink
           direction="left"

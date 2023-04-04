@@ -64,7 +64,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const user = useUser();
 
   return (
-    <div className="mx-auto flex w-[768px] flex-col items-center pt-[88px]">
+    <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
       <div>
         <h1 className="text-[48px] font-bold leading-[72px]">{title}</h1>
       </div>
