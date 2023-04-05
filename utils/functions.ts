@@ -167,3 +167,11 @@ export function isBetween(
 
   return startNumber <= target && target <= endNumber;
 }
+
+export function extractAnchorFromMarkdown(markdown: string): string[] {
+  const regex = /^#{1,6} .+/gm;
+
+  return (
+    markdown.match(regex)?.map((value) => value.replace(/^#{1,6} /, "")) ?? []
+  );
+}
