@@ -1,4 +1,11 @@
-import React, { ReactElement, ReactNode, useMemo } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useMemo,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { NextPage, NextPageContext } from "next/types";
 import PostAPI from "@api/post/postAPI";
 import { dummyPost } from "@utils/dummy";
@@ -10,6 +17,7 @@ import CommentInputArea from "@components/CommentInputArea";
 import useUser from "../../hooks/useUser";
 import CommentList from "@components/CommentList";
 import {
+  cls,
   extractAnchorFromMarkdown,
   getGithubProfileIcon,
   isBetween,
@@ -17,6 +25,8 @@ import {
 import Link from "next/link";
 import SeriesNav from "@components/SeriesNav";
 import AnchorNav from "@components/AnchorNav";
+import { useDispatch } from "react-redux";
+import { hideHeader } from "@redux/modules/configSlice";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -47,6 +57,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     commentList,
   } = post;
 
+  const dispatch = useDispatch();
+
   const anchors = useMemo(() => extractAnchorFromMarkdown(content), [content]);
 
   const seriesLength = seriesList?.length ?? -1;
@@ -69,6 +81,27 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   );
 
   const user = useUser();
+  const authorDivRef = useRef<HTMLDivElement>(null);
+  const [anchorNavPosition, setAnchorNavPosition] = useState<
+    "fixed" | "absolute"
+  >("absolute");
+
+  useEffect(() => {
+    if (!authorDivRef || !authorDivRef.current) return;
+
+    const callback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio < 1) {
+          setAnchorNavPosition("fixed");
+        } else {
+          setAnchorNavPosition("absolute");
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(callback, { threshold: 0.99 });
+    observer.observe(authorDivRef.current);
+  }, [authorDivRef, authorDivRef.current]);
 
   return (
     <>
@@ -76,18 +109,29 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         <div>
           <h1 className="text-[48px] font-bold leading-[72px]">{title}</h1>
         </div>
-        <div className="self-start pt-8">
+        <div className="self-start pt-8" ref={authorDivRef}>
           <p>
             <span className="font-medium">{githubId}</span> ·{" "}
             <span className="text-neutral-400">{createDate}</span>
           </p>
         </div>
-        <div className="-ml-1 flex justify-start self-start pt-4">
+        <div className="relative -ml-1 flex w-full justify-start self-start pt-4">
           {tagList?.map((value, index) => (
             <Tag onClick={() => {}} key={`tag#${index}`}>
               {value}
             </Tag>
           ))}
+          <AnchorNav
+            className={cls(
+              "hidden left-area-visible:block",
+              anchorNavPosition,
+              anchorNavPosition === "absolute"
+                ? "-right-[200px] -bottom-[152px]"
+                : "top-[140px] right-[106px]"
+            )}
+            anchors={anchors}
+            onClick={() => dispatch(hideHeader())}
+          />
         </div>
         {seriesName && (
           <div className="mt-8 w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
@@ -129,7 +173,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           />
         )}
       </div>
-      <AnchorNav className="fixed top-[436px] right-[10%]" anchors={anchors} />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { cls } from "@utils/functions";
 import { Children } from "@utils/types";
 
 type BottomBarPropType = {
@@ -20,17 +21,14 @@ const BottomBtn = ({
   return (
     <div className={className ?? ""}>
       <button
-        className={`m-2 rounded-md px-5 py-2 text-black dark:text-white${
-          buttonClass ? ` ${buttonClass}` : ""
-        }${
-          isDisabled
-            ? " cursor-not-allowed bg-neutral-200 dark:bg-neutral-700"
-            : " cursor-pointer hover:brightness-90"
-        }${
+        className={cls(
+          "m-2 cursor-pointer rounded-md px-5 py-2 text-black hover:brightness-90 dark:text-white",
+          "disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:brightness-100 disabled:dark:bg-neutral-700  disabled:dark:text-neutral-500",
+          buttonClass,
           isPoint
-            ? ` bg-point text-neutral-200 dark:text-white`
-            : " hover:bg-gray-300 dark:hover:bg-gray-700"
-        }`}
+            ? "bg-point text-neutral-200 dark:text-white"
+            : "hover:bg-gray-300 dark:hover:bg-gray-700"
+        )}
         onClick={onClick}
         disabled={isDisabled}
       >

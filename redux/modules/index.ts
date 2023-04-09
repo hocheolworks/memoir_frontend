@@ -2,21 +2,22 @@ import { CombinedState, combineReducers } from "@reduxjs/toolkit";
 import storage from "@redux/storage";
 import auth, { AuthState } from "./authSlice";
 import { PersistConfig, persistReducer } from "redux-persist";
+import config, { ConfigState } from "./configSlice";
 
-export type RootState = CombinedState<{ auth: AuthState }> | undefined;
+export type IntegratedState = CombinedState<{
+  auth: AuthState;
+  config: ConfigState;
+}>;
 
-const rootReducer = combineReducers({ auth });
+export type RootState = IntegratedState | undefined;
 
-const persistConfig: PersistConfig<
-  CombinedState<{ auth: AuthState }>,
-  any,
-  any,
-  any
-> = {
+const rootReducer = combineReducers({ auth, config });
+
+const persistConfig: PersistConfig<IntegratedState, any, any, any> = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["auth"],
+  whitelist: ["auth", "config"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

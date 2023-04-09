@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon } from "@react-icons/all-files/fa/FaMoon";
@@ -14,6 +14,11 @@ import { useTheme } from "next-themes";
 import DropdownMenu from "./DropdownMenu";
 import DropdownBtn from "./DropdownBtn";
 import { cls } from "@utils/functions";
+import {
+  hideHeader,
+  selectHeaderVisible,
+  showHeader,
+} from "@redux/modules/configSlice";
 
 type HeaderPropType = {
   className?: string;
@@ -22,7 +27,7 @@ type HeaderPropType = {
 const Header: FC<HeaderPropType> = ({ className }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectAuthUser);
-  const [show, setShow] = useState(true);
+  const isVisible = useSelector(selectHeaderVisible);
 
   const [isDropdownMenuVisible, setIsDropdownMenuVisible] =
     useState<boolean>(false);
@@ -35,12 +40,12 @@ const Header: FC<HeaderPropType> = ({ className }) => {
       const current = window.scrollY;
       const { current: prev } = prevScrollY;
 
-      if (current - prev < 0) {
+      if (current - prev <= 0) {
         // 위로 스크롤
-        setShow(true);
+        dispatch(showHeader());
       } else {
         // 정지 또는 아래로 스크롤
-        setShow(false);
+        dispatch(hideHeader());
       }
 
       prevScrollY.current = current;
@@ -76,7 +81,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
       className={cls(
         "fixed top-0 z-20 w-full border-b-[1px] border-b-neutral-200 bg-white dark:border-b-neutral-700 dark:bg-black",
         "transition-transform duration-200",
-        show ? "translate-y-0" : "-translate-y-16",
+        isVisible ? "translate-y-0" : "-translate-y-16",
         className
       )}
     >
