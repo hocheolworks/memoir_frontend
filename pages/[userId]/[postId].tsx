@@ -82,6 +82,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   const user = useUser();
   const authorDivRef = useRef<HTMLDivElement>(null);
+  const rootDivRef = useRef<HTMLDivElement>(null);
   const [anchorNavPosition, setAnchorNavPosition] = useState<
     "fixed" | "absolute"
   >("absolute");
@@ -105,8 +106,11 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
-        <div>
+      <div
+        className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]"
+        ref={rootDivRef}
+      >
+        <div className="self-start">
           <h1 className="text-[48px] font-bold leading-[72px]">{title}</h1>
         </div>
         <div className="self-start pt-8" ref={authorDivRef}>
@@ -126,20 +130,29 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
               "hidden left-area-visible:block",
               anchorNavPosition,
               anchorNavPosition === "absolute"
-                ? "-right-[200px] -bottom-[152px]"
-                : "top-[140px] right-[106px]"
+                ? "-right-16 -bottom-[152px] translate-x-full"
+                : "top-[140px]"
             )}
+            style={
+              anchorNavPosition === "fixed"
+                ? {
+                    left:
+                      (rootDivRef.current?.getBoundingClientRect().right ?? 0) +
+                      60,
+                  }
+                : {}
+            }
             anchors={anchors}
             onClick={() => dispatch(hideHeader())}
           />
         </div>
         {seriesName && (
-          <div className="mt-8 w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
+          <div className="mt-8 mb-[48px] w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
             <h3 className="text-[24px] font-bold">{seriesName}</h3>
           </div>
         )}
         <Markdown
-          className="mt-[80px] w-full bg-white text-black dark:bg-black dark:text-white"
+          className="mt-8 w-full bg-white text-black dark:bg-black dark:text-white"
           source={content}
         ></Markdown>
         <ProfileCard
