@@ -1,13 +1,6 @@
-import React, {
-  ReactElement,
-  ReactNode,
-  useMemo,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useMemo, useEffect, useRef, useState } from "react";
 import { NextPage, NextPageContext } from "next/types";
-import PostAPI from "@api/post/postAPI";
+// import PostAPI from "@api/post/postAPI";
 import { dummyPost } from "@utils/dummy";
 import { Post } from "@utils/types";
 import Tag from "@components/Tag";
@@ -22,7 +15,6 @@ import {
   getGithubProfileIcon,
   isBetween,
 } from "@utils/functions";
-import Link from "next/link";
 import SeriesNav from "@components/SeriesNav";
 import AnchorNav from "@components/AnchorNav";
 import { useDispatch } from "react-redux";

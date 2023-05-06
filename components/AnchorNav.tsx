@@ -1,6 +1,6 @@
 import { cls, titleToUrl } from "@utils/functions";
 import Link from "next/link";
-import React, { CSSProperties, forwardRef } from "react";
+import React, { CSSProperties, useState } from "react";
 
 type AnchorNavProps = {
   className?: string;
@@ -10,6 +10,8 @@ type AnchorNavProps = {
 };
 
 const AnchorNav = ({ className, style, onClick, anchors }: AnchorNavProps) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <ul
       className={cls(
@@ -18,17 +20,29 @@ const AnchorNav = ({ className, style, onClick, anchors }: AnchorNavProps) => {
       )}
       style={style}
     >
-      {anchors.map((anchor, idx) => (
-        <li key={`AnchorNav#${idx + 1}`}>
-          <Link
-            href={`#${titleToUrl(anchor).replaceAll(".", "")}`}
-            onClick={onClick}
-            className="text-sm text-neutral-500"
-          >
-            {anchor}
-          </Link>
-        </li>
-      ))}
+      {anchors.map((anchor, idx) => {
+        const isSelected = idx === selectedIndex;
+
+        return (
+          <li key={`AnchorNav#${idx + 1}`}>
+            <Link
+              href={`#${titleToUrl(anchor).replaceAll(".", "")}`}
+              onClick={() => {
+                if (onClick) onClick();
+                setSelectedIndex(idx);
+              }}
+              className={cls(
+                "text-sm text-neutral-500 transition-transform duration-500",
+                isSelected
+                  ? "scale-150 text-black dark:text-white"
+                  : "scale-100"
+              )}
+            >
+              {anchor}
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 };
