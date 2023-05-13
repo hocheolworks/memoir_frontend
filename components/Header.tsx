@@ -40,10 +40,10 @@ const Header: FC<HeaderPropType> = ({ className }) => {
       const current = window.scrollY;
       const { current: prev } = prevScrollY;
 
-      if (current - prev <= 0) {
+      if (current - prev <= -2) {
         // 위로 스크롤
         dispatch(showHeader());
-      } else {
+      } else if (current - prev >= 2) {
         // 정지 또는 아래로 스크롤
         dispatch(hideHeader());
       }

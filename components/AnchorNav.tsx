@@ -7,11 +7,18 @@ type AnchorNavProps = {
   style?: CSSProperties;
   onClick?: () => void;
   anchors: string[];
+  selectedIndex: number;
+  setSelectedIndex: (selectedIndex: number) => void;
 };
 
-const AnchorNav = ({ className, style, onClick, anchors }: AnchorNavProps) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
+const AnchorNav = ({
+  className,
+  style,
+  onClick,
+  anchors,
+  selectedIndex,
+  setSelectedIndex,
+}: AnchorNavProps) => {
   return (
     <ul
       className={cls(
