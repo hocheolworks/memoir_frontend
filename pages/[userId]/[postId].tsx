@@ -79,7 +79,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const [anchorNavPosition, setAnchorNavPosition] = useState<
     "fixed" | "absolute"
   >("absolute");
-  const [anchorNavIndex, setAnchorNavIndex] = useState(-1);
 
   useEffect(() => {
     if (!authorDivRef || !authorDivRef.current) return;
@@ -97,36 +96,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     const observer = new IntersectionObserver(callback, { threshold: 0.99 });
     observer.observe(authorDivRef.current);
   }, [authorDivRef, authorDivRef.current]);
-
-  useEffect(() => {
-    const callback: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        const idx = parseInt(entry.target.getAttribute("data-index") ?? "-1");
-
-        if (entry.isIntersecting) {
-          setAnchorNavIndex(idx);
-        } else {
-          // setAnchorNavIndex(idx - 1);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(callback, {
-      threshold: 0.01,
-      rootMargin: "0px 0px -99% 0px",
-    });
-
-    anchors.forEach((anchor, idx) => {
-      const $anchor = document.getElementById(
-        titleToUrl(anchor).replaceAll(".", "")
-      );
-
-      if ($anchor) {
-        $anchor.dataset.index = idx.toString();
-        observer.observe($anchor);
-      }
-    });
-  }, [content]);
 
   return (
     <>
@@ -172,8 +141,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
               // FIXME: 아래에서 위로 위동할 때, 헤더 표시 안되게 바꿔야해
               dispatch(hideHeader());
             }}
-            selectedIndex={anchorNavIndex}
-            setSelectedIndex={setAnchorNavIndex}
           />
         </div>
         {seriesName && (
