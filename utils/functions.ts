@@ -175,3 +175,16 @@ export function extractAnchorFromMarkdown(markdown: string): string[] {
     markdown.match(regex)?.map((value) => value.replace(/^#{1,6} /, "")) ?? []
   );
 }
+
+export function throttle(callback: Function, milliseconds: number) {
+  let timeoutId: number | null = null;
+
+  return () => {
+    if (!timeoutId) {
+      timeoutId = window.setTimeout(() => {
+        callback();
+        timeoutId = null;
+      }, milliseconds);
+    }
+  };
+}
