@@ -235,7 +235,7 @@ const Write: NextPageWithLayout = () => {
             }}
             commands={getCommands({ width: 18, height: 18 })}
             textareaProps={{
-              placeholder: "오늘을 기록해보세요!",
+              placeholder: "오늘을 회고해보세요!",
             }}
             onKeyDown={(e) => {
               if (!editContent || !selectionStart) return;

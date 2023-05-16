@@ -15,5 +15,9 @@ export const getImageWithSize = (
         />
       </svg>
     ),
+    execute: () => {
+      if (typeof window !== "undefined") {
+      }
+    },
   };
 };

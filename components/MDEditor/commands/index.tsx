@@ -44,7 +44,6 @@ const getCommands: (size?: {
   getImageWithSize(size?.width, size?.height),
   divider,
   getUnorderedListCommandWithSize(size?.width, size?.height),
-  getOrderedListCommandWithSize(size?.width, size?.height),
   getCheckedListCommandWithSize(size?.width, size?.height),
 ];
 
