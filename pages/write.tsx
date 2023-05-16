@@ -188,10 +188,6 @@ const Write: NextPageWithLayout = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(previewContent);
-  }, [previewContent]);
-
   return (
     <>
       <div
