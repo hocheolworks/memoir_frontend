@@ -11,6 +11,7 @@ import useUser from "../../hooks/useUser";
 import CommentList from "@components/CommentList";
 import {
   cls,
+  debounce,
   extractAnchorFromMarkdown,
   getGithubProfileIcon,
   isBetween,
@@ -75,10 +76,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   const user = useUser();
   const authorDivRef = useRef<HTMLDivElement>(null);
-  const rootDivRef = useRef<HTMLDivElement>(null);
-  const [anchorNavPosition, setAnchorNavPosition] = useState<
-    "fixed" | "absolute"
-  >("absolute");
+  const anchorNavRootRef = useRef<HTMLDivElement>(null);
+  const [anchorNavIsFixed, setAnchorNavIsFixed] = useState(false);
 
   useEffect(() => {
     if (!authorDivRef || !authorDivRef.current) return;
@@ -86,9 +85,9 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.intersectionRatio < 1) {
-          setAnchorNavPosition("fixed");
+          setAnchorNavIsFixed(true);
         } else {
-          setAnchorNavPosition("absolute");
+          setAnchorNavIsFixed(false);
         }
       });
     };
@@ -99,10 +98,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      <div
-        className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]"
-        ref={rootDivRef}
-      >
+      <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">
           <h1 className="text-[48px] font-bold leading-[72px]">{title}</h1>
         </div>
@@ -112,44 +108,39 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
             <span className="text-neutral-400">{createDate}</span>
           </p>
         </div>
-        <div className="relative -ml-1 flex w-full justify-start self-start pt-4">
+        <div className="-ml-1 flex w-full justify-start self-start pt-4">
           {tagList?.map((value, index) => (
             <Tag onClick={() => {}} key={`tag#${index}`}>
               {value}
             </Tag>
           ))}
-          <AnchorNav
+        </div>
+        <div ref={anchorNavRootRef} className="relative mt-8 w-full">
+          <div
             className={cls(
-              "hidden left-area-visible:block",
-              anchorNavPosition,
-              anchorNavPosition === "absolute"
-                ? "-right-16 -bottom-[152px] translate-x-full"
-                : "top-[140px]"
+              "absolute left-full hidden w-[240px] left-area-visible:block"
             )}
-            style={
-              // FIXME: anchorNavPosition === "fixed"일 때, 너비 조절하면 곱창남
-              anchorNavPosition === "fixed"
-                ? {
-                    left:
-                      (rootDivRef.current?.getBoundingClientRect().right ?? 0) +
-                      60,
-                  }
-                : {}
-            }
-            anchors={anchors}
-            onClick={() => {
-              // FIXME: 아래에서 위로 위동할 때, 헤더 표시 안되게 바꿔야해
-              dispatch(hideHeader());
-            }}
-          />
+          >
+            <AnchorNav
+              className={cls("ml-[60px]", anchorNavIsFixed ? "fixed" : "")}
+              style={{
+                top: anchorNavRootRef.current?.getBoundingClientRect().top,
+              }}
+              anchors={anchors}
+              onClick={() => {
+                // FIXME: 아래에서 위로 위동할 때, 헤더 표시 안되게 바꿔야해
+                dispatch(hideHeader());
+              }}
+            />
+          </div>
         </div>
         {seriesName && (
-          <div className="mt-8 mb-[48px] w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
+          <div className="mb-[48px] w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
             <h3 className="text-[24px] font-bold">{seriesName}</h3>
           </div>
         )}
         <Markdown
-          className="mt-8 w-full bg-white text-black dark:bg-black dark:text-white"
+          className="w-full bg-white text-black dark:bg-black dark:text-white"
           source={content}
         ></Markdown>
         <ProfileCard

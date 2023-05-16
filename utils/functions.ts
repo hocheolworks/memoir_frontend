@@ -188,3 +188,17 @@ export function throttle(callback: Function, milliseconds: number) {
     }
   };
 }
+
+export function debounce(callback: Function, milliseconds: number) {
+  let timeoutId: number | null = null;
+
+  return () => {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+
+    timeoutId = window.setTimeout(() => {
+      callback();
+    }, milliseconds);
+  };
+}
