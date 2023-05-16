@@ -89,7 +89,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
         <div id="header-left" className="flex flex-none items-center">
           <Link href={"/"}>
             <Image
-              src="/logo/FontLogo5.png"
+              src="/logo/FontLogo.png"
               alt="FontLogo"
               className="dark:invert"
               width={150}

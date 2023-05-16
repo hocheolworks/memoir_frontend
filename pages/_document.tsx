@@ -22,7 +22,7 @@ class MyDocument extends Document {
         <Head>
           <meta name="title" content="MEMOIR." />
           <meta name="description" content="Log your memories to MEMOIR." />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon-light.ico" />
         </Head>
         <body className="bg-white text-black dark:bg-black dark:text-white">
           <Main />
