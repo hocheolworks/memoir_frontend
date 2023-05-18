@@ -10,10 +10,10 @@ import {
 import { getQuoteWithSize } from "./quote";
 import { getHrWithSize } from "./hr";
 import { divider } from "./divider";
-import { getImageWithSize } from "./image";
 import { getStrikethroughWithSize } from "./strikeThrough";
 import { titleN } from "./title";
 import * as commands from "@uiw/react-md-editor/lib/commands";
+import { ImageUploadCommand } from "./imageUpload";
 
 const getCommands: (size?: {
   width: number;
@@ -41,7 +41,61 @@ const getCommands: (size?: {
   getQuoteWithSize(size?.width, size?.height),
   getCodeWithSize(size?.width, size?.height),
   getCodeBlockWithSize(size?.width, size?.height),
-  getImageWithSize(size?.width, size?.height),
+  commands.group(
+    [
+      {
+        name: "add-image-url",
+        keyCommand: "add-image-url",
+        shortcuts: "ctrlcmd+k",
+        value: "![image]({{text}})",
+        buttonProps: {
+          "aria-label": "Add image (ctrl + k)",
+          title: "Add image (ctrl + k)",
+        },
+        render: (command, disabled, executeCommand) => (
+          <button
+            className="text-left text-lg"
+            onClick={(e) => {
+              executeCommand(command, command.groupName);
+            }}
+          >
+            URL
+          </button>
+        ),
+        execute: commands.image.execute,
+      },
+      ImageUploadCommand(size?.width, size?.height),
+      // {
+      //   name: "upload-image-file",
+      //   keyCommand: "upload-image-file",
+      //   value: "![image]({{text}})",
+      //   render: (command, disabled, executeCommand) => (
+      //     <button
+      //       className="text-left text-lg"
+      //       onClick={(e) => {
+      //         executeCommand(command, command.groupName);
+      //       }}
+      //     >
+      //       파일 열기
+      //     </button>
+      //   ),
+      //   execute: (state, api) => {},
+      // },
+    ],
+    {
+      name: "image",
+      groupName: "image",
+      buttonProps: { "aria-label": "Add Image" },
+      icon: (
+        <svg width={size?.width} height={size?.height} viewBox="0 0 20 20">
+          <path
+            fill="currentColor"
+            d="M15 9c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4-7H1c-.55 0-1 .45-1 1v14c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 13l-6-5-2 2-4-5-4 8V4h16v11z"
+          />
+        </svg>
+      ),
+    }
+  ),
   divider,
   getUnorderedListCommandWithSize(size?.width, size?.height),
   getCheckedListCommandWithSize(size?.width, size?.height),

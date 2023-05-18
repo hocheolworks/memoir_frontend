@@ -29,14 +29,16 @@ export const titleN = (N: number): ICommand => {
     keyCommand: "title" + N,
     render: (command, disabled, executeCommand) => {
       return (
-        <div className={N === 6 ? "text-gray-400" : ""}>
-          <button
-            style={{ fontSize: getFontSize(N), textAlign: "left" }}
-            onClick={(e) => {
-              executeCommand(command, command.groupName);
-            }}
-          >{`Title ${N}`}</button>
-        </div>
+        <button
+          style={{
+            fontSize: getFontSize(N),
+            textAlign: "left",
+            ...(N === 6 && { color: "#9CA3AF" }),
+          }}
+          onClick={() => {
+            executeCommand(command, command.groupName);
+          }}
+        >{`Title ${N}`}</button>
       );
     },
     execute: (state, api) => {

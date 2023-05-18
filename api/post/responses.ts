@@ -46,3 +46,8 @@ export class PublishPostResponseBody {
   //조회수
   views: number;
 }
+
+export class UploadImageResponseBody {
+  // 업로드 완료된 파일 경로
+  url: string;
+}

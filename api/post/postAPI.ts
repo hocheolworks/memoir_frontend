@@ -1,7 +1,7 @@
 import req from "@api/core";
 import { plainToInstance } from "class-transformer";
 import { PublishCommentDto, PublishPostDto, SaveTempPostDto } from "./requests";
-import { PublishPostResponseBody } from "./responses";
+import { PublishPostResponseBody, UploadImageResponseBody } from "./responses";
 
 const PostAPI = {
   saveTempPost: (saveTempPostDto: SaveTempPostDto) => {
@@ -23,6 +23,17 @@ const PostAPI = {
 
   getPostById: (postId: number | string) => {
     return req.get(`/api/posts/${postId}`);
+  },
+
+  uploadImage: async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const { data } = await req.post("/api/image", formData);
+    return {
+      statusCode: data.statusCode,
+      data: plainToInstance(UploadImageResponseBody, data.data),
+    };
   },
 };
 

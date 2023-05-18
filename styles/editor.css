@@ -64,9 +64,13 @@
   list-style-type: decimal;
 }
 
-.wmde-markdown > p > img {
+/* .wmde-markdown > p > img {
   margin-top: 48px;
   margin-bottom: 48px;
+} */
+
+.w-md-editor-toolbar-child .w-md-editor-toolbar ul > li button {
+  padding: 0.25em 4px;
 }
 
 [data-color-mode*="dark"] .wmde-markdown-var,
