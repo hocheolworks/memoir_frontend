@@ -5,6 +5,7 @@ import {
 } from "@uiw/react-markdown-preview";
 import dynamic from "next/dynamic";
 import {
+  DragEventHandler,
   forwardRef,
   ReactElement,
   useCallback,
@@ -23,16 +24,7 @@ import { useSelector } from "react-redux";
 import { selectAuthUser } from "@redux/modules/authSlice";
 import rehypeSanitize from "rehype-sanitize";
 import { NextPageWithLayout } from "./_app";
-
-// FIXME: 발견된 버그 및 개선필요사항 정리
-// 1. (수정완료) /n이 whitespace로 변환되어 preview에 입력됨 -> \n을 <br>로 치환하여 해결했으나, 마크다운 문법이 제대로 안먹힘 ㅅㅂ -> white-space : 'pre-wrap'로 해결
-// 2. (수정완료) edit 창의 높이가 고정되지 않음, 브라우저의 높이를 넘어감
-// 3. (수정완료) unorderedList, orderedList 전부 preview에 표시 안됨, tailwindcss와 충돌 예상 -> @tailwind base;때문에었음 ol, ul 태그를 react-md-editor의 default css와 동일하게 적용하여 해결
-// 4. (수정완료) MDEditor는 csr로 처리되기 때문에 초기 렌더링 페이지가 ㅂㅅ임 -> 일단 loading시 컴포넌트로 대체
-// 5. (변경완료) preview 부분을 MDEditor가 아니라 MDEditor.Markdown으로 해야하는지 검토
-// 6. (개선완료) edit에서 작성시 preview에 스크롤이 생길만큼 내용이 많아지면 preview 영역이 알아서 매번 스크롤 하단으로 이동하게끔 개선 필요 => 아래 5줄내에서 엔터 입력시 preview의 스크롤 하단으로 이동되게 변경
-
-// TODO: 발행하기 클릭시 팝업 띄우기
+import FileUploadFromDrag from "@components/FileUploadFromDrag";
 
 // TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
@@ -66,14 +58,13 @@ const Write: NextPageWithLayout = () => {
   const [editContent, setEditContent] = useState<string | undefined>("");
   const [tagList, setTagList] = useState<Array<string>>([]);
 
-  const [previewContent, setPreviewContent] = useState<string | undefined>("");
+  // const [previewContent, setPreviewContent] = useState<string | undefined>("");
   const [selectionStart, setSelectionStart] = useState<number | undefined>(0);
   const [isPublishPopupOpen, setIsPublishPopupOpen] = useState<boolean>(false);
-
-  const isTypingRef = useRef<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const previewRef = useRef<MarkdownPreviewRef>(null);
+  const previewWrapperRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number>(-1);
 
   const handleResizeHeight = useCallback(() => {
@@ -85,14 +76,9 @@ const Write: NextPageWithLayout = () => {
   }, []);
 
   const scrollToBottom = useCallback(() => {
-    if (
-      previewRef &&
-      previewRef.current &&
-      previewRef.current.mdp &&
-      previewRef.current.mdp.current
-    ) {
-      previewRef.current.mdp.current.scrollTop =
-        previewRef.current.mdp.current.scrollHeight;
+    if (previewWrapperRef && previewWrapperRef.current) {
+      previewWrapperRef.current.scrollTop =
+        previewWrapperRef.current.scrollHeight;
     }
   }, []);
 
@@ -159,15 +145,37 @@ const Write: NextPageWithLayout = () => {
     }
   }, [isPublishPopupOpen]);
 
-  useEffect(() => {
-    if (title === "") {
-      setPreviewContent(editContent);
-    } else {
-      // 제목에서 마크다운 문법을 무시하기 위함
-      const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
-      setPreviewContent(tempTitle + editContent);
-    }
-  }, [title, editContent]);
+  // file 드래그 & 드랍
+  const onDropFile = useCallback(
+    (file: File) => {
+      console.log(file.name);
+      let newEditContent = editContent;
+
+      setIsDragging(false);
+    },
+    [editContent]
+  );
+
+  const onDragEnter: DragEventHandler = useCallback((e) => {
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const onDragLeave: DragEventHandler = useCallback((e) => {
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  // useEffect(() => {
+  //   if (title === "") {
+  //     setPreviewContent(editContent);
+  //   } else {
+  //     // 제목에서 마크다운 문법을 무시하기 위함
+  //     // const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
+  //     const tempTitle = `# ${title.replaceAll("\n", "")}`;
+  //     setPreviewContent(tempTitle + editContent);
+  //   }
+  // }, [title, editContent]);
 
   useEffect(() => {
     // 디바운싱
@@ -178,21 +186,20 @@ const Write: NextPageWithLayout = () => {
       onClickSaveTemp();
     }, 10000);
     timeoutRef.current = newTimer;
-  }, [title, editContent, tagList, onClickSaveTemp]);
 
-  useEffect(() => {
     return () => {
       if (timeoutRef.current !== -1) {
         window.clearTimeout(timeoutRef.current);
       }
     };
-  }, []);
+  }, [title, editContent, tagList, onClickSaveTemp]);
 
   return (
     <>
       <div
         className="absolute top-0 bottom-0 left-0 right-0 z-20 flex h-full overflow-hidden bg-white dark:bg-black"
         data-color-mode={theme ?? "dark"}
+        onDragEnter={onDragEnter}
       >
         <div className="flex w-full flex-col px-12 pt-8 lg:w-1/2">
           <div className="bg-white dark:bg-black">
@@ -250,13 +257,25 @@ const Write: NextPageWithLayout = () => {
             onClickPublish={onClickPublishPopup}
           />
         </div>
-        <ForwardRefMarkdown
-          source={previewContent}
-          className="wmde-preview hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-800 lg:block lg:w-1/2"
-          linkTarget="_blank"
-          rehypePlugins={[[rehypeSanitize]]}
-          ref={previewRef}
-        />
+        <div
+          className="hidden h-full overflow-y-auto rounded-none bg-neutral-50 px-12 pt-12 pb-24 dark:bg-neutral-800 lg:block lg:w-1/2"
+          ref={previewWrapperRef}
+        >
+          <h1 className="mb-16 text-5xl font-bold">{title}</h1>
+          <ForwardRefMarkdown
+            source={editContent}
+            className="wmde-preview bg-inherit bg-neutral-50 dark:bg-neutral-800"
+            linkTarget="_blank"
+            rehypePlugins={[[rehypeSanitize]]}
+          />
+        </div>
+
+        {(isPublishPopupOpen || isDragging) && (
+          <FileUploadFromDrag
+            onDropFile={onDropFile}
+            onDragLeave={onDragLeave}
+          />
+        )}
       </div>
       {isPublishPopupOpen && (
         <PublishPopup
