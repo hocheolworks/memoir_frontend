@@ -42,10 +42,7 @@ function selectWord({ text, selection }: TextSection): TextRange {
   return selection;
 }
 
-export const ImageUploadCommand = (
-  width: number = 12,
-  height: number = 12
-): commands.ICommand => {
+export const ImageUploadCommand = (): commands.ICommand => {
   let imageUrlFromCloudFront = "";
 
   return {
@@ -69,9 +66,7 @@ export const ImageUploadCommand = (
           // } catch (e: any) {
           //   errorHandler(e);
           // }
-
-          imageUrlFromCloudFront =
-            "https://johnstillk8.scusd.edu/sites/main/files/main-images/camera_lense_0.jpeg"; // mock
+          imageUrlFromCloudFront = file.name; // test
 
           executeCommand(command, commands.image.name);
           e.target.value = "";
