@@ -202,3 +202,33 @@ export function debounce(callback: Function, milliseconds: number) {
     }, milliseconds);
   };
 }
+
+export function isInsideOfLast5Lines(
+  content: string,
+  currentPosition: number
+): boolean {
+  let lastIndexOfLastLineBreak = 0;
+
+  for (let i = 0; i < 5; i++) {
+    if (content.includes("\n")) {
+      lastIndexOfLastLineBreak = content.lastIndexOf("\n");
+      content = content.slice(0, lastIndexOfLastLineBreak);
+    } else {
+      break;
+    }
+  }
+
+  return currentPosition >= lastIndexOfLastLineBreak;
+}
+
+export function isImageFile(file: File): boolean {
+  const { type } = file;
+  switch (type) {
+    case "image/jpeg":
+    case "image/png":
+    case "image/gif":
+      return true;
+    default:
+      return false;
+  }
+}

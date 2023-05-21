@@ -5,8 +5,11 @@ import {
 } from "@uiw/react-markdown-preview";
 import dynamic from "next/dynamic";
 import {
+  ChangeEvent,
   DragEventHandler,
+  EventHandler,
   forwardRef,
+  KeyboardEventHandler,
   ReactElement,
   useCallback,
   useEffect,
@@ -25,11 +28,14 @@ import { selectAuthUser } from "@redux/modules/authSlice";
 import rehypeSanitize from "rehype-sanitize";
 import { NextPageWithLayout } from "./_app";
 import FileUploadFromDrag from "@components/FileUploadFromDrag";
+import { isImageFile, isInsideOfLast5Lines } from "@utils/functions";
 
 // TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
 // 2. A 상태에서 스크롤이 맨위에 닿은 채로 스크롤업이 입력되면 다시 제목과 태그 입력창이 펼치듯이 나타남(B 상태)
 // 3. B 상태에서 스크롤이 맨위에 닿지 않고 스크롤다운이 입력되면 다시 A 상태로 돌아감
+
+// TODO: 마크다운 에디터 XSS 테스트 및 조치
 
 const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -41,7 +47,7 @@ const Markdown = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="hidden h-full bg-neutral-50 dark:bg-neutral-900 lg:block lg:w-1/2"></div>
+      <div className="hidden bg-neutral-50 dark:bg-neutral-800 lg:block lg:w-1/2"></div>
     ),
   }
 );
@@ -57,13 +63,11 @@ const Write: NextPageWithLayout = () => {
   const [title, setTitle] = useState<string>("");
   const [editContent, setEditContent] = useState<string | undefined>("");
   const [tagList, setTagList] = useState<Array<string>>([]);
-
-  // const [previewContent, setPreviewContent] = useState<string | undefined>("");
-  const [selectionStart, setSelectionStart] = useState<number | undefined>(0);
   const [isPublishPopupOpen, setIsPublishPopupOpen] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const selectionStartRef = useRef<number>(0);
   const previewWrapperRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number>(-1);
 
@@ -82,22 +86,30 @@ const Write: NextPageWithLayout = () => {
     }
   }, []);
 
-  const isInsideOfLast5Lines = useCallback(
-    (content: string, currentPosition: number): boolean => {
-      let lastIndexOfLastLineBreak = 0;
+  const onKeyDown: KeyboardEventHandler = useCallback(
+    (e) => {
+      if (!editContent) return;
+      const selectionStart = selectionStartRef.current;
 
-      for (let i = 0; i < 5; i++) {
-        if (content.includes("\n")) {
-          lastIndexOfLastLineBreak = content.lastIndexOf("\n");
-          content = content.slice(0, lastIndexOfLastLineBreak);
-        } else {
-          break;
-        }
+      if (
+        (e.key = "Enter") &&
+        isInsideOfLast5Lines(editContent, selectionStart)
+      ) {
+        scrollToBottom();
       }
-
-      return currentPosition >= lastIndexOfLastLineBreak;
     },
-    []
+    [editContent]
+  );
+
+  const editorOnChange = useCallback((value?: string | undefined) => {
+    setEditContent(value);
+  }, []);
+
+  const setSelectionStartRef = useCallback(
+    (e: any) => {
+      selectionStartRef.current = e.target.selectionStart;
+    },
+    [selectionStartRef]
   );
 
   const onClickSaveTemp = useCallback(async () => {
@@ -148,8 +160,25 @@ const Write: NextPageWithLayout = () => {
   // file 드래그 & 드랍
   const onDropFile = useCallback(
     (file: File) => {
-      console.log(file.name);
-      let newEditContent = editContent;
+      console.log(file.type, file.name);
+      const selectionStart = selectionStartRef.current;
+
+      if (!isImageFile(file)) {
+        toast("이미지 파일만 올려주세요 :)", {
+          theme: theme === "dark" ? "dark" : "light",
+          autoClose: 1500,
+          type: "info",
+        });
+      }
+
+      const imageUrl = file.name;
+
+      const preEditContent = editContent?.slice(0, selectionStart);
+      const postEditContent = editContent?.slice(selectionStart);
+
+      const imageMarkDownText = `![image](${imageUrl})\n`;
+
+      setEditContent(preEditContent + imageMarkDownText + postEditContent);
 
       setIsDragging(false);
     },
@@ -165,17 +194,6 @@ const Write: NextPageWithLayout = () => {
     e.stopPropagation();
     setIsDragging(false);
   }, []);
-
-  // useEffect(() => {
-  //   if (title === "") {
-  //     setPreviewContent(editContent);
-  //   } else {
-  //     // 제목에서 마크다운 문법을 무시하기 위함
-  //     // const tempTitle = `<h1>${title.replaceAll("\n", " ")}</h1>\n\n`;
-  //     const tempTitle = `# ${title.replaceAll("\n", "")}`;
-  //     setPreviewContent(tempTitle + editContent);
-  //   }
-  // }, [title, editContent]);
 
   useEffect(() => {
     // 디바운싱
@@ -232,24 +250,14 @@ const Write: NextPageWithLayout = () => {
             extraCommands={[]}
             preview={"edit"}
             previewOptions={{ rehypePlugins: [[rehypeSanitize]] }}
-            onChange={(value, e) => {
-              setSelectionStart(e?.currentTarget.selectionStart);
-              setEditContent(value);
-            }}
+            onChange={editorOnChange}
             commands={getCommands({ width: 18, height: 18 })}
             textareaProps={{
               placeholder: "오늘을 회고해보세요!",
             }}
-            onKeyDown={(e) => {
-              if (!editContent || !selectionStart) return;
-
-              if (
-                (e.key = "Enter") &&
-                isInsideOfLast5Lines(editContent, selectionStart)
-              ) {
-                scrollToBottom();
-              }
-            }}
+            onKeyDown={onKeyDown}
+            onKeyUp={setSelectionStartRef}
+            onMouseUp={setSelectionStartRef}
           />
 
           <BottomBar
