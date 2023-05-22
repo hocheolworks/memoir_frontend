@@ -4,6 +4,9 @@ import PostAPI from "@api/post/postAPI";
 import { errorHandler } from "@api/error";
 import { TextRange } from "@uiw/react-md-editor/lib/commands";
 import { TextSection } from "@uiw/react-md-editor/lib/utils/markdownUtils";
+import { isImageFile } from "@utils/functions";
+import { toast } from "react-toastify";
+import { useTheme } from "next-themes";
 
 function getSurroundingWord(text: string, position: number): TextRange {
   if (!text) throw Error("Argument 'text' should be truthy");
@@ -50,12 +53,22 @@ export const ImageUploadCommand = (): commands.ICommand => {
     keyCommand: "upload-image-file",
     value: "![image]({{text}})",
     render: (command, disabled, executeCommand) => {
+      const { theme } = useTheme();
       const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
         e
       ) => {
         const files = e.target.files;
         if (files && files.length > 0) {
           const file = files[0];
+
+          if (!isImageFile(file)) {
+            toast("이미지 파일만 올려주세요 :)", {
+              theme: theme === "dark" ? "dark" : "light",
+              autoClose: 1500,
+              type: "info",
+            });
+            return;
+          }
 
           // try {
           //   const { statusCode, data } = await PostAPI.uploadImage(file);

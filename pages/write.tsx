@@ -145,7 +145,6 @@ const Write: NextPageWithLayout = () => {
 
     toast(toastMessage, {
       theme: theme === "dark" ? "dark" : "light",
-      // theme: "colored",
       autoClose: 1500,
       type: toastType,
     });
@@ -169,6 +168,8 @@ const Write: NextPageWithLayout = () => {
           autoClose: 1500,
           type: "info",
         });
+
+        return;
       }
 
       const imageUrl = file.name;
