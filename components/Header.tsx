@@ -146,12 +146,12 @@ const Header: FC<HeaderPropType> = ({ className }) => {
                 >
                   마이 페이지
                 </DropdownBtn>
-                <DropdownBtn key={"dropdown-btn-temp"} link="/temp">
+                {/* <DropdownBtn key={"dropdown-btn-temp"} link="/temp">
                   임시 저장 목록
                 </DropdownBtn>
                 <DropdownBtn key={"dropdown-btn-setting"} link="/setting">
                   설정
-                </DropdownBtn>
+                </DropdownBtn> */}
                 <DropdownBtn
                   key={"dropdown-btn-logout"}
                   link="/"
