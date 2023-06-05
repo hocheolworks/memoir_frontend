@@ -1,11 +1,5 @@
 import { cls } from "@utils/functions";
-import React, {
-  DragEventHandler,
-  FC,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import React, { DragEventHandler, FC, useCallback } from "react";
 import FcAddImagePurple from "assets/icons/FcAddImagePurple.svg";
 
 type FileUploadFromDragProps = {

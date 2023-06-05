@@ -21,6 +21,7 @@ import SeriesNav from "@components/SeriesNav";
 import AnchorNav from "@components/AnchorNav";
 import { useDispatch } from "react-redux";
 import { hideHeader } from "@redux/modules/configSlice";
+import Link from "next/link";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -97,15 +98,32 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   }, [authorDivRef, authorDivRef.current]);
 
   return (
+    // TODO: 모바일에서 폰트 사이즈 조절
     <>
       <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">
           <h1 className="text-[48px] font-bold leading-[72px]">{title}</h1>
         </div>
-        <div className="self-start pt-8" ref={authorDivRef}>
+        <div
+          className="flex w-full items-center justify-between pt-8"
+          ref={authorDivRef}
+        >
           <p>
             <span className="font-medium">{githubId}</span> ·{" "}
             <span className="text-neutral-400">{createDate}</span>
+          </p>
+
+          {/* TODO: 본인 게시물에만 표시  */}
+          <p className="text-neutral-400">
+            <span className="cursor-pointer hover:text-white">
+              <Link href={`/write?id=${title}`}>수정</Link>
+            </span>{" "}
+            <span
+              className="cursor-pointer hover:text-white"
+              onClick={() => console.log("삭제")}
+            >
+              삭제
+            </span>
           </p>
         </div>
         <div className="-ml-1 flex w-full justify-start self-start pt-4">
