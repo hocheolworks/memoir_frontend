@@ -21,6 +21,10 @@ const PostAPI = {
     return data;
   },
 
+  deletePost: async (id: number) => {
+    return await req.delete(`/api/posts/${id}`);
+  },
+
   getPostById: (postId: number | string) => {
     return req.get(`/api/posts/${postId}`);
   },

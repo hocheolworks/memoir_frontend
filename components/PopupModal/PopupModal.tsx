@@ -67,6 +67,13 @@ export const PopupModal: FC<PopupModalProps> = ({}) => {
     }
   };
 
+  const onConfirmClick = useCallback(() => {
+    if (options.onClickConfirm) {
+      options.onClickConfirm();
+    }
+    closeModal();
+  }, [options]);
+
   useEffect(() => {
     const openModal = (options: ModalOptions) => {
       document.body.style.overflow = "hidden";
@@ -108,7 +115,9 @@ export const PopupModal: FC<PopupModalProps> = ({}) => {
                   취소
                 </ModalButton>
               )}
-              <ModalButton>{options.buttonText ?? "확인"}</ModalButton>
+              <ModalButton onClick={onConfirmClick}>
+                {options.buttonText ?? "확인"}
+              </ModalButton>
             </div>
           </article>
         </div>,

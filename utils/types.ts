@@ -108,6 +108,7 @@ export type TagData = {
 };
 
 export type Post = {
+  id: number;
   title: string;
   githubId: string;
   createDate: string;

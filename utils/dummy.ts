@@ -176,6 +176,7 @@ export const dummyTagList: TagData[] = [
 ];
 
 export const dummyPost: Post = {
+  id: 2563,
   title: "[삽질기#1] next-redux-wrapper에 대한 오해..",
   githubId: "lhjeong60",
   createDate: "2022년 12월 27일",

@@ -23,6 +23,11 @@ import { useDispatch } from "react-redux";
 import { hideHeader } from "@redux/modules/configSlice";
 import Link from "next/link";
 import { openModal } from "@components/PopupModal";
+import PostAPI from "@api/post/postAPI";
+import { errorHandler } from "@api/error";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { useTheme } from "next-themes";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -42,6 +47,7 @@ type PostPageProps = {
 
 const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const {
+    id,
     title,
     githubId,
     createDate,
@@ -77,9 +83,28 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   );
 
   const user = useUser();
+  const { theme } = useTheme();
+  const { push } = useRouter();
   const authorDivRef = useRef<HTMLDivElement>(null);
   const anchorNavRootRef = useRef<HTMLDivElement>(null);
   const [anchorNavIsFixed, setAnchorNavIsFixed] = useState(false);
+
+  const deleteThisPost = async () => {
+    try {
+      const { data } = await PostAPI.deletePost(id);
+
+      if (data.statusCode === "204") {
+        toast("게시글 삭제가 완료되었습니다.", {
+          type: "success",
+          theme: theme === "dark" ? "dark" : "light",
+        });
+
+        push(`/${user?.githubUserName}`);
+      }
+    } catch (e: any) {
+      errorHandler(e);
+    }
+  };
 
   const isMyPost = user?.githubUserName === githubId;
 
@@ -129,6 +154,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
                       "정말로 삭제하시겠습니까?\n실수라해도 돌이킬 수 없습니다?",
                     buttonText: "삭제",
                     withCancel: true,
+                    onClickConfirm: deleteThisPost,
                   })
                 }
               >
