@@ -88,7 +88,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
 
   return (
     <div
-      className={`fixed top-0 left-0 z-30 flex h-full w-full items-start justify-center bg-white zero:items-center dark:bg-black${
+      className={`full-page z-30 flex h-full w-full items-start justify-center bg-white zero:items-center dark:bg-black${
         isPopup ? " animate-slide-top" : ""
       }${isCancel ? " animate-slide-bottom" : ""}`}
       onAnimationEnd={() => {

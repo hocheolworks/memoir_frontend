@@ -65,7 +65,7 @@ const LoginDone: NextPageWithLayout = () => {
   }, [router.isReady, code, dispatch, router]);
 
   return (
-    <div className="right- fixed top-0 bottom-0 left-0 z-20 flex h-full w-full flex-col items-center justify-center bg-black bg-opacity-70">
+    <div className="full-page z-20 flex h-full w-full flex-col items-center justify-center bg-black bg-opacity-70">
       <GridLoader
         loading={code !== undefined || process.env.NODE_ENV === "development"}
         size={30}

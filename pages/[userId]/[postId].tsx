@@ -22,6 +22,7 @@ import AnchorNav from "@components/AnchorNav";
 import { useDispatch } from "react-redux";
 import { hideHeader } from "@redux/modules/configSlice";
 import Link from "next/link";
+import { openModal } from "@components/PopupModal";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -80,6 +81,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const anchorNavRootRef = useRef<HTMLDivElement>(null);
   const [anchorNavIsFixed, setAnchorNavIsFixed] = useState(false);
 
+  const isMyPost = user?.githubUserName === githubId;
+
   useEffect(() => {
     if (!authorDivRef || !authorDivRef.current) return;
 
@@ -108,23 +111,31 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           className="flex w-full items-center justify-between pt-8"
           ref={authorDivRef}
         >
-          <p>
+          <div>
             <span className="font-medium">{githubId}</span> ·{" "}
             <span className="text-neutral-400">{createDate}</span>
-          </p>
-
-          {/* TODO: 본인 게시물에만 표시  */}
-          <p className="text-neutral-400">
-            <span className="cursor-pointer hover:text-white">
-              <Link href={`/write?id=${title}`}>수정</Link>
-            </span>{" "}
-            <span
-              className="cursor-pointer hover:text-white"
-              onClick={() => console.log("삭제")}
-            >
-              삭제
-            </span>
-          </p>
+          </div>
+          {isMyPost && (
+            <div>
+              <span className="cursor-pointer text-neutral-400 hover:text-black dark:hover:text-white">
+                <Link href={`/write?id=${title}`}>수정</Link>
+              </span>{" "}
+              <span
+                className="cursor-pointer text-neutral-400 hover:text-black dark:hover:text-white"
+                onClick={() =>
+                  openModal({
+                    title: "게시글 삭제",
+                    message:
+                      "정말로 삭제하시겠습니까?\n실수라해도 돌이킬 수 없습니다?",
+                    buttonText: "삭제",
+                    withCancel: true,
+                  })
+                }
+              >
+                삭제
+              </span>
+            </div>
+          )}
         </div>
         <div className="-ml-1 flex w-full justify-start self-start pt-4">
           {tagList?.map((value, index) => (

@@ -17,6 +17,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import GlobalLayout from "@components/GlobalLayout";
 import { NextPage } from "next/types";
 import { ReactElement, ReactNode } from "react";
+import { PopupModal } from "@components/PopupModal";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -45,6 +46,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               autoClose={1500}
               theme={theme === "dark" ? "dark" : "light"}
             />
+            <PopupModal />
           </div>
         </ThemeProvider>
       </PersistGate>

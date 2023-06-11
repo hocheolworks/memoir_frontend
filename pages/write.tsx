@@ -279,7 +279,7 @@ const Write: NextPageWithLayout = () => {
           />
         </div>
 
-        {(isPublishPopupOpen || isDragging) && (
+        {!isPublishPopupOpen && isDragging && (
           <FileUploadFromDrag
             onDropFile={onDropFile}
             onDragLeave={onDragLeave}

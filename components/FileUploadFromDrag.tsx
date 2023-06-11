@@ -29,7 +29,7 @@ const FileUploadFromDrag: FC<FileUploadFromDragProps> = ({
   return (
     <div
       className={cls(
-        "flex-center fixed top-0 bottom-0 left-0 right-0 z-30 flex-col bg-white opacity-90 dark:bg-black"
+        "flex-center full-page z-30 flex-col bg-white opacity-90 dark:bg-black"
       )}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}

@@ -57,7 +57,7 @@ const ContributionTooltip: FC<ContributionTooltipProps> = ({
     >
       <div
         ref={divRef}
-        className={`z-50 rounded-md bg-neutral-300 py-2 px-4 text-xs text-black dark:bg-neutral-600 dark:text-white`}
+        className={`z-10 rounded-md bg-neutral-300 py-2 px-4 text-xs text-black dark:bg-neutral-600 dark:text-white`}
       >
         <strong>{count === 0 ? "No" : count} contribution </strong>
         on {date}
