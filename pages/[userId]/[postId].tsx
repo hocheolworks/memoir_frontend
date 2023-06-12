@@ -123,7 +123,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
     const observer = new IntersectionObserver(callback, { threshold: 0.99 });
     observer.observe(authorDivRef.current);
-  }, [authorDivRef, authorDivRef.current]);
+  }, [authorDivRef]);
 
   return (
     // TODO: 모바일에서 폰트 사이즈 조절

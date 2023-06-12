@@ -46,6 +46,10 @@ function selectWord({ text, selection }: TextSection): TextRange {
 }
 
 export const ImageUploadCommand = (): commands.ICommand => {
+  const { theme } = useTheme();
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   let imageUrlFromCloudFront = "";
 
   return {
@@ -53,7 +57,6 @@ export const ImageUploadCommand = (): commands.ICommand => {
     keyCommand: "upload-image-file",
     value: "![image]({{text}})",
     render: (command, disabled, executeCommand) => {
-      const { theme } = useTheme();
       const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
         e
       ) => {
@@ -85,8 +88,6 @@ export const ImageUploadCommand = (): commands.ICommand => {
           e.target.value = "";
         }
       };
-      const buttonRef = React.useRef<HTMLButtonElement>(null);
-      const inputRef = React.useRef<HTMLInputElement>(null);
 
       return (
         <button

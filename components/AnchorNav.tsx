@@ -60,7 +60,7 @@ const AnchorNav = ({ className, style, onClick, anchors }: AnchorNavProps) => {
     return () => {
       window.removeEventListener("scroll", onScrollWithThrottle);
     };
-  }, []);
+  }, [anchors, onScroll]);
 
   return (
     <ul

@@ -16,16 +16,19 @@ const FileUploadFromDrag: FC<FileUploadFromDragProps> = ({
     e.preventDefault();
   }, []);
 
-  const onDrop: DragEventHandler = useCallback((e) => {
-    // 이미지 드랍시 브라우저에서 이미지 열리는 기본동작 취소
-    e.preventDefault();
-    const files = e.dataTransfer?.files;
+  const onDrop: DragEventHandler = useCallback(
+    (e) => {
+      // 이미지 드랍시 브라우저에서 이미지 열리는 기본동작 취소
+      e.preventDefault();
+      const files = e.dataTransfer?.files;
 
-    if (files && files.length > 0) {
-      const file = files[0];
-      onDropFile(file);
-    }
-  }, []);
+      if (files && files.length > 0) {
+        const file = files[0];
+        onDropFile(file);
+      }
+    },
+    [onDropFile]
+  );
   return (
     <div
       className={cls(

@@ -56,23 +56,33 @@ export const PopupModal: FC<PopupModalProps> = ({}) => {
     setClosing(true);
   }, []);
 
-  const backgroundClickHandler: MouseEventHandler = useCallback((e) => {
-    e.stopPropagation();
-    closeModal;
-  }, []);
+  const backgroundClickHandler: MouseEventHandler = useCallback(
+    (e) => {
+      e.stopPropagation();
+      closeModal;
+    },
+    [closeModal]
+  );
 
-  const escapeKeyPressHandler = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      closeModal();
-    }
-  };
+  const escapeKeyPressHandler = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    },
+    [closeModal]
+  );
 
   const onConfirmClick = useCallback(() => {
     if (options.onClickConfirm) {
       options.onClickConfirm();
     }
     closeModal();
-  }, [options]);
+  }, [options, closeModal]);
+
+  const onClickCancel = useCallback(() => {
+    closeModal();
+  }, [closeModal]);
 
   useEffect(() => {
     const openModal = (options: ModalOptions) => {
@@ -83,7 +93,7 @@ export const PopupModal: FC<PopupModalProps> = ({}) => {
     };
 
     setModalFunctions(openModal, closeModal);
-  }, []);
+  }, [closeModal, escapeKeyPressHandler]);
 
   return show
     ? createPortal(
@@ -111,7 +121,7 @@ export const PopupModal: FC<PopupModalProps> = ({}) => {
             </p>
             <div className="absolute bottom-6 right-8 flex gap-2">
               {options.withCancel && (
-                <ModalButton type="cancel" onClick={closeModal}>
+                <ModalButton type="cancel" onClick={onClickCancel}>
                   취소
                 </ModalButton>
               )}

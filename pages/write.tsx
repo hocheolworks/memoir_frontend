@@ -98,7 +98,7 @@ const Write: NextPageWithLayout = () => {
         scrollToBottom();
       }
     },
-    [editContent]
+    [editContent, scrollToBottom]
   );
 
   const editorOnChange = useCallback((value?: string | undefined) => {
@@ -183,7 +183,7 @@ const Write: NextPageWithLayout = () => {
 
       setIsDragging(false);
     },
-    [editContent]
+    [editContent, theme]
   );
 
   const onDragEnter: DragEventHandler = useCallback((e) => {
