@@ -51,3 +51,29 @@ export class UploadImageResponseBody {
   // 업로드 완료된 파일 경로
   url: string;
 }
+
+export class GetPostByIdResponseBody {
+  //데이터 ID(PK)
+  id: number;
+
+  //생성일시
+  createdAt: string;
+
+  //수정일시
+  updatedAt: string;
+
+  //수정일시
+  deletedAt: string;
+
+  //게시글 제목
+  postTitle: string;
+
+  //게시글 URL
+  postUrl: string;
+
+  //조회수
+  views: number;
+
+  // 게시글 본문
+  postBody: string;
+}

@@ -29,6 +29,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { NextPageWithLayout } from "./_app";
 import FileUploadFromDrag from "@components/FileUploadFromDrag";
 import { isImageFile, isInsideOfLast5Lines } from "@utils/functions";
+import { useRouter } from "next/router";
 
 // TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
@@ -60,6 +61,11 @@ ForwardRefMarkdown.displayName = "ForwardRefMarkdown";
 const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
   const user = useSelector(selectAuthUser);
+  const { query } = useRouter();
+
+  const mode = query.id !== undefined ? "update" : "publish";
+  const id = mode === "update" ? parseInt(query.id as string) : -1;
+
   const [title, setTitle] = useState<string>("");
   const [editContent, setEditContent] = useState<string | undefined>("");
   const [tagList, setTagList] = useState<Array<string>>([]);
@@ -197,6 +203,19 @@ const Write: NextPageWithLayout = () => {
   }, []);
 
   useEffect(() => {
+    // 수정하기
+    (async () => {
+      if (id) {
+        const { data } = await PostAPI.getPostById(id);
+        const { postTitle, postBody } = data;
+
+        setTitle(postTitle);
+        setEditContent(postBody);
+      }
+    })();
+  }, [query, id]);
+
+  useEffect(() => {
     // 디바운싱
     if (timeoutRef.current) {
       window.clearTimeout(timeoutRef.current);
@@ -288,6 +307,8 @@ const Write: NextPageWithLayout = () => {
       </div>
       {isPublishPopupOpen && (
         <PublishPopup
+          id={id}
+          mode={mode}
           isPopup={isPublishPopupOpen}
           title={title}
           editContent={editContent ?? ""}

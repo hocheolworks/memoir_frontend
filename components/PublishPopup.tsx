@@ -20,12 +20,11 @@ import { PublishPostDto } from "@api/post/requests";
 import { errorHandler } from "@api/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { formatAbsolute, titleToUrl } from "@utils/functions";
-
-// TODO: (적용완료) 라이트모드 적용
-// TODO: (적용완료) refactoring
+import { cls, formatAbsolute, titleToUrl } from "@utils/functions";
 
 type PublishPopupProps = {
+  id?: number;
+  mode: "publish" | "update";
   isPopup: boolean;
   title: string;
   editContent: string;
@@ -33,6 +32,8 @@ type PublishPopupProps = {
 };
 
 const PublishPopup: FC<PublishPopupProps> = ({
+  id,
+  mode,
   isPopup,
   title,
   editContent,
@@ -57,12 +58,12 @@ const PublishPopup: FC<PublishPopupProps> = ({
     TreeNodeParent | TreeNodeChild
   >({ id: -1, name: "전체" });
 
-  const onClickPublish = async () => {
+  const onClickPublish = useCallback(async () => {
     const body: PublishPostDto = {
       postTitle: title,
       postBody: editContent,
-      firstDepth: selectedCategory?.parentName ?? "",
-      secondDepth: selectedCategory?.name,
+      parentCategory: selectedCategory?.parentName ?? "",
+      childCategory: selectedCategory?.name,
     };
 
     try {
@@ -79,7 +80,33 @@ const PublishPopup: FC<PublishPopupProps> = ({
     } catch (e: any) {
       errorHandler(e);
     }
-  };
+  }, [user, title, editContent, selectedCategory, push]);
+
+  const onClickUpdate = useCallback(async () => {
+    if (!id) return;
+
+    const body: PublishPostDto = {
+      postTitle: title,
+      postBody: editContent,
+      parentCategory: selectedCategory?.parentName ?? "",
+      childCategory: selectedCategory?.name,
+    };
+
+    try {
+      const { statusCode, data } = await PostAPI.updatePost(id, body);
+
+      if (statusCode === 204) {
+        toast("수정 완료", {
+          type: "success",
+          theme: "colored",
+        });
+
+        push(`/${user?.githubUserName}/${data.postTitle}`);
+      }
+    } catch (e: any) {
+      errorHandler(e);
+    }
+  }, [id, user, title, editContent, selectedCategory, push]);
 
   const getOut = useCallback(() => {
     setIsClickedAddToSeries(false);
@@ -88,9 +115,11 @@ const PublishPopup: FC<PublishPopupProps> = ({
 
   return (
     <div
-      className={`full-page z-30 flex h-full w-full items-start justify-center bg-white zero:items-center dark:bg-black${
-        isPopup ? " animate-slide-top" : ""
-      }${isCancel ? " animate-slide-bottom" : ""}`}
+      className={cls(
+        "full-page z-30 flex h-full w-full items-start justify-center bg-white dark:bg-black zero:items-center",
+        isPopup ? " animate-slide-top" : "",
+        isCancel ? " animate-slide-bottom" : ""
+      )}
       onAnimationEnd={() => {
         if (isCancel) {
           Popdown();
@@ -283,9 +312,9 @@ const PublishPopup: FC<PublishPopupProps> = ({
                 <BottomBtn
                   className="-mr-2"
                   isPoint={true}
-                  onClick={onClickPublish}
+                  onClick={mode === "publish" ? onClickPublish : onClickUpdate}
                 >
-                  발행하기
+                  {mode === "publish" ? "발행하기" : "수정하기"}
                 </BottomBtn>
               </div>
             </>

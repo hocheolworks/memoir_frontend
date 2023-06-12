@@ -19,8 +19,8 @@ export type PublishPostDto = {
   postBody: string;
 
   //글의 대분류
-  firstDepth: string;
+  parentCategory: string;
 
   //글의 소분류
-  secondDepth: string;
+  childCategory: string;
 };
