@@ -54,12 +54,16 @@ export const PopupModal: FC<PopupModalProps> = ({}) => {
     document.body.style.overflow = "unset";
     document.body.removeEventListener("keydown", escapeKeyPressHandler);
     setClosing(true);
-  }, []);
+    if (!options.withCancel && options.onClickConfirm) {
+      // 취소버튼이 없고 확인 콜백이 있을때, 모달을 닫을 경우, 확인 콜백 똑같이 실행
+      options.onClickConfirm();
+    }
+  }, [options]);
 
   const backgroundClickHandler: MouseEventHandler = useCallback(
     (e) => {
       e.stopPropagation();
-      closeModal;
+      closeModal();
     },
     [closeModal]
   );

@@ -8,6 +8,7 @@ import { ValidateEmail } from "@utils/functions";
 import { resetToken } from "@token/index";
 import axios from "axios";
 import { BaseApiError } from "@api/core/types";
+import { openModal } from "@components/PopupModal";
 
 const Register: FC = () => {
   const { push, query, isReady } = useRouter();
@@ -56,9 +57,14 @@ const Register: FC = () => {
           email: email,
         });
 
-        alert("회원가입 완료!, 다시 로그인 해주세요.");
-        resetToken();
-        push("/");
+        openModal({
+          title: "회원가입 완료",
+          message: "다시 로그인 해주세요.",
+          onClickConfirm: () => {
+            resetToken();
+            push("/");
+          },
+        });
       } catch (e: any) {
         errorHandler(e);
 

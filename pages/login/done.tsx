@@ -8,6 +8,7 @@ import { dummyUser } from "@utils/dummy";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
 import { NextPageWithLayout } from "@pages/_app";
+import { openModal } from "@components/PopupModal";
 
 const LoginDone: NextPageWithLayout = () => {
   const router = useRouter();
@@ -46,8 +47,14 @@ const LoginDone: NextPageWithLayout = () => {
 
     if (!code) {
       dispatch(resetAuth());
-      alert("Github 로그인에 실패했습니다. \n다시 시도해주세요.");
-      router.push("/");
+      openModal({
+        title: "로그인 실패",
+        message: "Github 로그인에 실패했습니다.",
+        onClickConfirm: () => {
+          router.push("/");
+        },
+      });
+
       return;
     }
 
