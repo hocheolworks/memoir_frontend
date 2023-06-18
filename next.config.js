@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const removeImports = require("next-remove-imports")();
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -20,7 +22,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `http://13.209.229.77/api/:path*`,
+        destination: `${API_BASE_URL}/:path*`,
       },
     ];
   },

@@ -41,3 +41,7 @@ next-env.d.ts
 
 # rest client
 .http
+
+
+# do not use github action for deploy anymore
+.github/workflows/main.yml
