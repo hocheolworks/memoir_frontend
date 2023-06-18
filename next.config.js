@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const removeImports = require("next-remove-imports")();
+const path = require("path");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
@@ -20,7 +23,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: process.env.NEXT_PUBLIC_API_BASE_URL + "api/:path*",
+        destination: path.join(API_BASE_URL, "api/:path*"),
       },
     ];
   },
