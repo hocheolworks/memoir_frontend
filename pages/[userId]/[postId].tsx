@@ -206,6 +206,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
         {seriesList && seriesLength > 1 && (
           <SeriesNav
+            className="mb-72"
             prevSeriesPreview={
               prevSeriesExist ? seriesList[prevSeriesIndex] : undefined
             }
@@ -214,7 +215,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
             }
           />
         )}
-        {user && (
+        {/* {user && (
           <CommentInputArea
             className="mt-16"
             postAuthor={githubId}
@@ -227,7 +228,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
             className="mt-4 w-full text-center"
             commentList={commentList}
           />
-        )}
+        )} */}
       </div>
     </>
   );

@@ -34,7 +34,7 @@ const BottomBar = ({
         </BottomBtn>
       </div>
       <div className="flex">
-        <BottomBtn onClick={onClickSaveTemp}>임시저장</BottomBtn>
+        {/* <BottomBtn onClick={onClickSaveTemp}>임시저장</BottomBtn> */}
         <BottomBtn onClick={onClickPublish} className="ml-1" isPoint={true}>
           발행하기
         </BottomBtn>

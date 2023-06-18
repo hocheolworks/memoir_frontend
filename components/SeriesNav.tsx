@@ -47,16 +47,23 @@ const SeriesNavLink = ({
 };
 
 type SeriesNavProps = {
+  className?: string;
   prevSeriesPreview?: SeriesPreview;
   nextSeriesPreview?: SeriesPreview;
 };
 
 const SeriesNav = ({
+  className,
   prevSeriesPreview,
   nextSeriesPreview,
 }: SeriesNavProps) => {
   return (
-    <div className="mt-24 flex w-full flex-col items-center justify-between gap-4 zero:flex-row zero:gap-0">
+    <div
+      className={cls(
+        "mt-24 flex w-full flex-col items-center justify-between gap-4 zero:flex-row zero:gap-0",
+        className
+      )}
+    >
       {prevSeriesPreview && (
         <SeriesNavLink
           direction="left"

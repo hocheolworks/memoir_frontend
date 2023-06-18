@@ -215,22 +215,22 @@ const Write: NextPageWithLayout = () => {
     })();
   }, [query, id]);
 
-  useEffect(() => {
-    // 디바운싱
-    if (timeoutRef.current) {
-      window.clearTimeout(timeoutRef.current);
-    }
-    const newTimer = window.setTimeout(() => {
-      onClickSaveTemp();
-    }, 10000);
-    timeoutRef.current = newTimer;
+  // useEffect(() => {
+  //   // 디바운싱
+  //   if (timeoutRef.current) {
+  //     window.clearTimeout(timeoutRef.current);
+  //   }
+  //   const newTimer = window.setTimeout(() => {
+  //     onClickSaveTemp();
+  //   }, 10000);
+  //   timeoutRef.current = newTimer;
 
-    return () => {
-      if (timeoutRef.current !== -1) {
-        window.clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [title, editContent, tagList, onClickSaveTemp]);
+  //   return () => {
+  //     if (timeoutRef.current !== -1) {
+  //       window.clearTimeout(timeoutRef.current);
+  //     }
+  //   };
+  // }, [title, editContent, tagList, onClickSaveTemp]);
 
   return (
     <>
