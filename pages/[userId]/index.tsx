@@ -31,12 +31,15 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
   const { userId } = query;
 
   try {
-    const token = process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST ?? ""; // test
+    const token =
+      process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_PUBLIC_ACCESS ?? "";
     const contributionCalendar = await UserAPI.getContributionData({
       token: token,
       username: userId as string,
       year: new Date().getFullYear(),
     });
+
+    // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
 
     return {
       props: { userId: userId, contributionData: contributionCalendar },
@@ -68,8 +71,7 @@ const UserMemoir: NextPageWithLayout<
     }
 
     try {
-      const contributionCalendar = await UserAPI.getContributionData({
-        token: process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_TEST ?? "",
+      const contributionCalendar = await UserAPI.bypassGetContributionData({
         username: (userId as string) ?? "",
         year: new Date().getFullYear(),
       });

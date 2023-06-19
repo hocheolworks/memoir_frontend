@@ -40,6 +40,19 @@ const UserAPI = {
     return plainToInstance(MeResponseBody, data.data);
   },
 
+  bypassGetContributionData: async ({
+    username,
+    year,
+  }: Omit<GithubGetContributionDto, "token">) => {
+    const { data } = await axios.get(
+      `/api/contributions/${username}?year=${year}`
+    );
+
+    const calender: ContributionCalendar = data;
+
+    return calender;
+  },
+
   getContributionData: async ({
     token,
     username,

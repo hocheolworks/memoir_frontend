@@ -21,6 +21,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/api/contributions/:githubUserName",
+        destination: "/api/contributions/:githubUserName",
+      },
+      {
         source: "/api/:path*",
         destination: `${API_BASE_URL}/:path*`,
       },
