@@ -127,26 +127,7 @@ const UserMemoir: NextPageWithLayout<
           labels={["글", "시리즈", "소개"]}
           className="my-8 w-full contribution-width:w-96"
         />
-        {selectedNavIndex === 0 && (
-          // (dummyPreview.length !== 0 ? ( // 글
-          //   <>
-          //     <div className="mb-4 hidden w-full justify-end first:flex">
-          //       <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-800">
-          //         <AiOutlineSearch />
-          //         <input className="ml-1 bg-inherit text-sm outline-none"></input>
-          //       </div>
-          //     </div>
-          //     {dummyPreview.map((value, index) => (
-          //       <PreviewHorizontal
-          //         key={`myPreview#${index}`}
-          //         preview={value}
-          //         index={index}
-          //       />
-          //     ))}
-          //   </>
-          // ) : (
-          //   <NoContents type="post" />
-          // ))
+        {selectedNavIndex === 0 && ( // 글
           <PostList
             className="w-full"
             postList={dummyPreview}

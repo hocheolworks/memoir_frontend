@@ -1,9 +1,8 @@
 import { getToken } from "@token/index";
-import { isDevEnv } from "@utils/functions";
 import axios, { AxiosRequestConfig } from "axios";
 import { BaseApiError } from "./types";
 
-const createInstance = () => {
+const createInstance = (isFileUpload: boolean = false) => {
   const token = getToken();
 
   const headers = {
@@ -12,16 +11,15 @@ const createInstance = () => {
     ...(token !== "" && { Authorization: `Bearer ${token}` }),
   };
 
-  const instance = axios.create(
-    isDevEnv()
-      ? {
-          headers: headers,
-        }
-      : {
-          // baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-          headers: headers,
-        }
-  );
+  const fileUploadHeader = {
+    accept: "*/*",
+    "Content-Type": "multipart/form-data",
+    ...(token !== "" && { Authorization: `Bearer ${token}` }),
+  };
+
+  const instance = axios.create({
+    headers: isFileUpload ? fileUploadHeader : headers,
+  });
 
   instance.interceptors.response.use(
     (res) => res,
@@ -59,6 +57,8 @@ const req = {
     createInstance().patch(url, body, config),
   delete: (url: string, config?: AxiosRequestConfig) =>
     createInstance().delete(url, config),
+  uploadFile: (url: string, body: any, config?: AxiosRequestConfig) =>
+    createInstance(true).post(url, body, config),
 };
 
 export default req;
