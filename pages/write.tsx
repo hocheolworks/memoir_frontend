@@ -205,7 +205,7 @@ const Write: NextPageWithLayout = () => {
   useEffect(() => {
     // 수정하기
     (async () => {
-      if (id) {
+      if (id && id !== -1) {
         const { data } = await PostAPI.getPostById(id);
         const { postTitle, postBody } = data;
 
