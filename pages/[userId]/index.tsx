@@ -15,12 +15,7 @@ import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next/types";
 import NavigationBar from "@components/NavigationBar";
-import {
-  dummyPreview,
-  dummySeriesList,
-  dummyTagList,
-  dummyTree,
-} from "@utils/dummy";
+import { dummySeriesList, dummyTagList, dummyTree } from "@utils/dummy";
 import Series from "@components/Series";
 import NoContents from "@components/NoContents";
 import Introduction from "@components/Introduction";
@@ -44,7 +39,11 @@ export async function getServerSideProps({ query }: NextPageContext) {
       year: new Date().getFullYear(),
     });
 
+    console.log(JSON.stringify(contributionCalendar));
+
     const { data } = await PostAPI.getPosts(userId);
+
+    console.log(JSON.stringify(data));
 
     // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
     return {
@@ -55,6 +54,8 @@ export async function getServerSideProps({ query }: NextPageContext) {
       },
     };
   } catch (e: any) {
+    console.log("/[userId] Error");
+    console.log(e);
     errorHandler(e);
     return {
       props: {
@@ -87,7 +88,7 @@ const UserMemoir: NextPageWithLayout<
 
     try {
       const contributionCalendar = await UserAPI.bypassGetContributionData({
-        username: (userId as string) ?? "",
+        username: userId,
         year: new Date().getFullYear(),
       });
 
@@ -110,10 +111,7 @@ const UserMemoir: NextPageWithLayout<
       </div>
       <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
         <div className="w-full pt-8">
-          <ProfileCard
-            userName={userId as string}
-            profileImage={user?.profileImage ?? ""}
-          />
+          <ProfileCard userName={userId} />
           <div id="contribution" className="mt-4 h-[200px] text-black">
             {contribution.totalContributions !== -1 ? (
               <ContributionGraph

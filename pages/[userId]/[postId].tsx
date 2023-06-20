@@ -208,7 +208,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         <ProfileCard
           className="mt-80 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
           userName={author}
-          profileImage={getGithubProfileIcon(author)}
         />
 
         {/* {seriesList && seriesLength > 1 && (

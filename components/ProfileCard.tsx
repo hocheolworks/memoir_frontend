@@ -3,25 +3,20 @@ import React from "react";
 import GithubIcon from "@public/logo/social/github-mark-white.svg";
 import CircleAvatar from "@components/CircleAvatar";
 import Link from "next/link";
-import { cls } from "@utils/functions";
+import { cls, getGithubProfileIcon } from "@utils/functions";
 
 type ProfileCardProps = {
   className?: string;
   userName: string;
-  profileImage: string;
 };
 
-const ProfileCard = ({
-  className,
-  userName,
-  profileImage,
-}: ProfileCardProps) => {
+const ProfileCard = ({ className, userName }: ProfileCardProps) => {
   return (
     <div className={cls("flex items-center justify-between", className)}>
       <div className="flex items-center">
         <CircleAvatar
           className="h-[50px]"
-          src={profileImage ?? ""}
+          src={getGithubProfileIcon(userName)}
           alt="circleAvartar"
           width={50}
           height={50}

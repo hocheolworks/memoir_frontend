@@ -1,5 +1,5 @@
 import { getToken } from "@token/index";
-import { isBrowser, isDevEnv } from "@utils/functions";
+import { isBrowser } from "@utils/functions";
 import axios, { AxiosRequestConfig } from "axios";
 import { BaseApiError } from "./types";
 
