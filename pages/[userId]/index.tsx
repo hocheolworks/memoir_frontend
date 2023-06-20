@@ -39,11 +39,7 @@ export async function getServerSideProps({ query }: NextPageContext) {
       year: new Date().getFullYear(),
     });
 
-    console.log(JSON.stringify(contributionCalendar));
-
     const { data } = await PostAPI.getPosts(userId);
-
-    console.log(JSON.stringify(data));
 
     // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
     return {
