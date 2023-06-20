@@ -1,4 +1,4 @@
-import req from "@api/core";
+import req from "fetch/core";
 import { plainToInstance } from "class-transformer";
 import { PublishCommentDto, PublishPostDto, SaveTempPostDto } from "./requests";
 import {
