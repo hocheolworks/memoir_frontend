@@ -165,7 +165,6 @@ const Write: NextPageWithLayout = () => {
   // file 드래그 & 드랍
   const onDropFile = useCallback(
     (file: File) => {
-      console.log(file.type, file.name);
       const selectionStart = selectionStartRef.current;
 
       if (!isImageFile(file)) {

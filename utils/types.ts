@@ -120,6 +120,31 @@ export type Post = {
   commentList?: Array<Comment>;
 };
 
+export type PreviewToBe = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  user: User;
+  postTitle: string;
+  postThumbnailImageUrl?: string;
+  postUrl: string;
+  views: number;
+};
+
+export type PostToBe = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  user: User;
+  postTitle: string;
+  postThumbnailImageUrl?: string;
+  postUrl: string;
+  views: number;
+  postBody: string;
+};
+
 export type Comment = {
   githubId: string;
   comment: string;

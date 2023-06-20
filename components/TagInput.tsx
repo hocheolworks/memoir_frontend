@@ -78,7 +78,6 @@ const TagInput = ({ tagList, setTagList, className }: TagInputPropType) => {
           }}
           onBlur={() => setPopup(false)}
           onKeyDown={(e) => {
-            // console.log("keydown");
             if (e.key === "Enter") {
               addTag(true);
             }
@@ -86,7 +85,6 @@ const TagInput = ({ tagList, setTagList, className }: TagInputPropType) => {
           placeholder="태그를 입력하세요"
           value={currentTag}
           onChange={(e) => {
-            // console.log("onchange");
             if (isAdded.current) {
               isAdded.current = false;
               return;
@@ -103,12 +101,10 @@ const TagInput = ({ tagList, setTagList, className }: TagInputPropType) => {
             }
           }}
           onCompositionStart={() => {
-            // console.log("start");
             isCompositionStart.current = true;
             isCompositionEnd.current = false;
           }}
           onCompositionEnd={() => {
-            // console.log("end");
             if (isCompositionStart.current && !isCompositionEnd.current) {
               isCompositionEnd.current = true;
               isCompositionStart.current = false;

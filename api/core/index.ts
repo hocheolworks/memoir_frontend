@@ -1,5 +1,5 @@
 import { getToken } from "@token/index";
-import { isDevEnv } from "@utils/functions";
+import { isBrowser, isDevEnv } from "@utils/functions";
 import axios, { AxiosRequestConfig } from "axios";
 import { BaseApiError } from "./types";
 
@@ -12,16 +12,10 @@ const createInstance = () => {
     ...(token !== "" && { Authorization: `Bearer ${token}` }),
   };
 
-  const instance = axios.create(
-    isDevEnv()
-      ? {
-          headers: headers,
-        }
-      : {
-          // baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-          headers: headers,
-        }
-  );
+  const instance = axios.create({
+    baseURL: isBrowser() ? "/api" : process.env.NEXT_PUBLIC_API_BASE_URL,
+    headers: headers,
+  });
 
   instance.interceptors.response.use(
     (res) => res,

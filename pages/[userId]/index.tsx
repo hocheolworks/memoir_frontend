@@ -5,7 +5,11 @@ import { selectAuthUser } from "@redux/modules/authSlice";
 import Link from "next/link";
 import GithubIcon from "@public/logo/social/github-mark-white.svg";
 import ContributionGraph from "@components/ContributionGraph/ContributionGraph";
-import { ContributionCalendar, WithRouterProps } from "@utils/types";
+import {
+  ContributionCalendar,
+  PreviewToBe,
+  WithRouterProps,
+} from "@utils/types";
 import UserAPI from "@api/user/userAPI";
 import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
@@ -26,9 +30,10 @@ import CategoryTreeNav from "@components/CategoryTreeNav";
 import ProfileCard from "@components/ProfileCard";
 import { NextPageWithLayout } from "@pages/_app";
 import GlobalLayout from "@components/GlobalLayout";
+import PostAPI from "@api/post/postAPI";
 
-export async function getServerSideProps({ query, req, res }: NextPageContext) {
-  const { userId } = query;
+export async function getServerSideProps({ query }: NextPageContext) {
+  const userId = query.userId as string;
 
   try {
     const token =
@@ -39,16 +44,22 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
       year: new Date().getFullYear(),
     });
 
-    // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
+    const { data } = await PostAPI.getPosts(userId);
 
+    // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
     return {
-      props: { userId: userId, contributionData: contributionCalendar },
+      props: {
+        userId: userId,
+        posts: data.list,
+        contributionData: contributionCalendar,
+      },
     };
   } catch (e: any) {
     errorHandler(e);
     return {
       props: {
         userId: userId,
+        posts: [],
         contributionData: { totalContributions: -1, weeks: [] },
       },
     };
@@ -56,8 +67,12 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
 }
 
 const UserMemoir: NextPageWithLayout<
-  { userId: string; contributionData: ContributionCalendar } & WithRouterProps
-> = ({ userId, contributionData }) => {
+  {
+    userId: string;
+    posts: PreviewToBe[];
+    contributionData: ContributionCalendar;
+  } & WithRouterProps
+> = ({ userId, posts, contributionData }) => {
   const user = useSelector(selectAuthUser);
   const router = useRouter();
   const { tag } = router.query;
@@ -128,28 +143,9 @@ const UserMemoir: NextPageWithLayout<
           className="my-8 w-full contribution-width:w-96"
         />
         {selectedNavIndex === 0 && (
-          // (dummyPreview.length !== 0 ? ( // 글
-          //   <>
-          //     <div className="mb-4 hidden w-full justify-end first:flex">
-          //       <div className="flex items-center rounded-sm border-[1px] border-neutral-500 bg-neutral-200 p-2 dark:bg-neutral-800">
-          //         <AiOutlineSearch />
-          //         <input className="ml-1 bg-inherit text-sm outline-none"></input>
-          //       </div>
-          //     </div>
-          //     {dummyPreview.map((value, index) => (
-          //       <PreviewHorizontal
-          //         key={`myPreview#${index}`}
-          //         preview={value}
-          //         index={index}
-          //       />
-          //     ))}
-          //   </>
-          // ) : (
-          //   <NoContents type="post" />
-          // ))
           <PostList
             className="w-full"
-            postList={dummyPreview}
+            postList={posts}
             filterTag={tag as string}
           ></PostList>
         )}

@@ -107,7 +107,7 @@ const Header: FC<HeaderPropType> = ({ className }) => {
           {/* 아직 기능 개발전이라 버튼 숨김처리
           <IconBtn
             className="mr-2"
-            onClick={() => console.log("show text input for search")}
+            onClick={() => {}}
             Icon={FaSearch}
             size={22}
           /> 
