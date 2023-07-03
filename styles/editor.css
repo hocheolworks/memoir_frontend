@@ -73,6 +73,11 @@
   padding: 0.25em 4px;
 }
 
+.wmde-markdown-var,
+.wmde-markdown {
+  --color-canvas-default: rgba(0, 0, 0, 0);
+}
+
 [data-color-mode*="dark"] .wmde-markdown-var,
 [data-color-mode*="dark"] .wmde-markdown {
   --color-fg-default: #f4f4f4 !important;
