@@ -51,6 +51,8 @@ function selectWord({ text, selection }: TextSection): TextRange {
 
 export const ImageUploadCommand = (): commands.ICommand => {
   const { theme } = useTheme();
+  const user = useUser();
+  const dispatch = useDispatch();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -61,9 +63,6 @@ export const ImageUploadCommand = (): commands.ICommand => {
     keyCommand: "upload-image-file",
     value: "![image]({{text}})",
     render: (command, disabled, executeCommand) => {
-      const user = useUser();
-      const dispatch = useDispatch();
-
       const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
         e
       ) => {

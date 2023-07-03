@@ -1,9 +1,10 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import CircleAvatar from "@components/CircleAvatar";
-import Link from "next/link";
-import GithubIcon from "@public/logo/social/github-mark-white.svg";
 import ContributionGraph from "@components/ContributionGraph/ContributionGraph";
-import { ContributionCalendar, WithRouterProps } from "@utils/types";
+import {
+  ContributionCalendar,
+  PreviewToBe,
+  WithRouterProps,
+} from "@utils/types";
 import UserAPI from "@api/user/userAPI";
 import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
@@ -20,6 +21,7 @@ import ProfileCard from "@components/ProfileCard";
 import { NextPageWithLayout } from "@pages/_app";
 import GlobalLayout from "@components/GlobalLayout";
 import useUser from "@hooks/useUser";
+import PostAPI from "@api/post/postAPI";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const userId = query.userId as string;
