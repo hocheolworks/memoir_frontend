@@ -1,8 +1,9 @@
 import req from "@api/core";
-import { UploadImageDto } from "./dto/requests";
+import { UploadImageReqDto } from "./dto/requests";
+import { plainToInstance } from "class-transformer";
+import { UploadImageResDto } from "./dto/responses";
 
-export default {
-  uploadImage: async (dto: UploadImageDto) => {
-    const { data } = await req.uploadFile("/api/media/images", dto);
-  },
+export const uploadImage = async (dto: UploadImageReqDto) => {
+  const { data } = await req.uploadFile("/api/media/images", dto);
+  return plainToInstance(UploadImageResDto, data.data);
 };

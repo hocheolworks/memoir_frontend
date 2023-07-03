@@ -1,4 +1,4 @@
-export type UploadImageDto = {
-  images: File[];
+export type UploadImageReqDto = {
+  images: File;
   folder: string;
 };

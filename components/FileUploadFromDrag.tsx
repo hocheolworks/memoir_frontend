@@ -1,13 +1,16 @@
 import { cls } from "@utils/functions";
 import React, { DragEventHandler, FC, useCallback } from "react";
 import FcAddImagePurple from "assets/icons/FcAddImagePurple.svg";
+import { ScaleLoader } from "react-spinners";
 
 type FileUploadFromDragProps = {
+  loading?: boolean;
   onDragLeave: DragEventHandler;
   onDropFile: (file: File) => void;
 };
 
 const FileUploadFromDrag: FC<FileUploadFromDragProps> = ({
+  loading,
   onDragLeave,
   onDropFile,
 }) => {
@@ -38,10 +41,21 @@ const FileUploadFromDrag: FC<FileUploadFromDragProps> = ({
       onDragLeave={onDragLeave}
       onDrop={onDrop}
     >
-      <FcAddImagePurple className="pointer-events-none h-[200px] w-[200px] animate-scale-in-bottom grayscale-[0.4]" />
-      <h2 className="pointer-events-none mt-4 text-2xl font-semibold">
-        이미지 열기
-      </h2>
+      {loading ? (
+        <>
+          <ScaleLoader color="#904CF9" width={20} height={35} />
+          <h2 className="pointer-events-none mt-4 text-2xl font-semibold">
+            업로드 중..
+          </h2>
+        </>
+      ) : (
+        <>
+          <FcAddImagePurple className="pointer-events-none h-[200px] w-[200px] animate-scale-in-bottom grayscale-[0.4]" />
+          <h2 className="pointer-events-none mt-4 text-2xl font-semibold">
+            이미지 열기
+          </h2>
+        </>
+      )}
     </div>
   );
 };

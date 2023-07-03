@@ -17,19 +17,23 @@ import {
   useState,
 } from "react";
 import { useTheme } from "next-themes";
+import { toast, TypeOptions } from "react-toastify";
+import { useSelector } from "react-redux";
+import rehypeSanitize from "rehype-sanitize";
+import { useRouter } from "next/router";
+
 import TagInput from "@components/TagInput";
 import { getCommands } from "@components/MDEditor/commands";
 import BottomBar from "@components/BottomBar";
 import PublishPopup from "@components/PublishPopup";
-import { toast, TypeOptions } from "react-toastify";
 import PostAPI from "@api/post/postAPI";
-import { useSelector } from "react-redux";
 import { selectAuthUser } from "@redux/modules/authSlice";
-import rehypeSanitize from "rehype-sanitize";
-import { NextPageWithLayout } from "./_app";
 import FileUploadFromDrag from "@components/FileUploadFromDrag";
 import { isImageFile, isInsideOfLast5Lines } from "@utils/functions";
-import { useRouter } from "next/router";
+
+import { NextPageWithLayout } from "./_app";
+import { uploadImage } from "@api/media";
+import { errorHandler } from "@api/error";
 
 // TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
@@ -65,6 +69,8 @@ const Write: NextPageWithLayout = () => {
 
   const mode = query.id !== undefined ? "update" : "publish";
   const id = mode === "update" ? parseInt(query.id as string) : -1;
+
+  const [imageUploadLoading, setImageUploadLoading] = useState(false);
 
   const [title, setTitle] = useState<string>("");
   const [editContent, setEditContent] = useState<string | undefined>("");
@@ -164,8 +170,8 @@ const Write: NextPageWithLayout = () => {
 
   // file 드래그 & 드랍
   const onDropFile = useCallback(
-    (file: File) => {
-      console.log(file.type, file.name);
+    async (file: File) => {
+      setImageUploadLoading(true);
       const selectionStart = selectionStartRef.current;
 
       if (!isImageFile(file)) {
@@ -178,16 +184,26 @@ const Write: NextPageWithLayout = () => {
         return;
       }
 
-      const imageUrl = file.name;
+      try {
+        const { cdnUrl, path } = await uploadImage({
+          images: file,
+          folder: `${user?.githubUserName}/images/`,
+        });
 
-      const preEditContent = editContent?.slice(0, selectionStart);
-      const postEditContent = editContent?.slice(selectionStart);
+        const imageUrl = cdnUrl + path;
 
-      const imageMarkDownText = `![image](${imageUrl})\n`;
+        const preEditContent = editContent?.slice(0, selectionStart);
+        const postEditContent = editContent?.slice(selectionStart);
 
-      setEditContent(preEditContent + imageMarkDownText + postEditContent);
+        const imageMarkDownText = `![image](${imageUrl})\n`;
 
-      setIsDragging(false);
+        setEditContent(preEditContent + imageMarkDownText + postEditContent);
+
+        setIsDragging(false);
+        setImageUploadLoading(false);
+      } catch (e: any) {
+        errorHandler(e);
+      }
     },
     [editContent, theme]
   );
@@ -300,6 +316,7 @@ const Write: NextPageWithLayout = () => {
 
         {!isPublishPopupOpen && isDragging && (
           <FileUploadFromDrag
+            loading={imageUploadLoading}
             onDropFile={onDropFile}
             onDragLeave={onDragLeave}
           />
