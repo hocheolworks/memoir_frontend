@@ -9,7 +9,7 @@ import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
 import LabelBtn from "./LabelBtn";
 import { useDispatch, useSelector } from "react-redux";
-import { resetAuth, selectAuthUser } from "@redux/modules/authSlice";
+import { resetAuth } from "@redux/modules/authSlice";
 import { useTheme } from "next-themes";
 import DropdownMenu from "./DropdownMenu";
 import DropdownBtn from "./DropdownBtn";
@@ -19,6 +19,7 @@ import {
   selectHeaderVisible,
   showHeader,
 } from "@redux/modules/configSlice";
+import useUser from "@hooks/useUser";
 
 type HeaderPropType = {
   className?: string;
@@ -26,7 +27,7 @@ type HeaderPropType = {
 
 const Header: FC<HeaderPropType> = ({ className }) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectAuthUser);
+  const user = useUser();
   const isVisible = useSelector(selectHeaderVisible);
 
   const [isDropdownMenuVisible, setIsDropdownMenuVisible] =

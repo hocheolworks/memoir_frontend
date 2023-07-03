@@ -1,7 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import CircleAvatar from "@components/CircleAvatar";
-import { useSelector } from "react-redux";
-import { selectAuthUser } from "@redux/modules/authSlice";
 import Link from "next/link";
 import GithubIcon from "@public/logo/social/github-mark-white.svg";
 import ContributionGraph from "@components/ContributionGraph/ContributionGraph";
@@ -26,6 +24,7 @@ import CategoryTreeNav from "@components/CategoryTreeNav";
 import ProfileCard from "@components/ProfileCard";
 import { NextPageWithLayout } from "@pages/_app";
 import GlobalLayout from "@components/GlobalLayout";
+import useUser from "@hooks/useUser";
 
 export async function getServerSideProps({ query, req, res }: NextPageContext) {
   const { userId } = query;
@@ -58,7 +57,7 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
 const UserMemoir: NextPageWithLayout<
   { userId: string; contributionData: ContributionCalendar } & WithRouterProps
 > = ({ userId, contributionData }) => {
-  const user = useSelector(selectAuthUser);
+  const user = useUser();
   const router = useRouter();
   const { tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);

@@ -18,7 +18,6 @@ import {
 } from "react";
 import { useTheme } from "next-themes";
 import { toast, TypeOptions } from "react-toastify";
-import { useSelector } from "react-redux";
 import rehypeSanitize from "rehype-sanitize";
 import { useRouter } from "next/router";
 
@@ -27,13 +26,13 @@ import { getCommands } from "@components/MDEditor/commands";
 import BottomBar from "@components/BottomBar";
 import PublishPopup from "@components/PublishPopup";
 import PostAPI from "@api/post/postAPI";
-import { selectAuthUser } from "@redux/modules/authSlice";
 import FileUploadFromDrag from "@components/FileUploadFromDrag";
 import { isImageFile, isInsideOfLast5Lines } from "@utils/functions";
 
 import { NextPageWithLayout } from "./_app";
 import { uploadImage } from "@api/media";
 import { errorHandler } from "@api/error";
+import useUser from "@hooks/useUser";
 
 // TODO: 스크롤 관련 애니메이션
 // 1. 스크롤 길이가 일정길이 미만이 되면, 에디터의 높이를 100%로 변경, 제목과 태그 입력창은 접히듯이 사라짐(A 상태)
@@ -64,7 +63,7 @@ ForwardRefMarkdown.displayName = "ForwardRefMarkdown";
 
 const Write: NextPageWithLayout = () => {
   const { theme } = useTheme();
-  const user = useSelector(selectAuthUser);
+  const user = useUser();
   const { query } = useRouter();
 
   const mode = query.id !== undefined ? "update" : "publish";
@@ -171,7 +170,6 @@ const Write: NextPageWithLayout = () => {
   // file 드래그 & 드랍
   const onDropFile = useCallback(
     async (file: File) => {
-      setImageUploadLoading(true);
       const selectionStart = selectionStartRef.current;
 
       if (!isImageFile(file)) {
@@ -183,7 +181,7 @@ const Write: NextPageWithLayout = () => {
 
         return;
       }
-
+      setImageUploadLoading(true);
       try {
         const { cdnUrl, path } = await uploadImage({
           images: file,

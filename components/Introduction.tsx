@@ -1,16 +1,15 @@
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import BottomBtn from "./BottomBtn";
 import { dummyIntroduction } from "@utils/dummy";
-import { useSelector } from "react-redux";
-import { selectAuthUser } from "@redux/modules/authSlice";
 import { DefaultProps } from "@utils/types";
+import useUser from "@hooks/useUser";
 
 type IntroductionProps = DefaultProps & {
   userId: string;
 };
 
 const Introduction: FC<IntroductionProps> = ({ className, userId }) => {
-  const user = useSelector(selectAuthUser);
+  const user = useUser();
   const [introduceText, setIntroduceText] = useState<string | null>(null);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 

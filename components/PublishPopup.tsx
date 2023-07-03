@@ -8,8 +8,6 @@ import { MdPlaylistAdd } from "@react-icons/all-files/md/MdPlaylistAdd";
 
 import { VscListTree } from "@react-icons/all-files/vsc/VscListTree";
 import { IoImageOutline } from "@react-icons/all-files/io5/IoImageOutline";
-import { useSelector } from "react-redux";
-import { selectAuthUser } from "@redux/modules/authSlice";
 import BottomBtn from "./BottomBtn";
 import ContainerWithTitle from "./ContainerWithTitle";
 import AddToSeriesArea from "./AddToSeriesArea";
@@ -21,6 +19,7 @@ import { errorHandler } from "@api/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { cls, formatAbsolute, titleToUrl } from "@utils/functions";
+import useUser from "@hooks/useUser";
 
 type PublishPopupProps = {
   id?: number;
@@ -42,7 +41,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const { push } = useRouter();
   const iconSize = 22;
 
-  const user = useSelector(selectAuthUser);
+  const user = useUser();
 
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [url, setUrl] = useState<string>(titleToUrl(title));

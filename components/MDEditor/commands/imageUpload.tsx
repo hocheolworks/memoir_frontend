@@ -7,6 +7,10 @@ import { TextSection } from "@uiw/react-md-editor/lib/utils/markdownUtils";
 import { isImageFile } from "@utils/functions";
 import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
+import { uploadImage } from "@api/media";
+import useUser from "@hooks/useUser";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "@redux/modules/configSlice";
 
 function getSurroundingWord(text: string, position: number): TextRange {
   if (!text) throw Error("Argument 'text' should be truthy");
@@ -57,6 +61,9 @@ export const ImageUploadCommand = (): commands.ICommand => {
     keyCommand: "upload-image-file",
     value: "![image]({{text}})",
     render: (command, disabled, executeCommand) => {
+      const user = useUser();
+      const dispatch = useDispatch();
+
       const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
         e
       ) => {
@@ -73,18 +80,22 @@ export const ImageUploadCommand = (): commands.ICommand => {
             return;
           }
 
-          // try {
-          //   const { statusCode, data } = await PostAPI.uploadImage(file);
+          try {
+            dispatch(showLoading({ text: "업로드 중..", type: "scale" }));
+            const { cdnUrl, path } = await uploadImage({
+              images: file,
+              folder: `${user?.githubUserName}/images/`,
+            });
 
-          //   if (statusCode === 201) {
-          //     imageUrlFromCloudFront = data.url;
-          //   }
-          // } catch (e: any) {
-          //   errorHandler(e);
-          // }
-          imageUrlFromCloudFront = file.name; // test
+            imageUrlFromCloudFront = cdnUrl + path;
 
-          executeCommand(command, commands.image.name);
+            executeCommand(command, commands.image.name);
+          } catch (e: any) {
+            errorHandler(e);
+          }
+
+          dispatch(hideLoading());
+
           e.target.value = "";
         }
       };

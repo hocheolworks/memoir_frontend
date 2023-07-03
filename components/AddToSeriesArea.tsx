@@ -1,9 +1,8 @@
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectAuthUser } from "@redux/modules/authSlice";
 import { DefaultProps } from "@utils/types";
 import BottomBtn from "./BottomBtn";
 import ContainerWithTitle from "./ContainerWithTitle";
+import useUser from "@hooks/useUser";
 
 type AddToSeriesAreaProps = DefaultProps & {
   selectedSeries: string;
@@ -17,7 +16,7 @@ const AddToSeriesArea: FC<AddToSeriesAreaProps> = ({
   setSelectedSeries,
   getOut,
 }) => {
-  const user = useSelector(selectAuthUser);
+  const user = useUser();
 
   const [existingSeries, setExistingSeries] = useState<string[]>([
     "React",
