@@ -1,7 +1,6 @@
 import React, { useMemo, useEffect, useRef, useState } from "react";
 import { NextPage, NextPageContext } from "next/types";
 // import PostAPI from "@api/post/postAPI";
-import { dummyPost } from "@utils/dummy";
 import { Post, PostToBe } from "@utils/types";
 import Tag from "@components/Tag";
 import Markdown from "@lhjeong60/react-markdown-preview";
@@ -135,7 +134,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     <>
       <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">
-          <h1 className="text-[48px] font-bold leading-[72px]">{postTitle}</h1>
+          <h1 className="text-[3rem] font-bold leading-normal">{postTitle}</h1>
         </div>
         <div
           className="flex w-full items-center justify-between pt-8"

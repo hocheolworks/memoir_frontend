@@ -3,6 +3,7 @@ import { getRandomArbitrary, getWeekNumber } from "./functions";
 import {
   ContributionTile,
   Post,
+  PostToBe,
   Preview,
   Series,
   TagData,
@@ -293,4 +294,17 @@ _**일절 테스트 해본적 없는 상상이며, 굉장히 틀릴 수 있음�
       createdAt: "2023년 3월 29일",
     },
   ],
+};
+
+export const dummyPostToBe: PostToBe = {
+  createdAt: "2023-07-03 12:00:34",
+  updatedAt: "",
+  deletedAt: "",
+  id: 1,
+  postTitle: "[삽질기#1] next-redux-wrapper에 대한 오해..",
+
+  user: dummyUser,
+  postUrl: "몰러",
+  views: 0,
+  postBody: dummyPost.content,
 };
