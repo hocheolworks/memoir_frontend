@@ -1,8 +1,7 @@
 import React, { useMemo, useEffect, useRef, useState } from "react";
 import { NextPage, NextPageContext } from "next/types";
 // import PostAPI from "@api/post/postAPI";
-import { dummyPost } from "@utils/dummy";
-import { Post } from "@utils/types";
+import { Post, PostToBe } from "@utils/types";
 import Tag from "@components/Tag";
 import Markdown from "@lhjeong60/react-markdown-preview";
 import ProfileCard from "@components/ProfileCard";
@@ -28,59 +27,64 @@ import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
+import moment from "moment";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
+  const numPostId = parseInt(postId as string) || 0;
 
-  // const res = await PostAPI.getPostById((postId as string) ?? "");
+  try {
+    const { statusCode, data } = await PostAPI.getPostById(numPostId);
 
-  return {
-    props: {
-      post: dummyPost,
-    },
-  };
+    if (statusCode === 200) {
+      return {
+        props: {
+          post: JSON.parse(JSON.stringify(data)),
+        },
+      };
+    }
+  } catch (e: any) {
+    console.log(e);
+    return {
+      notFound: true,
+    };
+  }
 }
 
 type PostPageProps = {
-  post: Post;
+  post: PostToBe;
 };
 
 const PostPage: NextPage<PostPageProps> = ({ post }) => {
-  const {
-    id,
-    title,
-    githubId,
-    createDate,
-    tagList,
-    seriesName,
-    seriesIndex,
-    seriesList,
-    content,
-    commentList,
-  } = post;
+  const { id, postTitle, createdAt, postBody } = post;
+
+  const author = post.user.githubUserName;
 
   const dispatch = useDispatch();
 
-  const anchors = useMemo(() => extractAnchorFromMarkdown(content), [content]);
-
-  const seriesLength = seriesList?.length ?? -1;
-
-  const firstSeriesIndex = 0;
-  const lastSeriesIndex = seriesLength - 1;
-
-  const prevSeriesIndex = seriesIndex !== undefined ? seriesIndex - 1 : -1;
-  const nextSeriesIndex = seriesIndex !== undefined ? seriesIndex + 1 : -1;
-
-  const prevSeriesExist = isBetween(
-    firstSeriesIndex,
-    lastSeriesIndex,
-    prevSeriesIndex
+  const anchors = useMemo(
+    () => extractAnchorFromMarkdown(postBody),
+    [postBody]
   );
-  const nextSeriesExist = isBetween(
-    firstSeriesIndex,
-    lastSeriesIndex,
-    nextSeriesIndex
-  );
+
+  // const seriesLength = seriesList?.length ?? -1;
+
+  // const firstSeriesIndex = 0;
+  // const lastSeriesIndex = seriesLength - 1;
+
+  // const prevSeriesIndex = seriesIndex !== undefined ? seriesIndex - 1 : -1;
+  // const nextSeriesIndex = seriesIndex !== undefined ? seriesIndex + 1 : -1;
+
+  // const prevSeriesExist = isBetween(
+  //   firstSeriesIndex,
+  //   lastSeriesIndex,
+  //   prevSeriesIndex
+  // );
+  // const nextSeriesExist = isBetween(
+  //   firstSeriesIndex,
+  //   lastSeriesIndex,
+  //   nextSeriesIndex
+  // );
 
   const user = useUser();
   const { theme } = useTheme();
@@ -106,7 +110,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     }
   };
 
-  const isMyPost = user?.githubUserName === githubId;
+  const isMyPost = user?.githubUserName === author;
 
   useEffect(() => {
     if (!authorDivRef || !authorDivRef.current) return;
@@ -130,20 +134,22 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     <>
       <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">
-          <h1 className="text-[48px] font-bold leading-[72px]">{title}</h1>
+          <h1 className="text-[3rem] font-bold leading-normal">{postTitle}</h1>
         </div>
         <div
           className="flex w-full items-center justify-between pt-8"
           ref={authorDivRef}
         >
           <div>
-            <span className="font-medium">{githubId}</span> ·{" "}
-            <span className="text-neutral-400">{createDate}</span>
+            <span className="font-medium">{author}</span> ·{" "}
+            <span className="text-neutral-400">
+              {moment(createdAt).format("YYYY년 MM월 DD일")}
+            </span>
           </div>
           {isMyPost && (
             <div>
               <span className="cursor-pointer text-neutral-400 hover:text-black dark:hover:text-white">
-                <Link href={`/write?id=${title}`}>수정</Link>
+                <Link href={`/write?id=${postTitle}`}>수정</Link>
               </span>{" "}
               <span
                 className="cursor-pointer text-neutral-400 hover:text-black dark:hover:text-white"
@@ -163,13 +169,13 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
             </div>
           )}
         </div>
-        <div className="-ml-1 flex w-full justify-start self-start pt-4">
+        {/* <div className="-ml-1 flex w-full justify-start self-start pt-4">
           {tagList?.map((value, index) => (
             <Tag onClick={() => {}} key={`tag#${index}`}>
               {value}
             </Tag>
           ))}
-        </div>
+        </div> */}
         <div ref={anchorNavRootRef} className="relative mt-8 w-full">
           <div
             className={cls(
@@ -189,22 +195,21 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
             />
           </div>
         </div>
-        {seriesName && (
+        {/* {seriesName && (
           <div className="mb-[48px] w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
             <h3 className="text-[24px] font-bold">{seriesName}</h3>
           </div>
-        )}
+        )} */}
         <Markdown
           className="w-full bg-white text-black dark:bg-black dark:text-white"
-          source={content}
+          source={postBody}
         ></Markdown>
         <ProfileCard
-          className="mt-48 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
-          userName={post.githubId}
-          profileImage={getGithubProfileIcon(post.githubId)}
+          className="mt-80 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
+          userName={author}
         />
 
-        {seriesList && seriesLength > 1 && (
+        {/* {seriesList && seriesLength > 1 && (
           <SeriesNav
             className="mb-72"
             prevSeriesPreview={
@@ -214,12 +219,12 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
               nextSeriesExist ? seriesList[nextSeriesIndex] : undefined
             }
           />
-        )}
+        )} */}
         {/* {user && (
           <CommentInputArea
             className="mt-16"
             postAuthor={githubId}
-            postTitle={title}
+            postTitle={postTitle}
             commentCount={commentList?.length ?? 0}
           />
         )}

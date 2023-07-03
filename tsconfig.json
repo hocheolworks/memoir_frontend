@@ -17,7 +17,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@api/*": ["./api/*"],
+      "@api/*": ["./fetch/*"],
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],
       "@pages/*": ["./pages/*"],

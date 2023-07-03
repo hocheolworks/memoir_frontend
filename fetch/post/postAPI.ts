@@ -1,19 +1,20 @@
-import req from "@api/core";
+import req from "fetch/core";
 import { plainToInstance } from "class-transformer";
 import { PublishCommentDto, PublishPostDto, SaveTempPostDto } from "./requests";
 import {
   GetPostByIdResponseBody,
+  GetPostsResponseBody,
   PublishPostResponseBody,
   UploadImageResponseBody,
 } from "./responses";
 
 const PostAPI = {
   saveTempPost: (saveTempPostDto: SaveTempPostDto) => {
-    return req.post("/api/posts/temp", saveTempPostDto);
+    return req.post("/posts/temp", saveTempPostDto);
   },
 
   publishPost: async (publishPostDto: PublishPostDto) => {
-    const { data } = await req.post("/api/posts", publishPostDto);
+    const { data } = await req.post("/posts", publishPostDto);
     return {
       statusCode: data.statusCode,
       data: plainToInstance(PublishPostResponseBody, data.data),
@@ -21,12 +22,12 @@ const PostAPI = {
   },
 
   publishComment: async (publishCommentDto: PublishCommentDto) => {
-    const { data } = await req.post("/api/comments", publishCommentDto);
+    const { data } = await req.post("/comments", publishCommentDto);
     return data;
   },
 
   updatePost: async (id: number, updatePostDto: PublishPostDto) => {
-    const { data } = await req.put(`/api/posts/${id}`, updatePostDto);
+    const { data } = await req.put(`/posts/${id}`, updatePostDto);
     return {
       statusCode: data.statusCode,
       data: plainToInstance(PublishPostResponseBody, data.data),
@@ -34,14 +35,28 @@ const PostAPI = {
   },
 
   deletePost: async (id: number) => {
-    return await req.delete(`/api/posts/${id}`);
+    return await req.delete(`/posts/${id}`);
   },
 
-  getPostById: async (postId: number) => {
-    const { data } = await req.get(`/api/posts/${postId}`);
+  getPosts: async (
+    githubUserName: string,
+    parentCategory?: string,
+    childCategory?: string
+  ) => {
+    const { data } = await req.get("/posts", {
+      params: { githubUserName, parentCategory, childCategory },
+    });
 
     return {
-      statusCode: data.statusCode,
+      statusCode: data.statusCode as number,
+      data: plainToInstance(GetPostsResponseBody, data.data),
+    };
+  },
+  getPostById: async (postId: number) => {
+    const { data } = await req.get(`/posts/${postId}`);
+
+    return {
+      statusCode: data.statusCode as number,
       data: plainToInstance(GetPostByIdResponseBody, data.data),
     };
   },
@@ -50,7 +65,7 @@ const PostAPI = {
     const formData = new FormData();
     formData.append("file", file);
 
-    const { data } = await req.post("/api/image", formData);
+    const { data } = await req.post("/image", formData);
     return {
       statusCode: data.statusCode,
       data: plainToInstance(UploadImageResponseBody, data.data),

@@ -232,3 +232,7 @@ export function isImageFile(file: File): boolean {
       return false;
   }
 }
+
+export function isBrowser() {
+  return typeof window !== "undefined";
+}

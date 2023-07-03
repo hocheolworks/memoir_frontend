@@ -115,7 +115,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   return (
     <div
       className={cls(
-        "full-page z-30 flex h-full w-full items-start justify-center bg-white dark:bg-black zero:items-center",
+        "full-page z-30 flex h-full w-full items-start justify-center overflow-auto bg-white dark:bg-black zero:items-center",
         isPopup ? " animate-slide-top" : "",
         isCancel ? " animate-slide-bottom" : ""
       )}

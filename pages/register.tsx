@@ -22,7 +22,6 @@ const Register: FC = () => {
   useEffect(() => {
     if (!isReady) return;
 
-    console.log(githubUserName);
     if (!githubUserName) {
       push("/404");
     }

@@ -9,12 +9,7 @@ import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next/types";
 import NavigationBar from "@components/NavigationBar";
-import {
-  dummyPreview,
-  dummySeriesList,
-  dummyTagList,
-  dummyTree,
-} from "@utils/dummy";
+import { dummySeriesList, dummyTagList, dummyTree } from "@utils/dummy";
 import Series from "@components/Series";
 import NoContents from "@components/NoContents";
 import Introduction from "@components/Introduction";
@@ -26,8 +21,8 @@ import { NextPageWithLayout } from "@pages/_app";
 import GlobalLayout from "@components/GlobalLayout";
 import useUser from "@hooks/useUser";
 
-export async function getServerSideProps({ query, req, res }: NextPageContext) {
-  const { userId } = query;
+export async function getServerSideProps({ query }: NextPageContext) {
+  const userId = query.userId as string;
 
   try {
     const token =
@@ -38,16 +33,24 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
       year: new Date().getFullYear(),
     });
 
-    // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
+    const { data } = await PostAPI.getPosts(userId);
 
+    // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
     return {
-      props: { userId: userId, contributionData: contributionCalendar },
+      props: {
+        userId: userId,
+        posts: data.list,
+        contributionData: contributionCalendar,
+      },
     };
   } catch (e: any) {
+    console.log("/[userId] Error");
+    console.log(e);
     errorHandler(e);
     return {
       props: {
         userId: userId,
+        posts: [],
         contributionData: { totalContributions: -1, weeks: [] },
       },
     };
@@ -55,8 +58,12 @@ export async function getServerSideProps({ query, req, res }: NextPageContext) {
 }
 
 const UserMemoir: NextPageWithLayout<
-  { userId: string; contributionData: ContributionCalendar } & WithRouterProps
-> = ({ userId, contributionData }) => {
+  {
+    userId: string;
+    posts: PreviewToBe[];
+    contributionData: ContributionCalendar;
+  } & WithRouterProps
+> = ({ userId, posts, contributionData }) => {
   const user = useUser();
   const router = useRouter();
   const { tag } = router.query;
@@ -71,7 +78,7 @@ const UserMemoir: NextPageWithLayout<
 
     try {
       const contributionCalendar = await UserAPI.bypassGetContributionData({
-        username: (userId as string) ?? "",
+        username: userId,
         year: new Date().getFullYear(),
       });
 
@@ -94,10 +101,7 @@ const UserMemoir: NextPageWithLayout<
       </div>
       <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
         <div className="w-full pt-8">
-          <ProfileCard
-            userName={userId as string}
-            profileImage={user?.profileImage ?? ""}
-          />
+          <ProfileCard userName={userId} />
           <div id="contribution" className="mt-4 h-[200px] text-black">
             {contribution.totalContributions !== -1 ? (
               <ContributionGraph
@@ -126,10 +130,10 @@ const UserMemoir: NextPageWithLayout<
           labels={["글", "시리즈", "소개"]}
           className="my-8 w-full contribution-width:w-96"
         />
-        {selectedNavIndex === 0 && ( // 글
+        {selectedNavIndex === 0 && (
           <PostList
             className="w-full"
-            postList={dummyPreview}
+            postList={posts}
             filterTag={tag as string}
           ></PostList>
         )}

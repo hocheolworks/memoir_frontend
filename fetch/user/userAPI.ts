@@ -6,7 +6,7 @@ import {
   GithubSignUpDto,
 } from "./requests";
 import { setToken } from "@token/index";
-import req from "@api/core";
+import req from "fetch/core";
 import { plainToInstance } from "class-transformer";
 import {
   MeResponseBody,
@@ -16,10 +16,7 @@ import {
 
 const UserAPI = {
   signIn: async (githubCodeDto: GithubCodeDto) => {
-    const { headers, data } = await req.post(
-      "/api/users/signin",
-      githubCodeDto
-    );
+    const { headers, data } = await req.post("/users/signin", githubCodeDto);
 
     const auth = headers["authorization"];
     if (auth) {
@@ -31,12 +28,12 @@ const UserAPI = {
   },
 
   signUp: async (githubSignUpDto: GithubSignUpDto) => {
-    const { data } = await req.post("/api/users/signup", githubSignUpDto);
+    const { data } = await req.post("/users/signup", githubSignUpDto);
     return plainToInstance(SignUpResponseBody, data.data);
   },
 
   me: async () => {
-    const { data } = await req.get("/api/users/me");
+    const { data } = await req.get("/users/me");
     return plainToInstance(MeResponseBody, data.data);
   },
 

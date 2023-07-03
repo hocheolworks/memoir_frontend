@@ -7,8 +7,6 @@ function useIntersectionObserver(option?: IntersectionObserverInit) {
   const handleScroll = useCallback<IntersectionObserverCallback>(
     (entries, observer) => {
       const { current } = dom;
-      console.log(entries);
-      console.log(observer);
     },
     []
   );
