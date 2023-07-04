@@ -26,37 +26,36 @@ import PostAPI from "@api/post/postAPI";
 export async function getServerSideProps({ query }: NextPageContext) {
   const userId = query.userId as string;
 
+  let posts: PreviewToBe[] = [];
+  let contributionCalendar: ContributionCalendar = {
+    totalContributions: -1,
+    weeks: [],
+  };
+
   try {
     const token =
       process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_PUBLIC_ACCESS ?? "";
-    const contributionCalendar = await UserAPI.getContributionData({
+    contributionCalendar = await UserAPI.getContributionData({
       token: token,
       username: userId as string,
       year: new Date().getFullYear(),
     });
 
     const { data } = await PostAPI.getPosts(userId);
-
-    // const contributionCalendar = { totalContributions: -1, weeks: [] }; // test
-    return {
-      props: {
-        userId: userId,
-        posts: data.list,
-        contributionData: contributionCalendar,
-      },
-    };
+    posts = data.list;
   } catch (e: any) {
     console.log("/[userId] Error");
     console.log(e);
     errorHandler(e);
-    return {
-      props: {
-        userId: userId,
-        posts: [],
-        contributionData: { totalContributions: -1, weeks: [] },
-      },
-    };
   }
+
+  return {
+    props: {
+      userId: userId,
+      posts: posts,
+      contributionData: contributionCalendar,
+    },
+  };
 }
 
 const UserMemoir: NextPageWithLayout<

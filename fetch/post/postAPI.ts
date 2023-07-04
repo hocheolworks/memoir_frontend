@@ -38,13 +38,9 @@ const PostAPI = {
     return await req.delete(`/api/posts/${id}`);
   },
 
-  getPosts: async (
-    githubUserName: string,
-    parentCategory?: string,
-    childCategory?: string
-  ) => {
+  getPosts: async (githubUserName: string, postCategoryId?: number) => {
     const { data } = await req.get("/api/posts", {
-      params: { githubUserName, parentCategory, childCategory },
+      params: { githubUserName, postCategoryId },
     });
 
     return {
