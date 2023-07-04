@@ -72,12 +72,6 @@ const UserMemoir: NextPageWithLayout<
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
 
-  useEffect(() => {
-    PostAPI.getPosts(userId)
-      .then((res) => console.log(res))
-      .catch((e) => console.error(e));
-  }, []);
-
   const retryBtnClick = async () => {
     if (!user) {
       return;

@@ -15,6 +15,8 @@ const NavigationBar: FC<NavigationBarProps> = ({
   labels,
   className,
 }) => {
+  const length = labels.length;
+
   return (
     <div className={className}>
       <div className="flex w-full justify-center text-black dark:text-white">
@@ -25,15 +27,18 @@ const NavigationBar: FC<NavigationBarProps> = ({
             onClick={() => {
               setSelectedIndex(index);
             }}
-            className={`w-1/3`}
+            style={{ width: `${100 / length}%` }}
           >
             {value}
           </NavigationBtn>
         ))}
       </div>
       <div
-        className="relative h-0.5 w-1/3 bg-point transition-[left] duration-200"
-        style={{ left: getPercentage(labels.length, selectedIndex) }}
+        className="relative h-0.5 bg-point transition-[left] duration-200"
+        style={{
+          left: getPercentage(labels.length, selectedIndex),
+          width: `${100 / length}%`,
+        }}
       ></div>
     </div>
   );

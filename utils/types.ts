@@ -1,4 +1,5 @@
 import { NextRouter } from "next/router";
+import { CSSProperties } from "react";
 
 export type User = {
   id: number;
@@ -27,6 +28,7 @@ export type TreeNodeParent = TreeNodeChild & {
 export type DefaultProps = {
   className?: string;
   children?: Children;
+  style?: CSSProperties;
 };
 
 export type Category = {

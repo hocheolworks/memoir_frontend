@@ -10,6 +10,7 @@ const NavigationBtn: FC<NavigationBtnProps> = ({
   isSelected,
   children,
   onClick,
+  style,
   className,
 }) => {
   return (
@@ -18,6 +19,7 @@ const NavigationBtn: FC<NavigationBtnProps> = ({
         isSelected ? "text-point" : ""
       } ${className ?? ""}`}
       onClick={onClick}
+      style={style}
     >
       {children}
     </button>
