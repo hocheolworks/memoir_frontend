@@ -6,11 +6,18 @@ import useUser from "@hooks/useUser";
 
 type IntroductionProps = DefaultProps & {
   userId: string;
+  introduction: string | null;
 };
 
-const Introduction: FC<IntroductionProps> = ({ className, userId }) => {
+const Introduction: FC<IntroductionProps> = ({
+  className,
+  userId,
+  introduction,
+}) => {
   const user = useUser();
-  const [introduceText, setIntroduceText] = useState<string | null>(null);
+  const [introduceText, setIntroduceText] = useState<string | null>(
+    introduction
+  );
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);

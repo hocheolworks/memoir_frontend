@@ -65,7 +65,6 @@ const UserMemoir: NextPageWithLayout<
     contributionData: ContributionCalendar;
   } & WithRouterProps
 > = ({ userId, posts, contributionData }) => {
-  const user = useUser();
   const router = useRouter();
   const { tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
@@ -73,10 +72,6 @@ const UserMemoir: NextPageWithLayout<
     useState<ContributionCalendar>(contributionData);
 
   const retryBtnClick = async () => {
-    if (!user) {
-      return;
-    }
-
     try {
       const contributionCalendar = await UserAPI.bypassGetContributionData({
         username: userId,
@@ -142,7 +137,7 @@ const UserMemoir: NextPageWithLayout<
             filterTag={tag as string}
           ></PostList>
         )}
-        {selectedNavIndex === 1 && // 시리즈
+        {/* {selectedNavIndex === 1 && // 시리즈
           (dummySeriesList.length !== 0 ? (
             <div className="flex flex-wrap">
               {dummySeriesList.map((value, index) => (
@@ -156,9 +151,12 @@ const UserMemoir: NextPageWithLayout<
             </div>
           ) : (
             <NoContents type="series" />
-          ))}
-        {selectedNavIndex === 2 && (
-          <Introduction userId={userId as string}></Introduction>
+          ))} */}
+        {selectedNavIndex === 1 && (
+          <Introduction
+            introduction={null}
+            userId={userId as string}
+          ></Introduction>
         )}
       </div>
       <div className="flex-1 text-center">
