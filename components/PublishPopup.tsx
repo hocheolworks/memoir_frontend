@@ -74,7 +74,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
           theme: "colored",
         });
 
-        push(`/${user?.githubUserName}/${data.postTitle}`);
+        push(`/${user?.githubUserName}/${data.id}`);
       }
     } catch (e: any) {
       errorHandler(e);
@@ -100,7 +100,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
           theme: "colored",
         });
 
-        push(`/${user?.githubUserName}/${data.postTitle}`);
+        push(`/${user?.githubUserName}/${data.id}`);
       }
     } catch (e: any) {
       errorHandler(e);

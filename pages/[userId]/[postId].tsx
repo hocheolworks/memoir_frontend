@@ -148,7 +148,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           {isMyPost && (
             <div>
               <span className="cursor-pointer text-neutral-400 hover:text-black dark:hover:text-white">
-                <Link href={`/write?id=${postTitle}`}>수정</Link>
+                <Link href={`/write?id=${id}`}>수정</Link>
               </span>{" "}
               <span
                 className="cursor-pointer text-neutral-400 hover:text-black dark:hover:text-white"
