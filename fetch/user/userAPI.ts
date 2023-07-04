@@ -6,7 +6,7 @@ import {
   GithubSignUpDto,
 } from "./requests";
 import { setToken } from "@token/index";
-import req from "fetch/core";
+import req from "@api/core";
 import { plainToInstance } from "class-transformer";
 import {
   MeResponseBody,

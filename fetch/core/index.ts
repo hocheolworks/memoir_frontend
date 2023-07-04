@@ -20,6 +20,7 @@ const createInstance = (isFileUpload: boolean = false) => {
 
   const instance = axios.create({
     headers: isFileUpload ? fileUploadHeader : headers,
+    baseURL: isBrowser() ? "/api" : process.env.NEXT_PUBLIC_API_BASE_URL,
   });
 
   instance.interceptors.response.use(
