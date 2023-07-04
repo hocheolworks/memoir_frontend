@@ -130,7 +130,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   }, [authorDivRef]);
 
   return (
-    // TODO: 모바일에서 폰트 사이즈 조절
     <>
       <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">

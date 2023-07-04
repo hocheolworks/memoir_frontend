@@ -72,6 +72,12 @@ const UserMemoir: NextPageWithLayout<
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
 
+  useEffect(() => {
+    PostAPI.getPosts(userId)
+      .then((res) => console.log(res))
+      .catch((e) => console.error(e));
+  }, []);
+
   const retryBtnClick = async () => {
     if (!user) {
       return;
@@ -128,7 +134,11 @@ const UserMemoir: NextPageWithLayout<
         <NavigationBar
           selectedIndex={selectedNavIndex}
           setSelectedIndex={setSelectedNavIndex}
-          labels={["글", "시리즈", "소개"]}
+          labels={[
+            "글",
+            // "시리즈",
+            "소개",
+          ]}
           className="my-8 w-full contribution-width:w-96"
         />
         {selectedNavIndex === 0 && (
