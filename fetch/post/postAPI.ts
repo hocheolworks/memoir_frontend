@@ -10,11 +10,11 @@ import {
 
 const PostAPI = {
   saveTempPost: (saveTempPostDto: SaveTempPostDto) => {
-    return req.post("/posts/temp", saveTempPostDto);
+    return req.post("/api/posts/temp", saveTempPostDto);
   },
 
   publishPost: async (publishPostDto: PublishPostDto) => {
-    const { data } = await req.post("/posts", publishPostDto);
+    const { data } = await req.post("/api/posts", publishPostDto);
     return {
       statusCode: data.statusCode,
       data: plainToInstance(PublishPostResponseBody, data.data),
@@ -22,12 +22,12 @@ const PostAPI = {
   },
 
   publishComment: async (publishCommentDto: PublishCommentDto) => {
-    const { data } = await req.post("/comments", publishCommentDto);
+    const { data } = await req.post("/api/comments", publishCommentDto);
     return data;
   },
 
   updatePost: async (id: number, updatePostDto: PublishPostDto) => {
-    const { data } = await req.put(`/posts/${id}`, updatePostDto);
+    const { data } = await req.put(`/api/posts/${id}`, updatePostDto);
     return {
       statusCode: data.statusCode,
       data: plainToInstance(PublishPostResponseBody, data.data),
@@ -35,7 +35,7 @@ const PostAPI = {
   },
 
   deletePost: async (id: number) => {
-    return await req.delete(`/posts/${id}`);
+    return await req.delete(`/api/posts/${id}`);
   },
 
   getPosts: async (
