@@ -267,11 +267,11 @@ const Write: NextPageWithLayout = () => {
               rows={1}
             />
             <hr className="mt-4 mb-5 ml-0.5 w-72 border-2 border-gray-500" />
-            <TagInput
+            {/* <TagInput
               tagList={tagList}
               setTagList={setTagList}
               className="mb-4"
-            />
+            /> */}
           </div>
 
           {/* preview와 다르게 왜 padding을 여기서 지정하지 않고 css로 지정하였나? 

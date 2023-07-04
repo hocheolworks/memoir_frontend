@@ -183,7 +183,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
           )}
           {!isClickedAddToSeries && !isClickedSetCategory && (
             <>
-              <ContainerWithTitle className="w-full" title="공개 설정">
+              {/* <ContainerWithTitle className="w-full" title="공개 설정">
                 <div className="flex">
                   <ToggleBtn
                     isSelected={!isPrivate}
@@ -205,8 +205,8 @@ const PublishPopup: FC<PublishPopupProps> = ({
                     label="비공개"
                   />
                 </div>
-              </ContainerWithTitle>
-              <ContainerWithTitle className="mt-6 w-full" title="URL 설정">
+              </ContainerWithTitle> */}
+              {/* <ContainerWithTitle className="mt-6 w-full" title="URL 설정">
                 <div className="flex">
                   <div className="self-center bg-neutral-200 py-1 pl-2 text-lg text-neutral-500 dark:bg-neutral-700">
                     /{user?.githubUserName}/
@@ -217,7 +217,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                     onChange={(e) => setUrl(e.target.value)}
                   />
                 </div>
-              </ContainerWithTitle>
+              </ContainerWithTitle> */}
 
               <ContainerWithTitle className="mt-6 w-full" title="카테고리 설정">
                 {selectedCategory ? (
@@ -261,7 +261,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                   </button>
                 )}
               </ContainerWithTitle>
-              <ContainerWithTitle className="mt-6 w-full" title="시리즈 설정">
+              {/* <ContainerWithTitle className="mt-6 w-full" title="시리즈 설정">
                 {selectedSeries ? (
                   <div className="relative">
                     <div className="flex w-full rounded-md bg-neutral-200 text-lg dark:bg-neutral-700">
@@ -300,7 +300,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
                     <div>시리즈에 추가</div>
                   </button>
                 )}
-              </ContainerWithTitle>
+              </ContainerWithTitle> */}
               <div className="mt-10 flex w-full flex-1 items-end justify-end">
                 <BottomBtn
                   onClick={() => {
