@@ -9,8 +9,7 @@ import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
 import { uploadImage } from "@api/media";
 import useUser from "@hooks/useUser";
-import { useDispatch } from "react-redux";
-import { hideLoading, showLoading } from "@redux/modules/configSlice";
+import useLoading from "@hooks/useLoading";
 
 function getSurroundingWord(text: string, position: number): TextRange {
   if (!text) throw Error("Argument 'text' should be truthy");
@@ -52,7 +51,7 @@ function selectWord({ text, selection }: TextSection): TextRange {
 export const ImageUploadCommand = (): commands.ICommand => {
   const { theme } = useTheme();
   const user = useUser();
-  const dispatch = useDispatch();
+  const { nowLoading, nowLoaded } = useLoading();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -80,7 +79,7 @@ export const ImageUploadCommand = (): commands.ICommand => {
           }
 
           try {
-            dispatch(showLoading({ text: "업로드 중..", type: "scale" }));
+            nowLoading({ text: "업로드 중..", type: "scale" });
             const { cdnUrl, path } = await uploadImage({
               images: file,
               folder: `${user?.githubUserName}/images/`,
@@ -93,7 +92,7 @@ export const ImageUploadCommand = (): commands.ICommand => {
             errorHandler(e);
           }
 
-          dispatch(hideLoading());
+          nowLoaded();
 
           e.target.value = "";
         }

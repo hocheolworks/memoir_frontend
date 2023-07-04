@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { cls, formatAbsolute, titleToUrl } from "@utils/functions";
 import useUser from "@hooks/useUser";
+import useLoading from "@hooks/useLoading";
 
 type PublishPopupProps = {
   id?: number;
@@ -42,6 +43,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const iconSize = 22;
 
   const user = useUser();
+  const { nowLoading, nowLoaded } = useLoading();
 
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [url, setUrl] = useState<string>(titleToUrl(title));
@@ -65,6 +67,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
       childCategory: selectedCategory?.name,
     };
 
+    nowLoading({ type: "scale", text: "글 싸는 중.." });
     try {
       const { statusCode, data } = await PostAPI.publishPost(body);
 
@@ -79,6 +82,8 @@ const PublishPopup: FC<PublishPopupProps> = ({
     } catch (e: any) {
       errorHandler(e);
     }
+
+    nowLoaded();
   }, [user, title, editContent, selectedCategory, push]);
 
   const onClickUpdate = useCallback(async () => {
@@ -90,21 +95,22 @@ const PublishPopup: FC<PublishPopupProps> = ({
       parentCategory: selectedCategory?.parentName ?? "",
       childCategory: selectedCategory?.name,
     };
-
+    nowLoading({ type: "scale", text: "수정 중.." });
     try {
-      const { statusCode, data } = await PostAPI.updatePost(id, body);
+      const response = await PostAPI.updatePost(id, body);
 
-      if (statusCode === 204) {
-        toast("수정 완료", {
-          type: "success",
-          theme: "colored",
-        });
+      console.log(response);
 
-        push(`/${user?.githubUserName}/${data.id}`);
-      }
+      toast("수정 완료", {
+        type: "success",
+        theme: "colored",
+      });
+
+      push(`/${user?.githubUserName}/${id}`);
     } catch (e: any) {
       errorHandler(e);
     }
+    nowLoaded();
   }, [id, user, title, editContent, selectedCategory, push]);
 
   const getOut = useCallback(() => {

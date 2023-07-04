@@ -7,12 +7,14 @@ type BottomBarPropType = {
   className?: string;
   onClickSaveTemp: () => void;
   onClickPublish: () => void;
+  mode: "publish" | "update";
 };
 
 const BottomBar = ({
   className,
   onClickSaveTemp,
   onClickPublish,
+  mode,
 }: BottomBarPropType) => {
   const router = useRouter();
 
@@ -36,7 +38,7 @@ const BottomBar = ({
       <div className="flex">
         {/* <BottomBtn onClick={onClickSaveTemp}>임시저장</BottomBtn> */}
         <BottomBtn onClick={onClickPublish} className="ml-1" isPoint={true}>
-          발행하기
+          {mode === "publish" ? "발행하기" : "수정하기"}
         </BottomBtn>
       </div>
     </div>

@@ -295,6 +295,7 @@ const Write: NextPageWithLayout = () => {
           />
 
           <BottomBar
+            mode={mode}
             onClickSaveTemp={onClickSaveTemp}
             onClickPublish={onClickPublishPopup}
           />

@@ -2,8 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { RootState } from "@redux/store/store";
 
-type LoadingInfo = {
-  type: "scale" | "grid";
+export type LoadingType = "scale" | "grid";
+
+export type LoadingInfo = {
+  type: LoadingType;
   text: string;
 };
 
