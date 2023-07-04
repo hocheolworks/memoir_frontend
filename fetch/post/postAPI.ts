@@ -43,7 +43,7 @@ const PostAPI = {
     parentCategory?: string,
     childCategory?: string
   ) => {
-    const { data } = await req.get("/posts", {
+    const { data } = await req.get("/api/posts", {
       params: { githubUserName, parentCategory, childCategory },
     });
 
@@ -53,22 +53,11 @@ const PostAPI = {
     };
   },
   getPostById: async (postId: number) => {
-    const { data } = await req.get(`/posts/${postId}`);
+    const { data } = await req.get(`/api/posts/${postId}`);
 
     return {
       statusCode: data.statusCode as number,
       data: plainToInstance(GetPostByIdResponseBody, data.data),
-    };
-  },
-
-  uploadImage: async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const { data } = await req.post("/image", formData);
-    return {
-      statusCode: data.statusCode,
-      data: plainToInstance(UploadImageResponseBody, data.data),
     };
   },
 };
