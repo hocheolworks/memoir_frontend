@@ -13,6 +13,7 @@ import {
   SignInResponseBody,
   SignUpResponseBody,
 } from "./responses";
+import dayjs from "dayjs";
 
 const UserAPI = {
   signIn: async (githubCodeDto: GithubCodeDto) => {
@@ -55,9 +56,18 @@ const UserAPI = {
     username,
     year,
   }: GithubGetContributionDto) => {
+    const now = dayjs();
+    const lastYear = now.subtract(1, "year").add(1, "day");
+
+    const from_to_date = year
+      ? `from: "${year}-01-01T00:00:00" , to:"${year}-12-31T23:59:59"`
+      : `from: "${lastYear.format("YYYY-MM-DD")}T00:00:00" , to: "${now.format(
+          "YYYY-MM-DD"
+        )}T23:59:59"`;
+
     const query = `query {
       user(login: "${username}") {
-        contributionsCollection(from: "${year}-01-01T00:00:00" , to:"${year}-12-31T23:59:59") {
+        contributionsCollection(${from_to_date}) {
             contributionCalendar {
                 totalContributions
                 weeks {

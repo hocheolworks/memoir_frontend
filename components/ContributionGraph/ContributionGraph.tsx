@@ -1,10 +1,11 @@
-import { FC, Fragment, useCallback, useRef, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useRef, useState } from "react";
 import Rect from "./Rect";
 import CalenderLabel from "./CalenderLabel";
 import { weekDayLabels } from "@utils/constants";
 import { ContributionCalendar, ContributionTooltipData } from "@utils/types";
 import { isSameMonth, parseLevel } from "@utils/functions";
 import ContributionTooltip from "./ContributionTooltip";
+import dayjs from "dayjs";
 
 type ContributionGraphProps = {
   width: number;
@@ -17,12 +18,11 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
   height,
   contributionData,
 }) => {
-  let prevMonthNumber = 0; // month label을 동적으로 표시하기 위한 플래그
+  let prevMonthNumber = dayjs(
+    contributionData.weeks[0].contributionDays[0].date
+  ).get("month"); // month label을 동적으로 표시하기 위한 플래그
   const [tooltipData, setTooltipData] = useState<ContributionTooltipData>();
   const [isHover, setIsHover] = useState<boolean>(false);
-  const [selectedYear, setSelectedYear] = useState<number>(
-    new Date().getFullYear()
-  );
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -48,13 +48,12 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
   );
 
   return (
-    <div className="overflow-x-hidden" ref={containerRef}>
+    <div ref={containerRef}>
       <p className="mb-4 pl-1 text-left text-sm text-black dark:text-white">
-        {contributionData?.totalContributions} contributions in{" "}
-        {selectedYear ?? "the last year"}
+        {contributionData?.totalContributions} contributions
       </p>
-      <div className="flex flex-col items-end contribution-width:items-center">
-        <svg width={width} height={height} className="overflow-x-hidden">
+      <div className="block flex-col items-end overflow-auto contribution-width:flex contribution-width:items-center">
+        <svg width={width} height={height}>
           <g transform="translate(15, 20)">
             {contributionData?.weeks.map((week, weekIdx) => {
               const days = week.contributionDays;
@@ -69,6 +68,10 @@ const ContributionGraph: FC<ContributionGraphProps> = ({
 
               if (prevMonthNumber === monthNumber) {
                 prevMonthNumber++;
+
+                if (prevMonthNumber === 12) {
+                  prevMonthNumber = 0;
+                }
               }
               return (
                 <Fragment key={`fragment${weekIdx}`}>

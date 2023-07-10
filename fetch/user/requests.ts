@@ -11,5 +11,5 @@ export type GithubSignUpDto = {
 export type GithubGetContributionDto = {
   token: string;
   username: string;
-  year: number;
+  year?: number;
 };

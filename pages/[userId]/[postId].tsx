@@ -28,6 +28,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
 import moment from "moment";
+import useLoading from "@hooks/useLoading";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -89,15 +90,17 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const user = useUser();
   const { theme } = useTheme();
   const { push } = useRouter();
+  const { nowLoading, nowLoaded } = useLoading();
   const authorDivRef = useRef<HTMLDivElement>(null);
   const anchorNavRootRef = useRef<HTMLDivElement>(null);
   const [anchorNavIsFixed, setAnchorNavIsFixed] = useState(false);
 
   const deleteThisPost = async () => {
     try {
-      const { data } = await PostAPI.deletePost(id);
+      nowLoading({ type: "scale", text: "삭제 중.." });
+      const { status } = await PostAPI.deletePost(id);
 
-      if (data.statusCode === "204") {
+      if (status === 204) {
         toast("게시글 삭제가 완료되었습니다.", {
           type: "success",
           theme: theme === "dark" ? "dark" : "light",
@@ -108,6 +111,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
     } catch (e: any) {
       errorHandler(e);
     }
+
+    nowLoaded();
   };
 
   const isMyPost = user?.githubUserName === author;
