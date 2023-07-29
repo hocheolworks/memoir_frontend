@@ -23,4 +23,7 @@ export type PublishPostDto = {
 
   //글의 소분류
   childCategory: string;
+
+  // 썸네일 이미지 주소
+  postThumbnailImageUrl?: string;
 };

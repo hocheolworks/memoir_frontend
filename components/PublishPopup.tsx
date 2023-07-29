@@ -2,9 +2,9 @@ import React, { FC, useCallback, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
 import { BiEdit } from "@react-icons/all-files/bi/BiEdit";
 
-import { MdLockOutline } from "@react-icons/all-files/md/MdLockOutline";
-import { MdPublic } from "@react-icons/all-files/md/MdPublic";
-import { MdPlaylistAdd } from "@react-icons/all-files/md/MdPlaylistAdd";
+// import { MdLockOutline } from "@react-icons/all-files/md/MdLockOutline";
+// import { MdPublic } from "@react-icons/all-files/md/MdPublic";
+// import { MdPlaylistAdd } from "@react-icons/all-files/md/MdPlaylistAdd";
 
 import { VscListTree } from "@react-icons/all-files/vsc/VscListTree";
 import { IoImageOutline } from "@react-icons/all-files/io5/IoImageOutline";
@@ -18,9 +18,14 @@ import { PublishPostDto } from "@api/post/requests";
 import { errorHandler } from "@api/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { cls, formatAbsolute, titleToUrl } from "@utils/functions";
+import {
+  cls,
+  formatAbsolute,
+  extractFirstImageSrcFromMarkdown,
+} from "@utils/functions";
 import useUser from "@hooks/useUser";
 import useLoading from "@hooks/useLoading";
+import Image from "next/image";
 
 type PublishPopupProps = {
   id?: number;
@@ -45,8 +50,11 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const user = useUser();
   const { nowLoading, nowLoaded } = useLoading();
 
-  const [isPrivate, setIsPrivate] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>(titleToUrl(title));
+  // const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  // const [url, setUrl] = useState<string>(titleToUrl(title));
+  const [firstImageSrc, _] = useState<string>(
+    extractFirstImageSrcFromMarkdown(editContent)
+  );
   const [abstract, setAbstract] = useState<string>(formatAbsolute(editContent));
   const [isCancel, setIsCancel] = useState<boolean>(false);
   const [isClickedAddToSeries, setIsClickedAddToSeries] =
@@ -65,6 +73,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
       postBody: editContent,
       parentCategory: selectedCategory?.parentName ?? "",
       childCategory: selectedCategory?.name,
+      postThumbnailImageUrl: firstImageSrc || undefined,
     };
 
     nowLoading({ type: "scale", text: "글 싸는 중.." });
@@ -94,19 +103,18 @@ const PublishPopup: FC<PublishPopupProps> = ({
       postBody: editContent,
       parentCategory: selectedCategory?.parentName ?? "",
       childCategory: selectedCategory?.name,
+      postThumbnailImageUrl: firstImageSrc || undefined,
     };
     nowLoading({ type: "scale", text: "수정 중.." });
     try {
-      const response = await PostAPI.updatePost(id, body);
-
-      console.log(response);
+      await PostAPI.updatePost(id, body);
 
       toast("수정 완료", {
         type: "success",
         theme: "colored",
       });
 
-      push(`/${user?.githubUserName}/${id}`);
+      push(`/${user?.githubUserName}/${id}`, {});
     } catch (e: any) {
       errorHandler(e);
     }
@@ -133,11 +141,25 @@ const PublishPopup: FC<PublishPopupProps> = ({
     >
       <div className="mt-6 flex min-h-[494px] w-full flex-col px-6 zero:-mt-12 zero:w-[704px] zero:flex-row zero:px-0 lg:w-[768px]">
         <ContainerWithTitle className="flex-1" title="미리보기">
-          <div className="flex aspect-video w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
-            <IoImageOutline size={100}></IoImageOutline>
-            <button className="w-32 rounded-[0.25rem] bg-neutral-300 py-1 text-point hover:brightness-90 dark:bg-neutral-800">
-              썸네일 업로드
-            </button>
+          <div className="relative flex aspect-video w-full flex-col items-center justify-center rounded-sm bg-neutral-200 py-12 dark:bg-neutral-700">
+            {firstImageSrc ? (
+              <>
+                <Image
+                  className="object-contain"
+                  alt="썸네일 이미지"
+                  src={firstImageSrc}
+                  fill={true}
+                />
+              </>
+            ) : (
+              <>
+                <IoImageOutline size={100}></IoImageOutline>
+                <p>썸네일 없음</p>
+                {/* <button className="w-32 rounded-[0.25rem] bg-neutral-300 py-1 text-point hover:brightness-90 dark:bg-neutral-800">
+                  썸네일 업로드
+                </button> */}
+              </>
+            )}
           </div>
           <div className="mt-8 w-full">
             <h4 className="text-left text-lg font-medium">{title ?? ""}</h4>

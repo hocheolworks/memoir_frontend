@@ -168,6 +168,27 @@ export function isBetween(
   return startNumber <= target && target <= endNumber;
 }
 
+export function extractFirstImageSrcFromMarkdown(markdown: string): string {
+  let src = "";
+
+  const regex = /!\[(.*)\]\((.*)\)/;
+
+  const matchString = markdown.match(regex)?.[0] || "";
+
+  if (matchString) {
+    const bracketOpenIndex = matchString.indexOf("(");
+    const bracketCloseIndex = matchString.indexOf(")");
+
+    if (bracketOpenIndex === -1 || bracketCloseIndex === -1) {
+      return "";
+    }
+
+    return matchString.slice(bracketOpenIndex + 1, bracketCloseIndex);
+  } else {
+    return "";
+  }
+}
+
 export function extractAnchorFromMarkdown(markdown: string): string[] {
   const regex = /^#{1,6} .+/gm;
 
