@@ -61,6 +61,7 @@ const CategoryTreeNode: FC<CategoryTreeNodeProps> = ({
             onClick={() => {
               setIsExpanded(!isExpanded);
             }}
+            tabIndex={-1}
           >
             <MdExpandMore
               size={20}

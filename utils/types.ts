@@ -1,6 +1,13 @@
 import { NextRouter } from "next/router";
 import { CSSProperties } from "react";
 
+export type ApiResponseDefaultType = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+};
+
 export type User = {
   id: number;
   createdAt: string;
@@ -13,11 +20,18 @@ export type User = {
   description: string;
 };
 
+export type Category = ApiResponseDefaultType & {
+  categoryName: string;
+  user: User;
+  parentCategory?: Category | null;
+};
+
 export type Children = JSX.Element | JSX.Element[] | string | string[];
 
 export type TreeNodeChild = {
   id: number;
   name: string;
+  parentId?: number;
   parentName?: string;
 };
 
@@ -29,13 +43,6 @@ export type DefaultProps = {
   className?: string;
   children?: Children;
   style?: CSSProperties;
-};
-
-export type Category = {
-  id: number;
-  isParent: boolean;
-  depth1: string;
-  depth2: string;
 };
 
 export type IsAllExpandedWrapper = {

@@ -1,5 +1,11 @@
 import { monthLabels } from "./constants";
-import { ContributionLevel, ContributionTile } from "./types";
+import {
+  Category,
+  ContributionLevel,
+  ContributionTile,
+  TreeNodeChild,
+  TreeNodeParent,
+} from "./types";
 import CryptoJS from "crypto-js";
 
 export function ValidateEmail(mail: string): boolean {
@@ -256,4 +262,31 @@ export function isImageFile(file: File): boolean {
 
 export function isBrowser() {
   return typeof window !== "undefined";
+}
+
+export function makeTreeFromCategories(categories: Category[]) {
+  const parentList: TreeNodeParent[] = categories
+    .filter((c) => !c.parentCategory)
+    .map((c) => ({
+      id: c.id,
+      name: c.categoryName,
+      children: [],
+    }));
+
+  categories.forEach((category) => {
+    if (category.parentCategory) {
+      const parent = parentList.find(
+        (p) => p.id === category.parentCategory?.id
+      );
+
+      parent?.children?.push({
+        id: category.id,
+        name: category.categoryName,
+        parentId: category.parentCategory.id,
+        parentName: category.parentCategory.categoryName,
+      });
+    }
+  });
+
+  return parentList;
 }

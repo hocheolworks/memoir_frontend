@@ -33,6 +33,7 @@ const CategoryTree: FC<CategoryTreeProps> = ({
           onClick={() => {
             setIsAllExpanded({ value: true });
           }}
+          tabIndex={-1}
         >
           <VscExpandAll size={18} />
         </button>
@@ -41,6 +42,7 @@ const CategoryTree: FC<CategoryTreeProps> = ({
           onClick={() => {
             setIsAllExpanded({ value: false });
           }}
+          tabIndex={-1}
         >
           <VscCollapseAll size={18} />
         </button>

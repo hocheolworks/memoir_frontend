@@ -1,9 +1,17 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { dummyTree } from "@utils/dummy";
 import { DefaultProps, TreeNodeChild, TreeNodeParent } from "@utils/types";
 import BottomBtn from "./BottomBtn";
 import CategoryTree from "./CategoryTree";
 import ContainerWithTitle from "./ContainerWithTitle";
+import useUser from "@hooks/useUser";
+import {
+  addPostCategory,
+  deletePostCategory,
+  getPostCategories,
+} from "@api/post-category";
+import { errorHandler } from "@api/error";
+import { makeTreeFromCategories } from "@utils/functions";
 
 type SmallBtnProps = DefaultProps & {
   onClick: () => void;
@@ -50,6 +58,8 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
   selectedCategory,
   setSelectedCategory,
 }) => {
+  const user = useUser();
+
   const [clickedCategory, setClickedCategory] = useState<
     TreeNodeParent | TreeNodeChild | null
   >(selectedCategory);
@@ -59,79 +69,122 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
 
   const [newCategory, setNewCategory] = useState<string>("");
 
-  const [categoryTree, setCategoryTree] = useState<TreeNodeParent[]>(dummyTree);
+  const [categoryTree, setCategoryTree] = useState<TreeNodeParent[]>([]);
 
-  const onClickAddCategory = () => {
+  const getCategories = useCallback(async () => {
+    if (user) {
+      try {
+        const { data } = await getPostCategories(user.githubUserName);
+
+        setCategoryTree(makeTreeFromCategories(data));
+      } catch (e: any) {
+        errorHandler(e);
+      }
+    }
+  }, [user, clickedCategory, newCategory]);
+
+  const onClickAddCategory = async () => {
     if (!clickedCategory || !newCategory) return;
 
-    // 현재 선택된 카테고리가 ~일 경우
-    if (clickedCategory.id === -1) {
-      // 전체
-      setCategoryTree([...categoryTree, { id: -11, name: newCategory }]);
-    } else if (clickedCategory.parentName === undefined) {
-      // 부모
-      let flag = false;
-      const newCategoryTree = [...categoryTree];
-      for (const node of newCategoryTree) {
-        if (node.id === clickedCategory.id) {
-          if (node.children) {
-            node.children.push({
-              id: -11,
-              name: newCategory,
-              parentName: clickedCategory.name,
-            });
-          } else {
-            node.children = [{ id: -11, name: newCategory }];
-          }
+    let parentId = undefined;
 
-          flag = true;
-          break;
-        }
-        if (flag) setCategoryTree(newCategoryTree);
-      }
-    } else {
-      // 자식
+    if (clickedCategory.id === -1) {
+      // 선택된 카테고리가 0뎁스인 경우
+      parentId = undefined;
+    } else if (!clickedCategory.parentId) {
+      // 선택된 카테고리가 1뎁스인 경우
+      parentId = clickedCategory.id;
     }
+
+    try {
+      const { data } = await addPostCategory({
+        categoryName: newCategory,
+        parentCategoryId: parentId,
+      });
+
+      await getCategories();
+    } catch (e: any) {
+      errorHandler(e);
+    }
+
+    // // 현재 선택된 카테고리가 ~일 경우
+    // if (clickedCategory.id === -1) {
+    //   // 전체
+    //   setCategoryTree([...categoryTree, { id: -11, name: newCategory }]);
+    // } else if (clickedCategory.parentName === undefined) {
+    //   // 부모
+    //   let flag = false;
+    //   const newCategoryTree = [...categoryTree];
+    //   for (const node of newCategoryTree) {
+    //     if (node.id === clickedCategory.id) {
+    //       if (node.children) {
+    //         node.children.push({
+    //           id: -11,
+    //           name: newCategory,
+    //           parentName: clickedCategory.name,
+    //         });
+    //       } else {
+    //         node.children = [{ id: -11, name: newCategory }];
+    //       }
+
+    //       flag = true;
+    //       break;
+    //     }
+    //     if (flag) setCategoryTree(newCategoryTree);
+    //   }
+    // } else {
+    //   // 자식
+    // }
 
     setNewCategory("");
   };
 
-  const onClickDeleteCategory = () => {
+  const onClickDeleteCategory = async () => {
     if (!clickedCategory) return;
+    try {
+      await deletePostCategory(clickedCategory.id);
 
-    if (clickedCategory.id !== -11) return;
-
-    if (!clickedCategory.parentName) {
-      // 선택된 카테고리가 부모노드인 경우
-      setClickedCategory({ id: -1, name: "전체" });
-      setCategoryTree(
-        categoryTree.filter(
-          (value) =>
-            value.id !== clickedCategory.id ||
-            value.name !== clickedCategory.name
-        )
-      );
-    } else {
-      // 선택된 카테고리가 자식노드인 경우
-      const newCategoryTree = [...categoryTree];
-      let parentNode = null;
-      for (const node of newCategoryTree) {
-        if (node.name === clickedCategory.parentName) {
-          parentNode = node;
-          if (node.children) {
-            node.children = node.children.filter(
-              (value) =>
-                value.id !== clickedCategory.id ||
-                value.name !== clickedCategory.name ||
-                value.parentName !== clickedCategory.parentName
-            );
-          }
-        }
-      }
-      setClickedCategory(parentNode);
-      setCategoryTree(newCategoryTree);
+      await getCategories();
+    } catch (e: any) {
+      errorHandler(e);
     }
+
+    // if (clickedCategory.id !== -11) return;
+
+    // if (!clickedCategory.parentName) {
+    //   // 선택된 카테고리가 부모노드인 경우
+    //   setClickedCategory({ id: -1, name: "전체" });
+    //   setCategoryTree(
+    //     categoryTree.filter(
+    //       (value) =>
+    //         value.id !== clickedCategory.id ||
+    //         value.name !== clickedCategory.name
+    //     )
+    //   );
+    // } else {
+    //   // 선택된 카테고리가 자식노드인 경우
+    //   const newCategoryTree = [...categoryTree];
+    //   let parentNode = null;
+    //   for (const node of newCategoryTree) {
+    //     if (node.name === clickedCategory.parentName) {
+    //       parentNode = node;
+    //       if (node.children) {
+    //         node.children = node.children.filter(
+    //           (value) =>
+    //             value.id !== clickedCategory.id ||
+    //             value.name !== clickedCategory.name ||
+    //             value.parentName !== clickedCategory.parentName
+    //         );
+    //       }
+    //     }
+    //   }
+    //   setClickedCategory(parentNode);
+    //   setCategoryTree(newCategoryTree);
   };
+
+  useEffect(() => {
+    getCategories();
+  }, [user]);
 
   return (
     <ContainerWithTitle className={className} title="카테고리 설정">
@@ -185,7 +238,7 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
                       onClickDeleteCategory();
                     }}
                     isDisabled={
-                      clickedCategory === null || clickedCategory?.id !== -11
+                      clickedCategory === null || clickedCategory?.id === -1
                     }
                   >
                     삭제
