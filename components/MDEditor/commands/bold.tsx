@@ -7,6 +7,7 @@ export const getBoldWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.bold,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg role="img" width={width} height={height} viewBox="0 0 384 512">
         <path

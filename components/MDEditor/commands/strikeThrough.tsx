@@ -7,6 +7,7 @@ export const getStrikethroughWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.strikethrough,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg
         data-name="strikethrough"

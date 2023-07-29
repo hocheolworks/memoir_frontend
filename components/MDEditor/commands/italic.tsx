@@ -7,6 +7,7 @@ export const getItalicWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.italic,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg
         data-name="italic"

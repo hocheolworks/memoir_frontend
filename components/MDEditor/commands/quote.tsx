@@ -7,6 +7,7 @@ export const getQuoteWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.quote,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg width={width} height={height} viewBox="0 0 520 520">
         <path

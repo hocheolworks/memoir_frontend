@@ -7,6 +7,7 @@ export const getCodeWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.code,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg width={width} height={height} role="img" viewBox="0 0 640 512">
         <path
@@ -24,6 +25,7 @@ export const getCodeBlockWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.codeBlock,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg width={width} height={height} role="img" viewBox="0 0 156 156">
         <path

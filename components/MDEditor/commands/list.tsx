@@ -6,6 +6,7 @@ export const getUnorderedListCommandWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.unorderedListCommand,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg
         data-name="unordered-list"
@@ -28,6 +29,7 @@ export const getOrderedListCommandWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.orderedListCommand,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg
         data-name="ordered-list"
@@ -51,6 +53,7 @@ export const getCheckedListCommandWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.checkedListCommand,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg
         data-name="checked-list"

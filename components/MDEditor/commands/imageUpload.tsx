@@ -61,6 +61,7 @@ export const ImageUploadCommand = (): commands.ICommand => {
     name: "upload-image-file",
     keyCommand: "upload-image-file",
     value: "![image]({{text}})",
+    buttonProps: { tabIndex: -1 },
     render: (command, disabled, executeCommand) => {
       const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (
         e

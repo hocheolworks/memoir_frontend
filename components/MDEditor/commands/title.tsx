@@ -27,6 +27,7 @@ export const titleN = (N: number): ICommand => {
   return {
     name: "title" + N,
     keyCommand: "title" + N,
+    buttonProps: { tabIndex: -1 },
     render: (command, disabled, executeCommand) => {
       return (
         <button

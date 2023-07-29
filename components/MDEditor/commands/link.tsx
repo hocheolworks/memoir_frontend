@@ -7,6 +7,7 @@ export const getLinkWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.link,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg
         data-name="italic"

@@ -7,6 +7,7 @@ export const getHrWithSize = (
 ): commands.ICommand => {
   return {
     ...commands.hr,
+    buttonProps: { tabIndex: -1 },
     icon: (
       <svg width={width} height={height} viewBox="0 0 175 175">
         <path

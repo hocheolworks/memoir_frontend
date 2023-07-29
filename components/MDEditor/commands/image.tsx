@@ -10,6 +10,7 @@ export const ImageCommand = (): commands.ICommand => {
     buttonProps: {
       "aria-label": "Add image (ctrl + k)",
       title: "Add image (ctrl + k)",
+      tabIndex: -1,
     },
     render: (command, disabled, executeCommand) => (
       <button

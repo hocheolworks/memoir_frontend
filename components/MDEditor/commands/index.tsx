@@ -26,7 +26,7 @@ const getCommands: (size?: {
   commands.group([...[1, 2, 3, 4, 5, 6].map((val) => titleN(val))], {
     name: "title",
     groupName: "title",
-    buttonProps: { "aria-label": "Insert title" },
+    buttonProps: { "aria-label": "Insert title", tabIndex: -1 },
     icon: (
       <svg width={size?.width} height={size?.height} viewBox="0 0 520 520">
         <path
@@ -44,7 +44,7 @@ const getCommands: (size?: {
   commands.group([ImageCommand(), ImageUploadCommand()], {
     name: "image",
     groupName: "image",
-    buttonProps: { "aria-label": "Add Image" },
+    buttonProps: { "aria-label": "Add Image", tabIndex: -1 },
     icon: (
       <svg width={size?.width} height={size?.height} viewBox="0 0 20 20">
         <path
