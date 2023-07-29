@@ -3,6 +3,7 @@ import ContributionGraph from "@components/ContributionGraph/ContributionGraph";
 import {
   ContributionCalendar,
   PreviewToBe,
+  TreeNodeParent,
   WithRouterProps,
 } from "@utils/types";
 import UserAPI from "@api/user/userAPI";
@@ -10,7 +11,6 @@ import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next/types";
 import NavigationBar from "@components/NavigationBar";
-import { dummySeriesList, dummyTagList, dummyTree } from "@utils/dummy";
 import Series from "@components/Series";
 import NoContents from "@components/NoContents";
 import Introduction from "@components/Introduction";
@@ -22,6 +22,8 @@ import { NextPageWithLayout } from "@pages/_app";
 import GlobalLayout from "@components/GlobalLayout";
 import useUser from "@hooks/useUser";
 import PostAPI from "@api/post/postAPI";
+import { getPostCategories } from "@api/post-category";
+import { makeTreeFromCategories } from "@utils/functions";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const userId = query.userId as string;
@@ -67,6 +69,7 @@ const UserMemoir: NextPageWithLayout<
   const router = useRouter();
   const { tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
+  const [categories, setCategories] = useState<TreeNodeParent[]>([]);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
 
@@ -83,12 +86,26 @@ const UserMemoir: NextPageWithLayout<
     }
   };
 
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      try {
+        const { data } = await getPostCategories(userId);
+
+        setCategories(makeTreeFromCategories(data));
+      } catch (e: any) {
+        errorHandler(e);
+      }
+    };
+
+    asyncWrapper();
+  }, [userId]);
+
   return (
     <div className="mb-14 flex h-full w-full items-start justify-center">
       <div className="flex flex-1 flex-col items-end bg-red-100">
         {selectedNavIndex === 0 && (
           <div className="absolute mt-[465px] mr-4 hidden w-[184px] flex-col pb-24 left-area-visible:flex">
-            <CategoryTreeNav tree={dummyTree}></CategoryTreeNav>
+            <CategoryTreeNav tree={categories}></CategoryTreeNav>
             {/* <TagList className="mt-32" tagList={dummyTagList} /> */}
           </div>
         )}

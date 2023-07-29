@@ -33,7 +33,7 @@ const PreviewHorizontal: FC<PreviewHorizontalProps> = ({
               src={postThumbnailImageUrl}
               fill
               alt="thumbnail"
-              className="cursor-pointer object-cover"
+              className="cursor-pointer object-contain"
             />
           </div>
         </Link>
