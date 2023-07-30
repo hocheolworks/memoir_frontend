@@ -33,6 +33,7 @@ type PublishPopupProps = {
   isPopup: boolean;
   title: string;
   editContent: string;
+  postCategory: { id: number; name: string };
   Popdown: () => void;
 };
 
@@ -42,6 +43,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   isPopup,
   title,
   editContent,
+  postCategory,
   Popdown,
 }) => {
   const { push } = useRouter();
@@ -65,14 +67,14 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const [selectedSeries, setSelectedSeries] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<
     TreeNodeParent | TreeNodeChild
-  >({ id: -1, name: "전체" });
+  >(postCategory);
 
   const onClickPublish = useCallback(async () => {
     const body: PublishPostDto = {
       postTitle: title,
       postBody: editContent,
-      parentCategory: selectedCategory?.parentName ?? "",
-      childCategory: selectedCategory?.name,
+      postCategoryId:
+        selectedCategory.id === -1 ? undefined : selectedCategory.id,
       postThumbnailImageUrl: firstImageSrc || undefined,
     };
 
@@ -101,8 +103,8 @@ const PublishPopup: FC<PublishPopupProps> = ({
     const body: PublishPostDto = {
       postTitle: title,
       postBody: editContent,
-      parentCategory: selectedCategory?.parentName ?? "",
-      childCategory: selectedCategory?.name,
+      postCategoryId:
+        selectedCategory.id === -1 ? undefined : selectedCategory.id,
       postThumbnailImageUrl: firstImageSrc || undefined,
     };
     nowLoading({ type: "scale", text: "수정 중.." });

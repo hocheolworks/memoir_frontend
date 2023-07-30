@@ -73,6 +73,10 @@ const Write: NextPageWithLayout = () => {
 
   const [title, setTitle] = useState<string>("");
   const [editContent, setEditContent] = useState<string | undefined>("");
+  const [postCategory, setPostCategory] = useState<{
+    id: number;
+    name: string;
+  }>({ id: -1, name: "전체" });
   const [tagList, setTagList] = useState<Array<string>>([]);
   const [isPublishPopupOpen, setIsPublishPopupOpen] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -221,10 +225,17 @@ const Write: NextPageWithLayout = () => {
     (async () => {
       if (id && id !== -1) {
         const { data } = await PostAPI.getPostById(id);
-        const { postTitle, postBody } = data;
+        const { postTitle, postBody, postCategory } = data;
 
         setTitle(postTitle);
         setEditContent(postBody);
+
+        if (postCategory) {
+          setPostCategory({
+            id: postCategory.id,
+            name: postCategory.categoryName,
+          });
+        }
       }
     })();
   }, [query, id]);
@@ -328,6 +339,7 @@ const Write: NextPageWithLayout = () => {
           isPopup={isPublishPopupOpen}
           title={title}
           editContent={editContent ?? ""}
+          postCategory={postCategory}
           Popdown={() => {
             setIsPublishPopupOpen(false);
           }}

@@ -3,19 +3,21 @@ import { FC, useState } from "react";
 import { DefaultProps, TreeNodeParent } from "@utils/types";
 import CategoryIndentSvg from "./CategoryIndentSvg";
 import { useTheme } from "next-themes";
-import LinkHoverUnderline from "./LinkHoverUnderline";
-import { useRouter } from "next/router";
+import ButtonHoverUnderline from "./ButtonHoverUnderline";
 
 type CategoryTreeNavProps = DefaultProps & {
   tree: TreeNodeParent[];
+  selectedCategoryId: number;
+  setSelectedCategoryId: (id: number) => void;
 };
 
-const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
+const CategoryTreeNav: FC<CategoryTreeNavProps> = ({
+  className,
+  tree,
+  selectedCategoryId,
+  setSelectedCategoryId,
+}) => {
   const { theme } = useTheme();
-
-  const router = useRouter();
-  const { depth1, depth2, userId } = router.query;
-  const pageUrl = `/${userId}`;
 
   return (
     <div className={className}>
@@ -23,13 +25,14 @@ const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
       <hr className="my-2 border-neutral-500" />
       <ul className="text-sm">
         <li className="mb-2">
-          <LinkHoverUnderline
-            href={pageUrl}
-            as={pageUrl}
-            isSelected={!depth1 && !depth2}
+          <ButtonHoverUnderline
+            onClick={() => {
+              setSelectedCategoryId(-1);
+            }}
+            isSelected={selectedCategoryId === -1}
           >
             전체보기
-          </LinkHoverUnderline>
+          </ButtonHoverUnderline>
         </li>
         {tree.map((value, parentIndex) => {
           const { name, children } = value;
@@ -37,16 +40,14 @@ const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
           return (
             <React.Fragment key={`${name}_${parentIndex}`}>
               <li className="py-0.5">
-                <LinkHoverUnderline
-                  href={{
-                    pathname: pageUrl,
-                    query: { depth1: name },
+                <ButtonHoverUnderline
+                  onClick={() => {
+                    setSelectedCategoryId(value.id);
                   }}
-                  as={pageUrl}
-                  isSelected={depth1 === name && !depth2}
+                  isSelected={selectedCategoryId === value.id}
                 >
                   {name}
-                </LinkHoverUnderline>
+                </ButtonHoverUnderline>
               </li>
               {children?.map((value, childIndex) => {
                 const { parentName, name } = value;
@@ -60,16 +61,14 @@ const CategoryTreeNav: FC<CategoryTreeNavProps> = ({ className, tree }) => {
                       height="15"
                       strokeColor={theme !== "dark" ? "black" : "white"}
                     ></CategoryIndentSvg>
-                    <LinkHoverUnderline
-                      href={{
-                        pathname: pageUrl,
-                        query: { depth1: parentName, depth2: name },
+                    <ButtonHoverUnderline
+                      onClick={() => {
+                        setSelectedCategoryId(value.id);
                       }}
-                      as={pageUrl}
-                      isSelected={depth1 === parentName && depth2 === name}
+                      isSelected={selectedCategoryId === value.id}
                     >
                       {name}
-                    </LinkHoverUnderline>
+                    </ButtonHoverUnderline>
                   </li>
                 );
               })}

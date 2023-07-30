@@ -1,4 +1,4 @@
-import { PreviewToBe } from "@utils/types";
+import { Category, PreviewToBe } from "@utils/types";
 
 type User = {
   // 데이터 ID(PK)
@@ -80,6 +80,9 @@ export class GetPostByIdResponseBody {
 
   //게시글 썸네일 이미지
   postThumbnailImageUrl?: string;
+
+  // 게시글 카테고리
+  postCategory?: Category;
 
   //게시글 URL
   postUrl: string;

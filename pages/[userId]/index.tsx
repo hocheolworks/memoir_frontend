@@ -70,8 +70,11 @@ const UserMemoir: NextPageWithLayout<
   const { tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
   const [categories, setCategories] = useState<TreeNodeParent[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(-1);
   const [contribution, setContribution] =
     useState<ContributionCalendar>(contributionData);
+
+  const [filteredPosts, setFilteredPosts] = useState<PreviewToBe[]>(posts);
 
   const retryBtnClick = async () => {
     try {
@@ -100,12 +103,31 @@ const UserMemoir: NextPageWithLayout<
     asyncWrapper();
   }, [userId]);
 
+  useEffect(() => {
+    PostAPI.getPosts(
+      userId,
+      selectedCategoryId === -1 ? undefined : selectedCategoryId
+    )
+      .then((res) => {
+        setFilteredPosts(res.data.list);
+      })
+      .catch((e) => {
+        if (e.statusCode === 404) {
+          setFilteredPosts([]);
+        }
+      });
+  }, [selectedCategoryId]);
+
   return (
     <div className="mb-14 flex h-full w-full items-start justify-center">
       <div className="flex flex-1 flex-col items-end bg-red-100">
         {selectedNavIndex === 0 && (
           <div className="absolute mt-[465px] mr-4 hidden w-[184px] flex-col pb-24 left-area-visible:flex">
-            <CategoryTreeNav tree={categories}></CategoryTreeNav>
+            <CategoryTreeNav
+              tree={categories}
+              selectedCategoryId={selectedCategoryId}
+              setSelectedCategoryId={setSelectedCategoryId}
+            ></CategoryTreeNav>
             {/* <TagList className="mt-32" tagList={dummyTagList} /> */}
           </div>
         )}
@@ -148,7 +170,7 @@ const UserMemoir: NextPageWithLayout<
         {selectedNavIndex === 0 && (
           <PostList
             className="w-full"
-            postList={posts}
+            postList={filteredPosts}
             filterTag={tag as string}
           ></PostList>
         )}
