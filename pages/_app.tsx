@@ -46,6 +46,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             {getLayout(<Component {...pageProps} />)}
             {loadingVisible && <LoadingFullScreen />}
             <ToastContainer
+              className="mt-[64px]"
               autoClose={1500}
               theme={theme === "dark" ? "dark" : "light"}
             />

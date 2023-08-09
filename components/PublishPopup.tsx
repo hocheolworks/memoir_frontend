@@ -26,6 +26,7 @@ import {
 import useUser from "@hooks/useUser";
 import useLoading from "@hooks/useLoading";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 type PublishPopupProps = {
   id?: number;
@@ -50,6 +51,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const iconSize = 22;
 
   const user = useUser();
+  const { theme } = useTheme();
   const { nowLoading, nowLoaded } = useLoading();
 
   // const [isPrivate, setIsPrivate] = useState<boolean>(false);
@@ -85,7 +87,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
       if (statusCode === 201) {
         toast("발행 완료", {
           type: "success",
-          theme: "colored",
+          theme: theme === "dark" ? "dark" : "light",
         });
 
         push(`/${user?.githubUserName}/${data.id}`);
@@ -113,10 +115,10 @@ const PublishPopup: FC<PublishPopupProps> = ({
 
       toast("수정 완료", {
         type: "success",
-        theme: "colored",
+        theme: theme === "dark" ? "dark" : "light",
       });
 
-      push(`/${user?.githubUserName}/${id}`, {});
+      push(`/${user?.githubUserName}/${id}`);
     } catch (e: any) {
       errorHandler(e);
     }
