@@ -78,7 +78,11 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
 
         setCategoryTree(makeTreeFromCategories(data));
       } catch (e: any) {
-        errorHandler(e);
+        if (e.statusCode === 404) {
+          setCategoryTree([]);
+        } else {
+          errorHandler(e);
+        }
       }
     }
   }, [user, clickedCategory, newCategory]);
