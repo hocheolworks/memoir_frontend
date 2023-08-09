@@ -45,16 +45,6 @@ export async function getServerSideProps({ query }: NextPageContext) {
     const { data } = await PostAPI.getPosts(userId);
     posts = data.list;
   } catch (e: any) {
-    if (e.statusCode === 404) {
-      return {
-        props: {
-          userId: userId,
-          posts: [],
-          contributionData: contributionCalendar,
-        },
-      };
-    }
-
     console.log("/[userId] Error");
     console.log(e);
     errorHandler(e);
