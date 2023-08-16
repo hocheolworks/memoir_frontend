@@ -1,4 +1,5 @@
 import { selectLoadingInfo } from "@redux/modules/configSlice";
+import { useTheme } from "next-themes";
 import React from "react";
 import { useSelector } from "react-redux";
 import { GridLoader, ScaleLoader } from "react-spinners";
@@ -14,7 +15,7 @@ const LoadingFullScreen = () => {
         )}
         {type === "grid" && <GridLoader size={30} color="#904CF9" />}
         {text && (
-          <h2 className="pointer-events-none mt-4 text-2xl font-semibold">
+          <h2 className="pointer-events-none mt-4 text-2xl font-semibold text-black dark:text-white">
             {text}
           </h2>
         )}

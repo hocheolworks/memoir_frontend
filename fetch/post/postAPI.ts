@@ -56,6 +56,16 @@ const PostAPI = {
       data: plainToInstance(GetPostByIdResponseBody, data.data),
     };
   },
+  getHottestPosts: async (page: number, pageSize: number) => {
+    const { data } = await req.get("/posts/hottest", {
+      params: { page, pageSize },
+    });
+
+    return {
+      statusCode: data.statusCode as number,
+      data: plainToInstance(GetPostsResponseBody, data.data),
+    };
+  },
 };
 
 export default PostAPI;

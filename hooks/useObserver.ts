@@ -1,7 +1,7 @@
-import { MutableRefObject, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
 export default function useObserver(
-  ref: MutableRefObject<HTMLElement>,
+  ref: RefObject<HTMLElement> | null,
   callback: IntersectionObserverCallback,
   options?: IntersectionObserverInit
 ) {
@@ -14,5 +14,5 @@ export default function useObserver(
     return () => {
       observer.disconnect();
     };
-  }, [ref, ref.current]);
+  }, [ref]);
 }
