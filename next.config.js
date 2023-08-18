@@ -9,6 +9,50 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const nextConfig = {
+  images: {
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "static.velog.io",
+      },
+      {
+        protocol: "https",
+        hostname: "velog.velcdn.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.delicious.com.au",
+      },
+      {
+        protocol: "https",
+        hostname: "images.theconversation.com",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com", // 깃허브 프로필 아이콘
+      },
+      {
+        protocol: "https",
+        hostname: "d1ccleacxg8gcm.cloudfront.net", // 이미지 저장용 cloudfront
+      },
+    ],
+    // domains: [
+    //   "*",
+    //   // "avatars.githubusercontent.com",
+    //   // "static.velog.io",
+    //   // "github.com",
+    //   // "d1ccleacxg8gcm.cloudfront.net", // 이미지 저장용 cloudfront
+    //   // "velog.velcdn.com", // 테스트 용
+    //   // "img.delicious.com.au", // 테스트 용
+    //   // "images.theconversation.com", // 테스트 용
+    // ],
+  },
   reactStrictMode: false,
   webpack: (config) => {
     config.module.rules.push({
@@ -31,19 +75,6 @@ const nextConfig = {
     ];
   },
   swcMinify: true,
-  images: {
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: [
-      "avatars.githubusercontent.com",
-      "static.velog.io",
-      "github.com",
-      "d1ccleacxg8gcm.cloudfront.net", // 이미지 저장용 cloudfront
-      "velog.velcdn.com", // 테스트 용
-      "img.delicious.com.au", // 테스트 용
-      "images.theconversation.com", // 테스트 용
-    ],
-  },
   env: {
     BASE_URL: process.env.BASE_URL,
   },
