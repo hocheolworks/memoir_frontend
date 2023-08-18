@@ -18,6 +18,7 @@
     "@uiw/react-md-editor": "^3.20.5",
     "axios": "^0.27.2",
     "babel-loader": "^9.1.0",
+    "browser-image-compression": "^2.0.2",
     "class-transformer": "^0.5.1",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.9",
@@ -36,8 +37,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "rehype-sanitize": "^5.0.1",
-    "sharp": "^0.31.3",
-    "vm2": "^3.9.11"
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.6",
