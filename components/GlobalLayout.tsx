@@ -14,7 +14,7 @@ const GlobalLayout = ({ children, withoutFooter }: GlobalLayoutProps) => {
       <main className="default-width mt-16 flex flex-1 flex-col">
         {children}
       </main>
-      {!withoutFooter && <Footer />}
+      {/* {!withoutFooter && <Footer />} */}
     </>
   );
 };
