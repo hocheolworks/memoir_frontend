@@ -14,8 +14,7 @@ interface PreviewVerticalProps {
 
 function PreviewVertical({ className, post }: PreviewVerticalProps) {
   return (
-    <Link
-      href={`/${post.user.githubUserName}/${post.id}`}
+    <div
       className={cls(
         "overflow-hidden rounded-[6px] transition-transform duration-300",
         "bg-neutral-200 dark:bg-[#433F40]",
@@ -27,25 +26,36 @@ function PreviewVertical({ className, post }: PreviewVerticalProps) {
       )}
     >
       {post.postThumbnailImageUrl && (
-        <div className="relative aspect-video pt-[52%] first:w-auto">
+        <Link
+          href={`/${post.user.githubUserName}/${post.id}`}
+          className="relative aspect-video pt-[52%] first:w-auto"
+        >
           <Image
             alt="글 썸네일"
             className="absolute top-0 right-0 left-0 object-cover"
             src={post.postThumbnailImageUrl}
             fill
           />
-        </div>
+        </Link>
       )}
       <div className="flex flex-grow flex-col justify-between">
         <div className="flex min-h-[100px] flex-grow flex-col items-start justify-between px-4 pt-3 pb-2 zero:min-h-auto">
-          <h4 className="font-semibold">{post.postTitle}</h4>
+          <Link
+            href={`/${post.user.githubUserName}/${post.id}`}
+            className="flex-1 self-stretch"
+          >
+            <h4 className="font-semibold">{post.postTitle}</h4>
+          </Link>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
             {dayjs(post.createdAt).format("YYYY년 MM월 DD일")}
           </p>
         </div>
 
         <div className="flex items-center justify-between border-t-[1px] border-t-neutral-300 px-4 py-3 dark:border-t-neutral-600">
-          <div className="flex items-center gap-2">
+          <Link
+            href={`/${post.user.githubUserName}`}
+            className="flex items-center gap-2"
+          >
             <CircleAvatar
               src={getGithubProfileIcon(post.user.githubUserName)}
               alt={"글쓴이 아이콘"}
@@ -53,14 +63,14 @@ function PreviewVertical({ className, post }: PreviewVerticalProps) {
               height={24}
             />
             <h6>{post.user.githubUserName}</h6>
-          </div>
+          </Link>
           <div className="flex items-center gap-1 text-neutral-500 dark:text-neutral-400">
             <FiEye size={14} />
             <span className="text-sm">{post.views}</span>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
