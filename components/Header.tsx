@@ -118,12 +118,14 @@ const Header: FC<HeaderPropType> = ({ className }) => {
               <Link href="/write">
                 <LabelBtn className="mr-2 hidden first:block" label="글쓰기" />
               </Link>
-              <CircleAvatar
-                src={user.profileImage}
-                alt={user.githubUserName}
-                className="mr-2 h-10 w-10"
-                fill
-              />
+              <Link href={`/${user.githubUserName}`}>
+                <CircleAvatar
+                  src={user.profileImage}
+                  alt={user.githubUserName}
+                  className="mr-2 h-10 w-10"
+                  fill
+                />
+              </Link>
               <IconBtn
                 Icon={GoTriangleDown}
                 className="-mr-2"
