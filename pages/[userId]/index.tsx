@@ -118,6 +118,10 @@ const UserMemoir: NextPageWithLayout<
       });
   }, [selectedCategoryId]);
 
+  useEffect(() => {
+    setFilteredPosts(posts);
+  }, [posts]);
+
   return (
     <div className="mb-14 flex h-full w-full items-start justify-center">
       <div className="flex flex-1 flex-col items-end bg-red-100">
