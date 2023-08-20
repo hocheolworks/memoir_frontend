@@ -13,7 +13,7 @@ type ProfileCardProps = {
 const ProfileCard = ({ className, userName }: ProfileCardProps) => {
   return (
     <div className={cls("flex items-center justify-between", className)}>
-      <div className="flex items-center">
+      <Link href={`/${userName}`} className="flex items-center">
         <CircleAvatar
           className="h-[50px]"
           src={getGithubProfileIcon(userName)}
@@ -22,7 +22,7 @@ const ProfileCard = ({ className, userName }: ProfileCardProps) => {
           height={50}
         ></CircleAvatar>
         <p className="ml-2 text-2xl">{userName}</p>
-      </div>
+      </Link>
       <div className="flex h-8 items-center">
         <Link
           href={`https://github.com/${encodeURIComponent(userName)}`}
