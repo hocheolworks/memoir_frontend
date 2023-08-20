@@ -112,9 +112,10 @@ export const handleResizeTextArea = (
 
 export const titleToUrl = (text: string): string => {
   return text
-    .replace(/[^0-9a-zA-Zㄱ-힣. -]/g, "")
+    .replace(/[^0-9a-zA-Zㄱ-힣 -]/g, "")
     .replace(/ /g, "-")
-    .replace(/--+/g, "-");
+    .replace(/--+/g, "-")
+    .toLowerCase();
 };
 
 export const removeMarkdown = (markdownText: string): string => {
