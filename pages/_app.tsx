@@ -37,38 +37,40 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     Component.getLayout || ((page) => <GlobalLayout>{page}</GlobalLayout>);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider attribute="class">
-          <Head>
-            <title>MEMOIR.</title>
-          </Head>
-          <DefaultSeo
-            openGraph={{
-              type: "website",
-              locale: "ko_KR",
-              images: [{ url: "https://mem0ir.com/og/og-memoir.png" }],
-              url: "https://www.mem0ir.com",
-              siteName: "MEMOIR.",
-              description:
-                "블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!",
-            }}
-            title="MEMOIR."
-            description="블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!"
-          />
-          <div id="wrapper" className="flex h-full w-full flex-col">
-            {getLayout(<Component {...pageProps} />)}
-            {loadingVisible && <LoadingFullScreen />}
-            <ToastContainer
-              className="mt-[64px]"
-              autoClose={1500}
-              theme={theme === "dark" ? "dark" : "light"}
-            />
-            <PopupModal />
-          </div>
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
+    <>
+      <Head>
+        <title>MEMOIR.</title>
+      </Head>
+      <DefaultSeo
+        openGraph={{
+          type: "website",
+          locale: "ko_KR",
+          images: [{ url: "https://mem0ir.com/og/og-memoir.png" }],
+          url: "https://www.mem0ir.com",
+          siteName: "MEMOIR.",
+          description:
+            "블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!",
+        }}
+        title="MEMOIR."
+        description="블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!"
+      />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider attribute="class">
+            <div id="wrapper" className="flex h-full w-full flex-col">
+              {getLayout(<Component {...pageProps} />)}
+              {loadingVisible && <LoadingFullScreen />}
+              <ToastContainer
+                className="mt-[64px]"
+                autoClose={1500}
+                theme={theme === "dark" ? "dark" : "light"}
+              />
+              <PopupModal />
+            </div>
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
+    </>
   );
 }
 
