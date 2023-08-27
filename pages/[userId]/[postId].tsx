@@ -12,6 +12,7 @@ import {
   cls,
   debounce,
   extractAnchorFromMarkdown,
+  formatAbsolute,
   getGithubProfileIcon,
   isBetween,
   titleToUrl,
@@ -30,6 +31,8 @@ import { useTheme } from "next-themes";
 import moment from "moment";
 import useLoading from "@hooks/useLoading";
 import Head from "next/head";
+import { NextSeo } from "next-seo";
+import { title } from "process";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -58,7 +61,7 @@ type PostPageProps = {
 };
 
 const PostPage: NextPage<PostPageProps> = ({ post }) => {
-  const { id, postTitle, createdAt, postBody } = post;
+  const { id, postTitle, createdAt, postBody, postThumbnailImageUrl } = post;
 
   const author = post.user.githubUserName;
 
@@ -140,6 +143,23 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
       <Head>
         <title>{postTitle}</title>
       </Head>
+      <NextSeo
+        title={postTitle}
+        description={formatAbsolute(postBody)}
+        openGraph={{
+          locale: "ko_KR",
+          siteName: "MEMOIR.",
+          title: postTitle,
+          description: formatAbsolute(postBody),
+          images: [
+            {
+              url:
+                postThumbnailImageUrl || "https://mem0ir.com/og/og-memoir.png",
+            },
+          ],
+          url: `https://mem0ir.com/${author}/${id}`,
+        }}
+      />
       <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">
           <h1 className="text-[3rem] font-bold leading-normal">{postTitle}</h1>
