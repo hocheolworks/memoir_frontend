@@ -47,7 +47,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             openGraph={{
               type: "website",
               locale: "ko_KR",
-              url: "https://mem0ir.com/og/og-memoir.png",
+              images: [{ url: "https://mem0ir.com/og/og-memoir.png" }],
+              url: "https://www.mem0ir.com",
               siteName: "MEMOIR.",
               description:
                 "블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!",
