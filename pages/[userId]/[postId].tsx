@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
 import moment from "moment";
 import useLoading from "@hooks/useLoading";
+import Head from "next/head";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -136,6 +137,9 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
+      <Head>
+        <title>{postTitle}</title>
+      </Head>
       <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div className="self-start">
           <h1 className="text-[3rem] font-bold leading-normal">{postTitle}</h1>

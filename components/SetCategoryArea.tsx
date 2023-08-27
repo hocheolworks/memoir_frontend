@@ -81,7 +81,7 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
         errorHandler(e);
       }
     }
-  }, [user, clickedCategory, newCategory]);
+  }, [user]);
 
   const onClickAddCategory = async () => {
     if (!clickedCategory || !newCategory) return;
@@ -184,7 +184,7 @@ const SetCategoryArea: FC<SetCategoryAreaProps> = ({
 
   useEffect(() => {
     getCategories();
-  }, [user]);
+  }, [user, getCategories]);
 
   return (
     <ContainerWithTitle className={className} title="카테고리 설정">

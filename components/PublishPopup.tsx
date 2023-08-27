@@ -97,7 +97,17 @@ const PublishPopup: FC<PublishPopupProps> = ({
     }
 
     nowLoaded();
-  }, [user, title, editContent, selectedCategory, push]);
+  }, [
+    user,
+    title,
+    editContent,
+    selectedCategory,
+    push,
+    firstImageSrc,
+    nowLoaded,
+    nowLoading,
+    theme,
+  ]);
 
   const onClickUpdate = useCallback(async () => {
     if (!id) return;
@@ -123,7 +133,18 @@ const PublishPopup: FC<PublishPopupProps> = ({
       errorHandler(e);
     }
     nowLoaded();
-  }, [id, user, title, editContent, selectedCategory, push]);
+  }, [
+    id,
+    user,
+    title,
+    editContent,
+    selectedCategory,
+    push,
+    firstImageSrc,
+    nowLoaded,
+    nowLoading,
+    theme,
+  ]);
 
   const getOut = useCallback(() => {
     setIsClickedAddToSeries(false);

@@ -207,7 +207,7 @@ const Write: NextPageWithLayout = () => {
         errorHandler(e);
       }
     },
-    [editContent, theme]
+    [editContent, theme, user]
   );
 
   const onDragEnter: DragEventHandler = useCallback((e) => {

@@ -24,6 +24,7 @@ import useUser from "@hooks/useUser";
 import PostAPI from "@api/post/postAPI";
 import { getPostCategories } from "@api/post-category";
 import { makeTreeFromCategories } from "@utils/functions";
+import Head from "next/head";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const userId = query.userId as string;
@@ -116,101 +117,106 @@ const UserMemoir: NextPageWithLayout<
           setFilteredPosts([]);
         }
       });
-  }, [selectedCategoryId]);
+  }, [selectedCategoryId, userId]);
 
   useEffect(() => {
     setFilteredPosts(posts);
   }, [posts]);
 
   return (
-    <div className="mb-14 flex h-full w-full items-start justify-center">
-      <div className="flex flex-1 flex-col items-end bg-red-100">
-        {selectedNavIndex === 0 && (
-          <div className="absolute mt-[465px] mr-4 hidden w-[184px] flex-col pb-24 left-area-visible:flex">
-            <CategoryTreeNav
-              tree={categories}
-              selectedCategoryId={selectedCategoryId}
-              setSelectedCategoryId={setSelectedCategoryId}
-            ></CategoryTreeNav>
-            {/* <TagList className="mt-32" tagList={dummyTagList} /> */}
-          </div>
-        )}
-      </div>
-      <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
-        <div className="w-full pt-8">
-          <ProfileCard userName={userId} />
-          <div id="contribution" className="mt-4 h-[200px] text-black">
-            {contribution.totalContributions !== -1 ? (
-              <ContributionGraph
-                width={823}
-                height={128}
-                contributionData={contribution}
-              />
-            ) : (
-              <div className="flex h-[184px] w-full flex-col items-center justify-center rounded-md bg-neutral-300 dark:bg-neutral-700">
-                <p className="text-md mb-3 dark:text-neutral-400">
-                  contribution 정보를 불러올 수 없습니다.
-                </p>
-                <button
-                  className="w-20 rounded-[0.25rem] bg-neutral-200 py-1 text-sm text-neutral-900 hover:brightness-90 dark:bg-neutral-800 dark:text-neutral-300"
-                  onClick={retryBtnClick}
-                >
-                  다시 시도
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-        <NavigationBar
-          selectedIndex={selectedNavIndex}
-          setSelectedIndex={setSelectedNavIndex}
-          labels={[
-            "글",
-            // "시리즈",
-            "소개",
-          ]}
-          className="my-8 w-full contribution-width:w-96"
-        />
-        {selectedNavIndex === 0 && (
-          <PostList
-            className="w-full"
-            postList={filteredPosts}
-            filterTag={tag as string}
-          ></PostList>
-        )}
-        {/* {selectedNavIndex === 1 && // 시리즈
-          (dummySeriesList.length !== 0 ? (
-            <div className="flex flex-wrap">
-              {dummySeriesList.map((value, index) => (
-                <Series
-                  key={`myPreview#${index}`}
-                  series={value}
-                  index={index}
-                  className="w-full px-4 py-6 contribution-width:w-1/2"
-                />
-              ))}
+    <>
+      <Head>
+        <title>{userId} - MEMOIR.</title>
+      </Head>
+      <div className="mb-14 flex h-full w-full items-start justify-center">
+        <div className="flex flex-1 flex-col items-end bg-red-100">
+          {selectedNavIndex === 0 && (
+            <div className="absolute mt-[465px] mr-4 hidden w-[184px] flex-col pb-24 left-area-visible:flex">
+              <CategoryTreeNav
+                tree={categories}
+                selectedCategoryId={selectedCategoryId}
+                setSelectedCategoryId={setSelectedCategoryId}
+              ></CategoryTreeNav>
+              {/* <TagList className="mt-32" tagList={dummyTagList} /> */}
             </div>
-          ) : (
-            <NoContents type="series" />
-          ))} */}
-        {selectedNavIndex === 1 && (
-          <Introduction
-            introduction={null}
-            userId={userId as string}
-          ></Introduction>
-        )}
-      </div>
-      <div className="flex-1 text-center">
-        {/*Right*/}
-        {/* <div className="">
-          <TagList
-            className="mt-[465px] ml-4 text-left"
-            userId={userId as string}
-            tagList={dummyTagList}
+          )}
+        </div>
+        <div className="flex w-full flex-col items-center text-center contribution-width:w-[823px]">
+          <div className="w-full pt-8">
+            <ProfileCard userName={userId} />
+            <div id="contribution" className="mt-4 h-[200px] text-black">
+              {contribution.totalContributions !== -1 ? (
+                <ContributionGraph
+                  width={823}
+                  height={128}
+                  contributionData={contribution}
+                />
+              ) : (
+                <div className="flex h-[184px] w-full flex-col items-center justify-center rounded-md bg-neutral-300 dark:bg-neutral-700">
+                  <p className="text-md mb-3 dark:text-neutral-400">
+                    contribution 정보를 불러올 수 없습니다.
+                  </p>
+                  <button
+                    className="w-20 rounded-[0.25rem] bg-neutral-200 py-1 text-sm text-neutral-900 hover:brightness-90 dark:bg-neutral-800 dark:text-neutral-300"
+                    onClick={retryBtnClick}
+                  >
+                    다시 시도
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          <NavigationBar
+            selectedIndex={selectedNavIndex}
+            setSelectedIndex={setSelectedNavIndex}
+            labels={[
+              "글",
+              // "시리즈",
+              "소개",
+            ]}
+            className="my-8 w-full contribution-width:w-96"
           />
-        </div> */}
+          {selectedNavIndex === 0 && (
+            <PostList
+              className="w-full"
+              postList={filteredPosts}
+              filterTag={tag as string}
+            ></PostList>
+          )}
+          {/* {selectedNavIndex === 1 && // 시리즈
+            (dummySeriesList.length !== 0 ? (
+              <div className="flex flex-wrap">
+                {dummySeriesList.map((value, index) => (
+                  <Series
+                    key={`myPreview#${index}`}
+                    series={value}
+                    index={index}
+                    className="w-full px-4 py-6 contribution-width:w-1/2"
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoContents type="series" />
+            ))} */}
+          {selectedNavIndex === 1 && (
+            <Introduction
+              introduction={null}
+              userId={userId as string}
+            ></Introduction>
+          )}
+        </div>
+        <div className="flex-1 text-center">
+          {/*Right*/}
+          {/* <div className="">
+            <TagList
+              className="mt-[465px] ml-4 text-left"
+              userId={userId as string}
+              tagList={dummyTagList}
+            />
+          </div> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

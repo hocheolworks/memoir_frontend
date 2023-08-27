@@ -19,6 +19,7 @@ import { ReactElement, ReactNode } from "react";
 import { PopupModal } from "@components/PopupModal";
 import { selectLoadingVisible } from "@redux/modules/configSlice";
 import LoadingFullScreen from "@components/LoadingFullScreen";
+import { DefaultSeo } from "next-seo";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -42,6 +43,18 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <Head>
             <title>MEMOIR.</title>
           </Head>
+          <DefaultSeo
+            openGraph={{
+              type: "website",
+              locale: "ko_KR",
+              url: "https://mem0ir.com/og/og-memoir.png",
+              siteName: "MEMOIR.",
+              description:
+                "블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!",
+            }}
+            title="MEMOIR."
+            description="블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!"
+          />
           <div id="wrapper" className="flex h-full w-full flex-col">
             {getLayout(<Component {...pageProps} />)}
             {loadingVisible && <LoadingFullScreen />}
