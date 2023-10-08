@@ -7,7 +7,7 @@ import { ReactElement, useCallback, useRef, useState } from "react";
 import { NextPageWithLayout } from "./_app";
 import useObserver from "@hooks/useObserver";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 32;
 
 let page = 2; // client
 
