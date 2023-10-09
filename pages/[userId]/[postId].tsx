@@ -217,8 +217,9 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
               }}
               anchors={anchors}
               onClick={() => {
-                // FIXME: 아래에서 위로 위동할 때, 헤더 표시 안되게 바꿔야해
-                dispatch(hideHeader());
+                setTimeout(() => {
+                  dispatch(hideHeader());
+                }, 0);
               }}
             />
           </div>
