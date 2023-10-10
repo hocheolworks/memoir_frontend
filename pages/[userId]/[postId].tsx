@@ -1,7 +1,6 @@
 import React, { useMemo, useEffect, useRef, useState } from "react";
 import { NextPage, NextPageContext } from "next/types";
-// import PostAPI from "@api/post/postAPI";
-import { Post, PostToBe } from "@utils/types";
+import { PostToBe } from "@utils/types";
 import Tag from "@components/Tag";
 import Markdown from "@lhjeong60/react-markdown-preview";
 import ProfileCard from "@components/ProfileCard";
@@ -10,12 +9,9 @@ import useUser from "../../hooks/useUser";
 import CommentList from "@components/CommentList";
 import {
   cls,
-  debounce,
   extractAnchorFromMarkdown,
   formatAbsolute,
-  getGithubProfileIcon,
   isBetween,
-  titleToUrl,
 } from "@utils/functions";
 import SeriesNav from "@components/SeriesNav";
 import AnchorNav from "@components/AnchorNav";
@@ -32,7 +28,6 @@ import moment from "moment";
 import useLoading from "@hooks/useLoading";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
-import { title } from "process";
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const { postId } = query;
@@ -97,7 +92,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const { nowLoading, nowLoaded } = useLoading();
   const authorDivRef = useRef<HTMLDivElement>(null);
   const anchorNavRootRef = useRef<HTMLDivElement>(null);
-  const [anchorNavIsFixed, setAnchorNavIsFixed] = useState(false);
+  const [anchorNavTop, setAnchorNavTop] = useState(0);
 
   const deleteThisPost = async () => {
     try {
@@ -122,21 +117,13 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const isMyPost = user?.githubUserName === author;
 
   useEffect(() => {
-    if (!authorDivRef || !authorDivRef.current) return;
-
-    const callback: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.intersectionRatio < 1) {
-          setAnchorNavIsFixed(true);
-        } else {
-          setAnchorNavIsFixed(false);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(callback, { threshold: 0.99 });
-    observer.observe(authorDivRef.current);
-  }, [authorDivRef]);
+    if (anchorNavRootRef?.current) {
+      setAnchorNavTop(
+        anchorNavRootRef.current.getBoundingClientRect().top - 64 // 헤더 높이 제외
+      );
+      console.log(anchorNavRootRef.current);
+    }
+  }, [anchorNavRootRef]);
 
   return (
     <>
@@ -160,7 +147,29 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           url: `https://mem0ir.com/${author}/${id}`,
         }}
       />
-      <div className="mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
+      <div className="relative mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
+        <div
+          className={cls(
+            "absolute top-0 bottom-0 left-full hidden w-[240px] left-area-visible:block"
+          )}
+          style={{
+            paddingTop: anchorNavTop,
+          }}
+        >
+          <AnchorNav
+            className={cls("sticky ml-[60px]")}
+            style={{
+              top: "88px",
+            }}
+            anchors={anchors}
+            onClick={() => {
+              setTimeout(() => {
+                dispatch(hideHeader());
+              }, 0);
+            }}
+          />
+        </div>
+
         <div className="self-start">
           <h1 className="text-[3rem] font-bold leading-normal">{postTitle}</h1>
         </div>
@@ -204,26 +213,11 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
             </Tag>
           ))}
         </div> */}
-        <div ref={anchorNavRootRef} className="relative mt-8 w-full">
-          <div
-            className={cls(
-              "absolute left-full hidden w-[240px] left-area-visible:block"
-            )}
-          >
-            <AnchorNav
-              className={cls("ml-[60px]", anchorNavIsFixed ? "fixed" : "")}
-              style={{
-                top: anchorNavRootRef.current?.getBoundingClientRect().top,
-              }}
-              anchors={anchors}
-              onClick={() => {
-                setTimeout(() => {
-                  dispatch(hideHeader());
-                }, 0);
-              }}
-            />
-          </div>
-        </div>
+        <div
+          id="anchorNavRoot"
+          ref={anchorNavRootRef}
+          className="mt-8 w-full"
+        ></div>
         {/* {seriesName && (
           <div className="mb-[48px] w-full rounded-lg bg-neutral-200 py-8 px-6 dark:bg-grey1 dark:text-white">
             <h3 className="text-[24px] font-bold">{seriesName}</h3>
