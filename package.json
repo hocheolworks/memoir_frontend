@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
-    "postbuild": "next-sitemap",
     "start": "next start -p 3001",
     "lint": "next lint"
   },
@@ -13,6 +12,9 @@
     "@lhjeong60/react-markdown-preview": "^4.1.91",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.8.5",
+    "@types/react-icons": "^3.0.0",
+    "@types/redux": "^3.6.0",
+    "@types/redux-persist": "^4.3.1",
     "@uiw/react-md-editor": "^3.20.5",
     "axios": "^0.27.2",
     "babel-loader": "^9.1.0",
@@ -25,7 +27,6 @@
     "next-redux-wrapper": "^8.0.0",
     "next-remove-imports": "^1.0.7",
     "next-seo": "^6.1.0",
-    "next-sitemap": "^4.2.3",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -50,6 +51,7 @@
     "@types/node": "18.7.13",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
+    "@types/react-toastify": "^4.1.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^7.23.0",
     "eslint-config-next": "^13.1.6",
