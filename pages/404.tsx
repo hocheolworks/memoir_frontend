@@ -1,4 +1,3 @@
-import GlobalLayout from "@components/GlobalLayout";
 import { getErrorMessage } from "@utils/functions";
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "./_app";

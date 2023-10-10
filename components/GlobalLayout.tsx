@@ -4,10 +4,9 @@ import Footer from "./Footer";
 
 type GlobalLayoutProps = {
   children: ReactNode;
-  withoutFooter?: boolean;
 };
 
-const GlobalLayout = ({ children, withoutFooter }: GlobalLayoutProps) => {
+const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   return (
     <>
       <Header />

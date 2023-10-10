@@ -70,7 +70,7 @@ const Home: NextPageWithLayout<HomeProps> = ({ posts }) => {
 
   return (
     <div className="flex h-full w-full flex-col items-center">
-      <div className="w-full pt-12 pb-6 text-left">
+      <div className="w-full pb-6 pt-12 text-left">
         <h2 className="text-2xl font-bold">On Fire 🔥</h2>
       </div>
       <div className="w-full">
@@ -87,9 +87,5 @@ const Home: NextPageWithLayout<HomeProps> = ({ posts }) => {
     </div>
   );
 };
-
-Home.getLayout = (page: ReactElement) => (
-  <GlobalLayout withoutFooter>{page}</GlobalLayout>
-);
 
 export default Home;
