@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.mem0ir.com
+
+# Sitemaps
+Sitemap: https://www.mem0ir.com/sitemap.xml
+Sitemap: https://www.mem0ir.com/server-sitemap-index.xml

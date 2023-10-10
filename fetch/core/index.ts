@@ -49,18 +49,18 @@ const createInstance = (isFileUpload: boolean = false) => {
 };
 
 const req = {
-  get: (url: string, config?: AxiosRequestConfig) =>
-    createInstance().get(url, config),
-  post: (url: string, body: any, config?: AxiosRequestConfig) =>
-    createInstance().post(url, body, config),
-  put: (url: string, body: any, config?: AxiosRequestConfig) =>
-    createInstance().put(url, body, config),
-  patch: (url: string, body: any, config?: AxiosRequestConfig) =>
-    createInstance().patch(url, body, config),
-  delete: (url: string, config?: AxiosRequestConfig) =>
-    createInstance().delete(url, config),
-  uploadFile: (url: string, body: any, config?: AxiosRequestConfig) =>
-    createInstance(true).post(url, body, config),
+  get: <T = any>(url: string, config?: AxiosRequestConfig) =>
+    createInstance().get<T>(url, config),
+  post: <T = any>(url: string, body: any, config?: AxiosRequestConfig) =>
+    createInstance().post<T>(url, body, config),
+  put: <T = any>(url: string, body: any, config?: AxiosRequestConfig) =>
+    createInstance().put<T>(url, body, config),
+  patch: <T = any>(url: string, body: any, config?: AxiosRequestConfig) =>
+    createInstance().patch<T>(url, body, config),
+  delete: <T = any>(url: string, config?: AxiosRequestConfig) =>
+    createInstance().delete<T>(url, config),
+  uploadFile: <T = any>(url: string, body: any, config?: AxiosRequestConfig) =>
+    createInstance(true).post<T>(url, body, config),
 };
 
 export default req;
