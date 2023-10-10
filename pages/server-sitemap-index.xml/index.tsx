@@ -1,15 +1,19 @@
 // pages/server-sitemap-index.xml/index.tsx
 import { getServerSideSitemapIndexLegacy } from "next-sitemap";
 import { GetServerSideProps } from "next";
+import sitemapAPI from "@api/sitemap/sitemapAPI";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // Method to source urls from cms
-  // const urls = await fetch('https//example.com/api')
+  let urls: string[] = [];
 
-  return getServerSideSitemapIndexLegacy(ctx, [
-    "https://example.com/path-1.xml",
-    "https://example.com/path-2.xml",
-  ]);
+  try {
+    urls = await sitemapAPI.getAllPostPathnames();
+  } catch (e) {}
+
+  return getServerSideSitemapIndexLegacy(
+    ctx,
+    urls.map((url) => process.env.NEXT_PUBLIC_WEB_URL + "/" + url)
+  );
 };
 
 // Default export to prevent next.js errors
