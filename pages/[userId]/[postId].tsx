@@ -127,30 +127,29 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      <Head>
-        <title>{postTitle}</title>
-      </Head>
       <NextSeo
-        title={postTitle}
-        description={formatAbsolute(postBody)}
+        title={post.postTitle}
+        description={formatAbsolute(post.postBody)}
         openGraph={{
           locale: "ko_KR",
           siteName: "MEMOIR.",
           title: postTitle,
-          description: formatAbsolute(postBody),
+          description: formatAbsolute(post.postBody),
           images: [
             {
               url:
-                postThumbnailImageUrl || "https://mem0ir.com/og/og-memoir.png",
+                post.postThumbnailImageUrl ??
+                "https://mem0ir.com/og/og-memoir.png",
             },
           ],
           url: `https://mem0ir.com/${author}/${id}`,
         }}
       />
+
       <div className="relative mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
         <div
           className={cls(
-            "absolute top-0 bottom-0 left-full hidden w-[240px] left-area-visible:block"
+            "absolute bottom-0 left-full top-0 hidden w-[240px] left-area-visible:block"
           )}
           style={{
             paddingTop: anchorNavTop,
@@ -228,7 +227,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           source={postBody}
         ></Markdown>
         <ProfileCard
-          className="mt-80 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
+          className="mb-24 mt-80 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
           userName={author}
         />
 
