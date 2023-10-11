@@ -8,7 +8,10 @@ html {
 
 @media only screen and (max-width: 767px) {
   html {
-    font-size: 14px;
+    font-size: 12px;
+  }
+  .wmde-markdown {
+    font-size: 16px !important;
   }
 }
 
@@ -32,7 +35,7 @@ div#__next {
 }
 
 .default-width {
-  @apply mx-auto w-full px-4 first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0;
+  @apply mx-auto w-full px-[24px] first:w-firstScreenWidth first:px-0 second:w-secondScreenWidth second:px-0 third:w-thirdScreenWidth third:px-0;
 }
 
 .flex-center {
