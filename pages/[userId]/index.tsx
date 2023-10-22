@@ -131,7 +131,7 @@ const UserMemoir: NextPageWithLayout<
       <div className="mb-14 flex h-full w-full items-start justify-center">
         <div className="flex flex-1 flex-col items-end bg-red-100">
           {selectedNavIndex === 0 && (
-            <div className="absolute mt-[465px] mr-4 hidden w-[184px] flex-col pb-24 left-area-visible:flex">
+            <div className="absolute mr-4 mt-[465px] hidden w-[184px] flex-col pb-24 left-area-visible:flex">
               <CategoryTreeNav
                 tree={categories}
                 selectedCategoryId={selectedCategoryId}
@@ -221,7 +221,7 @@ const UserMemoir: NextPageWithLayout<
 };
 
 UserMemoir.getLayout = (page: ReactElement) => (
-  <GlobalLayout withoutFooter>{page}</GlobalLayout>
+  <GlobalLayout>{page}</GlobalLayout>
 );
 
 export default UserMemoir;
