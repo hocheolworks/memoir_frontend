@@ -5,7 +5,6 @@ import {
   GetPostByIdResponseBody,
   GetPostsResponseBody,
   PublishPostResponseBody,
-  UploadImageResponseBody,
 } from "./responses";
 
 const PostAPI = {
@@ -56,9 +55,14 @@ const PostAPI = {
       data: plainToInstance(GetPostByIdResponseBody, data.data),
     };
   },
-  getHottestPosts: async (page: number, pageSize: number) => {
+  getHottestPosts: async (
+    page: number,
+    pageSize: number,
+    isServerSide: boolean = false
+  ) => {
     const { data } = await req.get("/posts/hottest", {
       params: { page, pageSize },
+      ...(isServerSide && { headers: { caches: "no-store" } }),
     });
 
     return {

@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, memo, useCallback, useRef } from "react";
 
 type RectProps = {

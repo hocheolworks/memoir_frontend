@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { ContributionTooltipData } from "@utils/types";
 

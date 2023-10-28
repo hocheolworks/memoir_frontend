@@ -1,4 +1,6 @@
-import { FC, Fragment, useCallback, useEffect, useRef, useState } from "react";
+"use client";
+
+import { FC, Fragment, useCallback, useRef, useState } from "react";
 import Rect from "./Rect";
 import CalenderLabel from "./CalenderLabel";
 import { weekDayLabels } from "@utils/constants";

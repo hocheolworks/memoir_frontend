@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC, useEffect, useRef, useState } from "react";
@@ -5,7 +7,6 @@ import CircleAvatar from "./CircleAvatar";
 import IconBtn from "./IconBtn";
 import { FaMoon } from "@react-icons/all-files/fa/FaMoon";
 import { BsFillBrightnessHighFill } from "@react-icons/all-files/bs/BsFillBrightnessHighFill";
-import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
 import LabelBtn from "./LabelBtn";
 import { useDispatch, useSelector } from "react-redux";

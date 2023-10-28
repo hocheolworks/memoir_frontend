@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { Children } from "@utils/types";
-import { encodeByAES56 } from "@utils/functions";
+import Link from "next/link";
 
 type DropdownBtnPropType = {
   className?: string;
@@ -16,27 +14,17 @@ const DropdownBtn = ({
   children,
   onClick,
 }: DropdownBtnPropType) => {
-  const router = useRouter();
-
   return (
-    <div
+    <Link
       className={
-        "bg-gray-200 text-black hover:bg-gray-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600" +
+        "flex h-10 w-full items-center bg-gray-200 pl-3 text-left text-base text-black hover:bg-gray-300 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600" +
         (className ? ` ${className}` : "")
       }
+      href={link}
+      onClick={onClick}
     >
-      <button
-        className="h-10 w-full pl-3 text-left text-base"
-        onMouseDown={() => {
-          router.push(link);
-          if (onClick) {
-            onClick();
-          }
-        }}
-      >
-        {children}
-      </button>
-    </div>
+      {children}
+    </Link>
   );
 };
 

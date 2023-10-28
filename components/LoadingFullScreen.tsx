@@ -1,5 +1,6 @@
+"use client";
+
 import { selectLoadingInfo } from "@redux/modules/configSlice";
-import { useTheme } from "next-themes";
 import React from "react";
 import { useSelector } from "react-redux";
 import { GridLoader, ScaleLoader } from "react-spinners";
