@@ -21,6 +21,10 @@ class MyDocument extends Document {
       <Html lang="ko">
         <Head>
           <link rel="icon" href="/favicon-light.ico" />
+          <meta
+            name="google-adsense-account"
+            content="ca-pub-2643817325092140"
+          ></meta>
         </Head>
         <body className="bg-white text-black dark:bg-black dark:text-white">
           <Main />
