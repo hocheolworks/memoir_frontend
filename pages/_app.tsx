@@ -41,12 +41,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <>
       <Head>
         <title>MEMOIR.</title>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2643817325092140"
-          crossOrigin="anonymous"
-        />
       </Head>
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2643817325092140"
+        crossOrigin="anonymous"
+      />
       <DefaultSeo
         openGraph={{
           type: "website",
