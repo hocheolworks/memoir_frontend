@@ -43,7 +43,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <title>MEMOIR.</title>
       </Head>
       <Script
-        async
+        id="adsbygoogle-init"
+        strategy="afterInteractive"
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2643817325092140"
         crossOrigin="anonymous"
       />
