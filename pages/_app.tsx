@@ -20,6 +20,7 @@ import { PopupModal } from "@components/PopupModal";
 import { selectLoadingVisible } from "@redux/modules/configSlice";
 import LoadingFullScreen from "@components/LoadingFullScreen";
 import { DefaultSeo } from "next-seo";
+import Script from "next/script";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -40,6 +41,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <>
       <Head>
         <title>MEMOIR.</title>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2643817325092140"
+          crossOrigin="anonymous"
+        />
       </Head>
       <DefaultSeo
         openGraph={{
