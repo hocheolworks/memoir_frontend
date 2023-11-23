@@ -3,29 +3,29 @@ import BottomBtn from "./BottomBtn";
 import { dummyIntroduction } from "@utils/dummy";
 import { DefaultProps } from "@utils/types";
 import useUser from "@hooks/useUser";
+import UserAPI from "@api/user/userAPI";
 
 type IntroductionProps = DefaultProps & {
   userId: string;
-  introduction: string | null;
+  introduce: string | null;
 };
 
 const Introduction: FC<IntroductionProps> = ({
   className,
   userId,
-  introduction,
+  introduce,
 }) => {
   const user = useUser();
-  const [introduceText, setIntroduceText] = useState<string | null>(
-    introduction
-  );
+  const [introduceText, setIntroduceText] = useState<string | null>(introduce);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useLayoutEffect(() => {
-    // id로 소개 조회하는 api 호출
-    setIntroduceText(dummyIntroduction);
-  }, []);
+    UserAPI.getUserByUsername(userId).then((res) => {
+      setIntroduceText(res.blogIntroduction);
+    });
+  }, [userId]);
 
   const onClickWriteIntro = () => {
     setIsEditMode(true);
@@ -38,13 +38,16 @@ const Introduction: FC<IntroductionProps> = ({
   };
 
   const onClickSaveIntro = () => {
-    setIsEditMode(false);
-
-    if (introduceText === "") {
+    if (introduceText === "" || introduceText === null) {
       setIntroduceText(null);
+      setIsEditMode(false);
       return;
     }
-    // 소개글 저장 api 호출
+
+    UserAPI.updateUser({ blogIntroduction: introduceText }).then((res) => {
+      setIntroduceText(res.blogIntroduction);
+      setIsEditMode(false);
+    });
   };
 
   return (
@@ -80,15 +83,15 @@ const Introduction: FC<IntroductionProps> = ({
               ref={textareaRef}
               className="w-full resize-none overflow-hidden bg-white font-mono text-lg outline-none placeholder:text-lg placeholder:italic dark:bg-black dark:text-neutral-400"
               value={introduceText}
-              placeholder="자네는 누구인가?"
+              placeholder="간단하게 소개해보세요!"
               onChange={(e) => {
                 setIntroduceText(e.target.value);
                 // handleResizeHeight();
               }}
-              rows={introduceText.split("\n").length + 1}
+              rows={(introduceText ?? "").split("\n").length + 1}
             ></textarea>
           ) : (
-            introduceText
+            (introduceText ?? "")
               .split("\n")
               .map((value, index) =>
                 value !== "" ? (

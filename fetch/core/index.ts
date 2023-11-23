@@ -12,6 +12,8 @@ const createInstance = (isFileUpload: boolean = false) => {
     ...(token !== "" && { Authorization: `Bearer ${token}` }),
   };
 
+  console.log(headers);
+
   const fileUploadHeader = {
     accept: "*/*",
     "Content-Type": "multipart/form-data",

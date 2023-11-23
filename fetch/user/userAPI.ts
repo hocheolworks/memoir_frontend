@@ -4,6 +4,7 @@ import {
   GithubCodeDto,
   GithubGetContributionDto,
   GithubSignUpDto,
+  UpdateUserDto,
 } from "./requests";
 import { setToken } from "@token/index";
 import req from "@api/core";
@@ -35,6 +36,16 @@ const UserAPI = {
 
   me: async () => {
     const { data } = await req.get("/users/me");
+    return plainToInstance(MeResponseBody, data.data);
+  },
+
+  getUserByUsername: async (githubUserName: string) => {
+    const { data } = await req.get(`/users?githubUserName=${githubUserName}`);
+    return plainToInstance(MeResponseBody, data.data);
+  },
+
+  updateUser: async (updateUserDto: UpdateUserDto) => {
+    const { data } = await req.put("/users/me", updateUserDto);
     return plainToInstance(MeResponseBody, data.data);
   },
 

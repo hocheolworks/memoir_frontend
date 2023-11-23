@@ -35,6 +35,8 @@ export async function getServerSideProps({ query }: NextPageContext) {
     weeks: [],
   };
 
+  let introduce = null;
+
   try {
     const token =
       process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN_FOR_PUBLIC_ACCESS ?? "";
@@ -45,6 +47,9 @@ export async function getServerSideProps({ query }: NextPageContext) {
 
     const { data } = await PostAPI.getPosts(userId);
     posts = data.list;
+
+    const { blogIntroduction } = await UserAPI.getUserByUsername(userId);
+    introduce = blogIntroduction;
   } catch (e: any) {
     console.log("/[userId] Error");
     console.log(e);
@@ -55,6 +60,7 @@ export async function getServerSideProps({ query }: NextPageContext) {
     props: {
       userId: userId,
       posts: posts,
+      introduce: introduce,
       contributionData: contributionCalendar,
     },
   };
@@ -65,8 +71,9 @@ const UserMemoir: NextPageWithLayout<
     userId: string;
     posts: PreviewToBe[];
     contributionData: ContributionCalendar;
+    introduce: string;
   } & WithRouterProps
-> = ({ userId, posts, contributionData }) => {
+> = ({ userId, posts, contributionData, introduce }) => {
   const router = useRouter();
   const { tag } = router.query;
   const [selectedNavIndex, setSelectedNavIndex] = useState<number>(0);
@@ -200,7 +207,7 @@ const UserMemoir: NextPageWithLayout<
             ))} */}
           {selectedNavIndex === 1 && (
             <Introduction
-              introduction={null}
+              introduce={introduce}
               userId={userId as string}
             ></Introduction>
           )}
