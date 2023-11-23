@@ -6,6 +6,7 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
+import Script from "next/script";
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -25,6 +26,11 @@ class MyDocument extends Document {
             name="google-adsense-account"
             content="ca-pub-2643817325092140"
           ></meta>
+          <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2643817325092140"
+            crossOrigin="anonymous"
+          />
         </Head>
         <body className="bg-white text-black dark:bg-black dark:text-white">
           <Main />
