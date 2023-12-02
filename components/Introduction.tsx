@@ -1,6 +1,5 @@
-import React, { FC, useLayoutEffect, useRef, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import BottomBtn from "./BottomBtn";
-import { dummyIntroduction } from "@utils/dummy";
 import { DefaultProps } from "@utils/types";
 import useUser from "@hooks/useUser";
 import UserAPI from "@api/user/userAPI";
@@ -20,12 +19,6 @@ const Introduction: FC<IntroductionProps> = ({
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useLayoutEffect(() => {
-    UserAPI.getUserByUsername(userId).then((res) => {
-      setIntroduceText(res.blogIntroduction);
-    });
-  }, [userId]);
 
   const onClickWriteIntro = () => {
     setIsEditMode(true);

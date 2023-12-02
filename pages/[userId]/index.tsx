@@ -23,7 +23,7 @@ import GlobalLayout from "@components/GlobalLayout";
 import useUser from "@hooks/useUser";
 import PostAPI from "@api/post/postAPI";
 import { getPostCategories } from "@api/post-category";
-import { makeTreeFromCategories } from "@utils/functions";
+import { cls, makeTreeFromCategories } from "@utils/functions";
 import Head from "next/head";
 
 export async function getServerSideProps({ query }: NextPageContext) {
@@ -205,12 +205,11 @@ const UserMemoir: NextPageWithLayout<
             ) : (
               <NoContents type="series" />
             ))} */}
-          {selectedNavIndex === 1 && (
-            <Introduction
-              introduce={introduce}
-              userId={userId as string}
-            ></Introduction>
-          )}
+          <Introduction
+            className={cls(selectedNavIndex !== 1 && "hidden")}
+            introduce={introduce}
+            userId={userId as string}
+          ></Introduction>
         </div>
         <div className="flex-1 text-center">
           {/*Right*/}
