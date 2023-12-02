@@ -35,6 +35,7 @@ type PublishPopupProps = {
   title: string;
   editContent: string;
   postCategory: { id: number; name: string };
+  postSummary?: string | null;
   Popdown: () => void;
 };
 
@@ -44,6 +45,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   isPopup,
   title,
   editContent,
+  postSummary,
   postCategory,
   Popdown,
 }) => {
@@ -59,7 +61,9 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const [firstImageSrc, _] = useState<string>(
     extractFirstImageSrcFromMarkdown(editContent)
   );
-  const [abstract, setAbstract] = useState<string>(formatAbsolute(editContent));
+  const [abstract, setAbstract] = useState<string>(
+    postSummary ?? formatAbsolute(editContent)
+  );
   const [isCancel, setIsCancel] = useState<boolean>(false);
   const [isClickedAddToSeries, setIsClickedAddToSeries] =
     useState<boolean>(false);
@@ -75,6 +79,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
     const body: PublishPostDto = {
       postTitle: title,
       postBody: editContent,
+      postSummary: abstract,
       postCategoryId:
         selectedCategory.id === -1 ? undefined : selectedCategory.id,
       postThumbnailImageUrl: firstImageSrc || undefined,
@@ -101,6 +106,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
     user,
     title,
     editContent,
+    abstract,
     selectedCategory,
     push,
     firstImageSrc,
@@ -117,6 +123,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
       postBody: editContent,
       postCategoryId:
         selectedCategory.id === -1 ? undefined : selectedCategory.id,
+      postSummary: abstract,
       postThumbnailImageUrl: firstImageSrc || undefined,
     };
     nowLoading({ type: "scale", text: "수정 중.." });
@@ -138,6 +145,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
     user,
     title,
     editContent,
+    abstract,
     selectedCategory,
     push,
     firstImageSrc,

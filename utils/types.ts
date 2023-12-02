@@ -136,6 +136,7 @@ export type PreviewToBe = {
   deletedAt: string;
   user: User;
   postTitle: string;
+  postSummary: string | null;
   postThumbnailImageUrl?: string;
   postUrl: string;
   views: number;

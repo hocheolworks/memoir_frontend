@@ -15,8 +15,15 @@ const PreviewHorizontal: FC<PreviewHorizontalProps> = ({
   preview,
   index,
 }) => {
-  const { id, createdAt, views, postTitle, postThumbnailImageUrl, user } =
-    preview;
+  const {
+    id,
+    createdAt,
+    views,
+    postTitle,
+    postSummary,
+    postThumbnailImageUrl,
+    user,
+  } = preview;
 
   const directUrl = `/${user.githubUserName}/${id}`;
 
@@ -43,11 +50,7 @@ const PreviewHorizontal: FC<PreviewHorizontalProps> = ({
           {postTitle}
         </div>
       </Link>
-      <p className="pb-8 text-left text-sm text-neutral-500">
-        {
-          // TODO: 바디 요약 서버에서 내려줘야함
-        }
-      </p>
+      <p className="pb-8 text-left text-sm text-neutral-500">{postSummary}</p>
       {/* <div className="-ml-1 flex flex-wrap content-start justify-start">
         {tagList?.map((value, tagIndex) => (
           <Tag onClick={() => {}} key={`preview#${index}tag#${tagIndex}`}>

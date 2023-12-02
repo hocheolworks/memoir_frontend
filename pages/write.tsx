@@ -220,13 +220,16 @@ const Write: NextPageWithLayout = () => {
     setIsDragging(false);
   }, []);
 
+  const postSummaryRef = useRef<string | null>(null);
+
   useEffect(() => {
     // 수정하기
     (async () => {
       if (id && id !== -1) {
         const { data } = await PostAPI.getPostById(id);
-        const { postTitle, postBody, postCategory } = data;
+        const { postTitle, postBody, postCategory, postSummary } = data;
 
+        postSummaryRef.current = postSummary;
         setTitle(postTitle);
         setEditContent(postBody);
 
@@ -340,6 +343,7 @@ const Write: NextPageWithLayout = () => {
           title={title}
           editContent={editContent ?? ""}
           postCategory={postCategory}
+          postSummary={postSummaryRef.current}
           Popdown={() => {
             setIsPublishPopupOpen(false);
           }}

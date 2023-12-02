@@ -21,6 +21,7 @@ class MyDocument extends Document {
       <Html lang="ko">
         <Head>
           <link rel="icon" href="/favicon-light.ico" />
+          <link rel="canonical" href="https://www.mem0ir.com" />
           <meta
             name="google-adsense-account"
             content="ca-pub-2643817325092140"

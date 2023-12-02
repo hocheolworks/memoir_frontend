@@ -15,6 +15,9 @@ export type PublishPostDto = {
   //게시글 제목
   postTitle: string;
 
+  // 게시글 요약
+  postSummary: string;
+
   //게시글 본문
   postBody: string;
 
