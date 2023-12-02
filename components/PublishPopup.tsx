@@ -85,7 +85,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
       postThumbnailImageUrl: firstImageSrc || undefined,
     };
 
-    nowLoading({ type: "scale", text: "글 싸는 중.." });
+    nowLoading({ type: "scale", text: "글 쓰는 중.." });
     try {
       const { statusCode, data } = await PostAPI.publishPost(body);
 
