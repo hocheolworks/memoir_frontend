@@ -13,3 +13,7 @@ export type GithubGetContributionDto = {
   username: string;
   year?: number;
 };
+
+export type UpdateUserDto = {
+  blogIntroduction: string;
+};
