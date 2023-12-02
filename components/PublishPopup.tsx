@@ -35,6 +35,7 @@ type PublishPopupProps = {
   title: string;
   editContent: string;
   postCategory: { id: number; name: string };
+  postSummary?: string | null;
   Popdown: () => void;
 };
 
@@ -44,6 +45,7 @@ const PublishPopup: FC<PublishPopupProps> = ({
   isPopup,
   title,
   editContent,
+  postSummary,
   postCategory,
   Popdown,
 }) => {
@@ -59,7 +61,9 @@ const PublishPopup: FC<PublishPopupProps> = ({
   const [firstImageSrc, _] = useState<string>(
     extractFirstImageSrcFromMarkdown(editContent)
   );
-  const [abstract, setAbstract] = useState<string>(formatAbsolute(editContent));
+  const [abstract, setAbstract] = useState<string>(
+    postSummary ?? formatAbsolute(editContent)
+  );
   const [isCancel, setIsCancel] = useState<boolean>(false);
   const [isClickedAddToSeries, setIsClickedAddToSeries] =
     useState<boolean>(false);

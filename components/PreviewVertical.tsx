@@ -45,6 +45,9 @@ function PreviewVertical({ className, post }: PreviewVerticalProps) {
             className="flex-1 self-stretch"
           >
             <h4 className="font-semibold">{post.postTitle}</h4>
+            <p className="overflow-hidden text-ellipsis text-left text-sm text-neutral-500 [-webkit-line-clamp:2] [display:-webkit-box] [-webkit-box-orient:vertical]">
+              {post.postSummary}
+            </p>
           </Link>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
             {dayjs(post.createdAt).format("YYYY년 MM월 DD일")}
