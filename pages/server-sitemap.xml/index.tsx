@@ -1,7 +1,7 @@
 // pages/server-sitemap-index.xml/index.tsx
-import { getServerSideSitemapIndexLegacy } from "next-sitemap";
-import { GetServerSideProps } from "next";
 import sitemapAPI from "@api/sitemap/sitemapAPI";
+import { getServerSideSitemapLegacy } from "next-sitemap";
+import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let urls: string[] = [];
@@ -10,9 +10,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     urls = await sitemapAPI.getAllPostPathnames();
   } catch (e) {}
 
-  return getServerSideSitemapIndexLegacy(
+  return getServerSideSitemapLegacy(
     ctx,
-    urls.map((url) => process.env.NEXT_PUBLIC_WEB_URL + "/" + url)
+    urls.map((url) => ({
+      loc: process.env.NEXT_PUBLIC_WEB_URL + "/" + url,
+      lastmod: new Date().toISOString(),
+    }))
   );
 };
 

@@ -148,7 +148,7 @@ export function formatAbsolute(
   return replaced.slice(0, maxLength);
 }
 
-export function cls(...classes: (string | undefined)[]) {
+export function cls(...classes: (string | undefined | false)[]) {
   return classes.filter((c) => c !== undefined && c !== "").join(" ");
 }
 

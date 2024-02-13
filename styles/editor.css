@@ -83,7 +83,8 @@
 }
 
 [data-color-mode*="dark"] .wmde-markdown-var,
-[data-color-mode*="dark"] .wmde-markdown {
+[data-color-mode*="dark"] .wmde-markdown,
+.dark .wmde-markdown {
   --color-fg-default: #f4f4f4 !important;
   --color-fg-muted: #8b949e !important;
   --color-fg-subtle: #484f58 !important;
@@ -96,7 +97,8 @@
 }
 
 [data-color-mode*="light"] .wmde-markdown-var,
-[data-color-mode*="light"] .wmde-markdown {
+[data-color-mode*="light"] .wmde-markdown,
+.light .wmde-markdown {
   --color-fg-default: #242021 !important;
   --color-fg-muted: #57606a !important;
   --color-fg-subtle: #6e7781 !important;

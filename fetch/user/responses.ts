@@ -62,4 +62,7 @@ export class MeResponseBody {
 
   //프로필 설명
   description: string;
+
+  // 블로그 소개
+  blogIntroduction: string | null;
 }

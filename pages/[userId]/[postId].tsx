@@ -147,7 +147,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           url: `https://mem0ir.com/${author}/${id}`,
         }}
       />
-      <div className="relative mx-auto flex w-full max-w-[768px] flex-col items-center pt-[88px]">
+      <div className="first relative mx-auto flex w-full max-w-[768px] flex-col items-center pt-[24px]">
         <div
           className={cls(
             "absolute top-0 bottom-0 left-full hidden w-[240px] left-area-visible:block"
@@ -157,10 +157,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           }}
         >
           <AnchorNav
-            className={cls("sticky ml-[60px]")}
-            style={{
-              top: "88px",
-            }}
+            className={cls("sticky top-[88px] ml-[60px]")}
             anchors={anchors}
             onClick={() => {
               setTimeout(() => {
@@ -171,7 +168,9 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         </div>
 
         <div className="self-start">
-          <h1 className="text-[3rem] font-bold leading-normal">{postTitle}</h1>
+          <h1 className="break-keep text-[2.25rem] font-bold leading-normal first:text-[3rem]">
+            {postTitle}
+          </h1>
         </div>
         <div
           className="flex w-full items-center justify-between pt-8"
@@ -228,7 +227,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           source={postBody}
         ></Markdown>
         <ProfileCard
-          className="mt-80 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700"
+          className="mt-24 mb-24 w-full border-t-[1px] border-neutral-200 pt-4 dark:border-neutral-700 first:mt-36"
           userName={author}
         />
 

@@ -91,4 +91,6 @@ export class GetPostByIdResponseBody {
   views: number;
   // 게시글 본문
   postBody: string;
+
+  postSummary: string | null;
 }
