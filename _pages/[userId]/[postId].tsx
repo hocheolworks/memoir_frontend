@@ -24,9 +24,8 @@ import { errorHandler } from "@api/error";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useTheme } from "next-themes";
-import moment from "moment";
+import dayjs from "dayjs";
 import useLoading from "@hooks/useLoading";
-import Head from "next/head";
 import { NextSeo } from "next-seo";
 
 export async function getServerSideProps({ query }: NextPageContext) {
@@ -179,7 +178,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           <div>
             <span className="font-medium">{author}</span> ·{" "}
             <span className="text-neutral-400">
-              {moment(createdAt).format("YYYY년 MM월 DD일")}
+              {dayjs(createdAt).format("YYYY년 MM월 DD일")}
             </span>
           </div>
           {isMyPost && (

@@ -7,7 +7,7 @@ import { resetAuth, setAuthUser } from "@redux/modules/authSlice";
 import { dummyUser } from "@utils/dummy";
 import { GridLoader } from "react-spinners";
 import Link from "next/link";
-import { NextPageWithLayout } from "@pages/_app";
+import { NextPageWithLayout } from "_pages/_app";
 import { openModal } from "@components/PopupModal";
 
 const LoginDone: NextPageWithLayout = () => {

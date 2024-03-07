@@ -2,9 +2,24 @@ import { errorHandler } from "@api/error";
 import PostAPI from "@api/post/postAPI";
 import PostContainer from "@components/PostContainer";
 import { PreviewToBe } from "@utils/types";
-import { ReactElement, useCallback, useRef, useState } from "react";
-import useObserver from "@hooks/useObserver";
-import { NextPage } from "next/types";
+import { Metadata } from "next/types";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_WEB_URL ?? "https://www.mem0ir.com"
+  ),
+  title: "MEMOIR.",
+  description: "블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!",
+  icons: "/favicon-light.ico",
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    images: [{ url: "/og/og-memoir.png" }],
+    url: "/",
+    siteName: "MEMOIR.",
+    description: "블로그와 잔디심기를 한번에? 당신의 개발을 회고해보세요!",
+  },
+};
 
 async function getHottestPosts(page: number, pageSize: number) {
   let posts: PreviewToBe[] = [];

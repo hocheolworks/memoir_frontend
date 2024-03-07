@@ -18,7 +18,7 @@ import TagList from "@components/TagList";
 import PostList from "@components/PostList";
 import CategoryTreeNav from "@components/CategoryTreeNav";
 import ProfileCard from "@components/ProfileCard";
-import { NextPageWithLayout } from "@pages/_app";
+import { NextPageWithLayout } from "_pages/_app";
 import GlobalLayout from "@components/GlobalLayout";
 import useUser from "@hooks/useUser";
 import PostAPI from "@api/post/postAPI";

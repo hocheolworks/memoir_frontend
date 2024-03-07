@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { DefaultProps, Preview, PreviewToBe } from "@utils/types";
 import Tag from "./Tag";
-import moment from "moment";
+import dayjs from "dayjs";
 
 type PreviewHorizontalProps = DefaultProps & {
   preview: PreviewToBe;
@@ -60,7 +60,7 @@ const PreviewHorizontal: FC<PreviewHorizontalProps> = ({
       </div> */}
       <div className="mt-4 text-left text-sm text-neutral-500">
         {
-          moment(createdAt).format("YYYY년 MM월 DD일") +
+          dayjs(createdAt).format("YYYY년 MM월 DD일") +
             " · " +
             views.toString() +
             " 읽음"

@@ -5,7 +5,6 @@ import "@styles/editor.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import type { AppProps } from "next/app";
-import Head from "next/head";
 
 import { ToastContainer } from "react-toastify";
 import { wrapper } from "@redux/store/store";
@@ -38,9 +37,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <Head>
-        <title>MEMOIR.</title>
-      </Head>
       <DefaultSeo
         openGraph={{
           type: "website",

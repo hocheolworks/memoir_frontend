@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { getRandomArbitrary, getWeekNumber } from "./functions";
 import {
   ContributionTile,
@@ -44,8 +44,8 @@ export const getDummyContributionData = (year: number) => {
 export const dummyUser: User = {
   id: -1,
   blogName: "개발새발",
-  createdAt: moment("2023-03-18").format("YYYYMMDD"),
-  updatedAt: moment("2023-03-19").format("YYYYMMDD"),
+  createdAt: dayjs("2023-03-18").format("YYYYMMDD"),
+  updatedAt: dayjs("2023-03-19").format("YYYYMMDD"),
   deletedAt: "",
   email: "lheong60@naver.com",
   githubUserName: "lhjeong60",
