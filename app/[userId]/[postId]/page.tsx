@@ -50,12 +50,10 @@ export async function generateMetadata(
         description: formatAbsolute(post.postBody),
         images: [
           {
-            url:
-              post.postThumbnailImageUrl ||
-              "https://mem0ir.com/og/og-memoir.png",
+            url: post.postThumbnailImageUrl || "/og/og-memoir.png",
           },
         ],
-        url: `https://mem0ir.com/${userId}/${postId}`,
+        url: `/${userId}/${postId}`,
       },
     };
   } else {
