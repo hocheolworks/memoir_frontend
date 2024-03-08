@@ -1,5 +1,5 @@
 import { selectAuthUser } from "@redux/modules/authSlice";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 

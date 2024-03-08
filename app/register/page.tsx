@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import { errorHandler } from "@api/error";
 import UserAPI from "@api/user/userAPI";
@@ -11,8 +11,9 @@ import { BaseApiError } from "@api/core/types";
 import { openModal } from "@components/PopupModal";
 
 const Register: FC = () => {
-  const { push, query, isReady } = useRouter();
-  const { githubUserName } = query;
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
+  const githubUserName = searchParams.get("githubUserName");
 
   const [email, setEmail] = useState<string>();
   const [blogName, setBlogName] = useState<string>();
@@ -20,12 +21,10 @@ const Register: FC = () => {
   const [disableBtn, setDisableBtn] = useState<boolean>();
 
   useEffect(() => {
-    if (!isReady) return;
-
     if (!githubUserName) {
       push("/404");
     }
-  }, [isReady, githubUserName, push]);
+  }, [githubUserName, push]);
 
   useEffect(() => {
     if (

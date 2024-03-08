@@ -1,4 +1,3 @@
-import { NextRouter } from "next/router";
 import { CSSProperties } from "react";
 
 export type ApiResponseDefaultType = {
@@ -85,10 +84,6 @@ export type ContributionTooltipData = {
   clientTop: number;
   weekIdx: number;
   weekday: number;
-};
-
-export type WithRouterProps = {
-  router: NextRouter;
 };
 
 export type Preview = {

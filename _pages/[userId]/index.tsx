@@ -4,7 +4,6 @@ import {
   ContributionCalendar,
   PreviewToBe,
   TreeNodeParent,
-  WithRouterProps,
 } from "@utils/types";
 import UserAPI from "@api/user/userAPI";
 import { errorHandler } from "@api/error";

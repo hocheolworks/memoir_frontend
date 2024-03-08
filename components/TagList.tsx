@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import React, { FC } from "react";
 import { DefaultProps, TagData } from "@utils/types";
 import LinkHoverUnderline from "./LinkHoverUnderline";
@@ -10,9 +10,9 @@ type TagListProps = DefaultProps & {
 
 const TagList: FC<TagListProps> = ({ className, tagList }) => {
   const totalCount = tagList.reduce((acc, cur) => acc + cur.count, 0);
-  const router = useRouter();
-
-  const { tag, userId } = router.query;
+  const searchParams = useSearchParams();
+  const tag = searchParams.get("tag");
+  const userId = searchParams.get("userId");
   const pageUrl = `/${userId}`;
 
   return (

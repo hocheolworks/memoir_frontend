@@ -20,7 +20,6 @@
       "@api/*": ["./fetch/*"],
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],
-      "@pages/*": ["_pages/*"],
       "@public/*": ["./public/*"],
       "@redux/*": ["./redux/*"],
       "@styles/*": ["./styles/*"],
