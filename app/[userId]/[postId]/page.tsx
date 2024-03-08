@@ -38,6 +38,9 @@ export async function generateMetadata(
 
   if (post) {
     return {
+      metadataBase: new URL(
+        process.env.NEXT_PUBLIC_WEB_URL ?? "https://www.mem0ir.com"
+      ),
       title: post.postTitle,
       description: formatAbsolute(post.postBody),
       openGraph: {
