@@ -180,7 +180,7 @@ const PostClientPage = ({ post }: PostClientPageProps) => {
           </div>
         )} */}
         <Markdown
-          className="w-full bg-white text-black dark:bg-black dark:text-white"
+          className="wmde-preview w-full bg-white text-black dark:bg-black dark:text-white"
           source={postBody}
         ></Markdown>
         <ProfileCard
